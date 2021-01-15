@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
 
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.safi_d.sistemas.safiapp.Principal.MenuActivity"
+    tools:context="com.safi_d.sistemas.safdiscomert.Principal.MenuActivity"
     tools:showIn="@layout/app_bar_main">
 
     <FrameLayout
@@ -20,7 +20,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@mipmap/fondo"
+            android:background="@mipmap/fondodiscomert"
         />
 
     </FrameLayout>
