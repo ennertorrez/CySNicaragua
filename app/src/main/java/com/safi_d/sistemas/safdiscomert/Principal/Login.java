@@ -969,9 +969,6 @@ public class Login extends Activity {
                 CheckConnectivity();
                 if(isOnline){
                     //It retrieves the latest version by scraping the content of current version from play store at runtime
-                /*    String urlOfAppFromPlayStore = "https://play.google.com/store/apps/details?id=com.suplidora.sistemas.sisago&hl=es";
-                    Document doc = Jsoup.connect(urlOfAppFromPlayStore).get();
-                    latestVersion = doc.getElementsByAttributeValue("itemprop", "softwareVersion").first().text();*/
 
                     Document doc2 = Jsoup
                             .connect(
