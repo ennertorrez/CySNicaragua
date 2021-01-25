@@ -683,22 +683,6 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
                         }
                          /*Si no existe lo agregamos*/
                         if (existe == false) {
-                            //Validamos que solamente se puedan ingresar 18 articulos
-                            if (listaArticulos.size() == 18 ) {
-
-                                /*Eliminamos el ultimo item NO BONIFICADO agregado*/
-                                HashMap<String, String> ultimoItemP = null;
-                                for (HashMap<String, String> itemsel : listaArticulos) {
-                                    if (itemsel.get(variables_publicas.PEDIDOS_DETALLE_COLUMN_TipoArt).equalsIgnoreCase("P")) {
-                                        ultimoItemP = itemsel;
-                                    }
-                                }
-                                if (ultimoItemP != null) {
-                                    listaArticulos.remove(ultimoItemP);
-                                }
-                                MensajeAviso("No se puede agregar el producto seleccionado,ya que posee bonificacion y excede el limite de 18 productos para un pedido Mayorista");
-                                break;
-                            }
 
                             HashMap<String, String> articuloBonificado = new HashMap<>();
                             articuloBonificado.put("CodigoPedido", pedido.getCodigoPedido());
@@ -1213,11 +1197,11 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
         itemPedidos.put("UnidadCajaVenta", articulo.getUnidadCajaVenta());
         itemPedidos.put("Bodega", "01");
 
-        //Validamos que solamente se puedan ingresar 18 articulos
+/*        //Validamos que solamente se puedan ingresar 18 articulos
         if (listaArticulos.size() == 18 ) {
             MensajeAviso("No se puede agregar el producto seleccionado,ya que excede el limite de 18 productos para un pedido Mayorista");
             return false;
-        }
+        }*/
 
        listaArticulos.add(itemPedidos);
 

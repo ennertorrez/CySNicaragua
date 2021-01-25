@@ -420,7 +420,7 @@ public class ListaPedidovsFacturado extends Fragment {
 
             String jsonStr = sh.makeServiceCall(encodeUrl);
             if (jsonStr == null) {
-                new Funciones().SendMail("Ha ocurrido un error al obtener lista de pedidos,Respuesta nula GET", variables_publicas.info+urlString, "cysnicaragua@gmail.com", variables_publicas.correosErrores);
+                new Funciones().SendMail("Ha ocurrido un error al obtener lista de pedidos,Respuesta nula GET", variables_publicas.info+urlString, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
             } else {
                 Log.e(TAG, "Response from url: " + jsonStr);
 
@@ -454,7 +454,7 @@ public class ListaPedidovsFacturado extends Fragment {
                 }
             }
         } catch (Exception ex) {
-            new Funciones().SendMail("Ha ocurrido un error al obtener lista de pedidos,Excepcion controlada", variables_publicas.info+ex.getMessage(), "cysnicaragua@gmail.com", variables_publicas.correosErrores);
+            new Funciones().SendMail("Ha ocurrido un error al obtener lista de pedidos,Excepcion controlada", variables_publicas.info+ex.getMessage(), "dlunasistemas@gmail.com", variables_publicas.correosErrores);
 
         }
     }

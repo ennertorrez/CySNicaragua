@@ -148,7 +148,7 @@ public class ListaDetallePedidoFacturado extends Activity {
 
             String jsonStr = sh.makeServiceCall(encodeUrl);
             if (jsonStr == null) {
-                new Funciones().SendMail("Ha ocurrido un error al obtener lista de items. Respuesta nula GET", variables_publicas.info+urlString, "cysnicaragua@gmail.com", variables_publicas.correosErrores);
+                new Funciones().SendMail("Ha ocurrido un error al obtener lista de items. Respuesta nula GET", variables_publicas.info+urlString, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
             } else {
                 Log.e(TAG, "Response from url: " + jsonStr);
 
@@ -182,7 +182,7 @@ public class ListaDetallePedidoFacturado extends Activity {
                 }
             }
         } catch (Exception ex) {
-            new Funciones().SendMail("Ha ocurrido un error al obtener lista de items. Excepcion controlada", variables_publicas.info+ex.getMessage(), "cysnicaragua@gmail.com", variables_publicas.correosErrores);
+            new Funciones().SendMail("Ha ocurrido un error al obtener lista de items. Excepcion controlada", variables_publicas.info+ex.getMessage(), "dlunasistemas@gmail.com", variables_publicas.correosErrores);
 
         }
     }
