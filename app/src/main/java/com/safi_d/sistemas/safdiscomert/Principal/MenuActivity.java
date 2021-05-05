@@ -32,7 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import java.text.ParseException;
 
 import android.os.Handler;
 
@@ -50,11 +50,9 @@ import com.safi_d.sistemas.safdiscomert.AccesoDatos.InformesDetalleHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.InformesHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.PedidosDetalleHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.PedidosHelper;
-//import com.safi_d.sistemas.safiapp.AccesoDatos.PreciosHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.UsuariosHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.VendedoresHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.TPreciosHelper;
-//import com.safi_d.sistemas.safiapp.AccesoDatos.ZonasHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.RutasHelper;
 import com.safi_d.sistemas.safdiscomert.Auxiliar.Funciones;
 import com.safi_d.sistemas.safdiscomert.Auxiliar.SincronizarDatos;
@@ -70,12 +68,18 @@ import com.safi_d.sistemas.safdiscomert.Menu.ListaPedidosFragment;
 import com.safi_d.sistemas.safdiscomert.Menu.ListaPedidosSupFragment;
 import com.safi_d.sistemas.safdiscomert.Menu.ListaPedidovsFacturado;
 import com.safi_d.sistemas.safdiscomert.Menu.ListaRecibosPendFragment;
+import com.safi_d.sistemas.safdiscomert.Menu.ListaTotalFacturado;
 import com.safi_d.sistemas.safdiscomert.Menu.MaestroProductoFragment;
 import com.safi_d.sistemas.safdiscomert.Menu.PedidosFragment;
 import com.safi_d.sistemas.safdiscomert.R;
 
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.time.LocalDateTime;
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Handler handler = new Handler();
@@ -104,11 +108,10 @@ public class MenuActivity extends AppCompatActivity
     private FacturasPendientesHelper FacturasPendientesH;
     private PedidosHelper PedidoH;
     private RutasHelper RutasH;
-    //private ZonasHelper ZonasH;
-    //private PreciosHelper PreciosH;
     private TPreciosHelper TPreciosH;
     private CategoriasClienteHelper CategoriaH;
-
+    private static String vFechaResultadoFInicio="";
+    private static String vFechaResultadoFFin="";
     String IMEI = "";
     private static final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 0;
     boolean isGPSEnabled = false;
@@ -166,7 +169,7 @@ public class MenuActivity extends AppCompatActivity
             userHeader = variables_publicas.usuario.getNombre();
             userHeaderCodigo = variables_publicas.usuario.getCodigo();
             VersionSistema = "Version: " + variables_publicas.VersionSistema;
-            Servidor = variables_publicas.direccionIp.equals("http://192.168.0.7:8087") ? "SERVIDOR: PRODUCCION" : "SERVIDOR: DESARROLLO";
+            Servidor = variables_publicas.direccionIp.equals("http://200.62.90.235:8087") ? "SERVIDOR: PRODUCCION" : "SERVIDOR: DESARROLLO";
         } catch (Exception ex) {
             Log.e("Error:", ex.getMessage());
         }
@@ -192,10 +195,8 @@ public class MenuActivity extends AppCompatActivity
         InformesH = new InformesHelper(DbOpenHelper.database);
         InformesDetalleH = new InformesDetalleHelper(DbOpenHelper.database);
         FacturasPendientesH = new FacturasPendientesHelper(DbOpenHelper.database);
-        //ZonasH = new ZonasHelper(DbOpenHelper.database);
         RutasH = new RutasHelper(DbOpenHelper.database);
         CategoriaH = new CategoriasClienteHelper(DbOpenHelper.database);
-        //PreciosH = new PreciosHelper(DbOpenHelper.database);
         TPreciosH = new TPreciosHelper(DbOpenHelper.database);
 
         sd = new SincronizarDatos(DbOpenHelper, ClientesH, VendedoresH, CartillasBcH,
@@ -212,6 +213,8 @@ public class MenuActivity extends AppCompatActivity
         //navigationView.getMenu().getItem(2).getSubMenu().getItem(1).setVisible(false); //Clientes nuevos
         //navigationView.getMenu().getItem(2).getSubMenu().getItem(2).setVisible(false); //Activar Clientes
         navigationView.getMenu().getItem(3).setVisible(false); //Recibos
+        navigationView.getMenu().getItem(1).getSubMenu().getItem(2).setVisible(false); //Pedidos vs Facturado
+        navigationView.getMenu().getItem(2).getSubMenu().getItem(2).setVisible(false); //Activar Clientes
 
         if ((!variables_publicas.usuario.getCanal().equalsIgnoreCase("Detalle")&& variables_publicas.usuario.getTipo().equalsIgnoreCase("Vendedor")) || variables_publicas.usuario.getTipo().equalsIgnoreCase("Supervisor") || variables_publicas.usuario.getTipo().equalsIgnoreCase("User") ) {
             navigationView.getMenu().getItem(3).setVisible(true); //Recibos
@@ -235,7 +238,6 @@ public class MenuActivity extends AppCompatActivity
         if (variables_publicas.usuario.getTipo().equalsIgnoreCase("Supervisor") || variables_publicas.usuario.getTipo().equalsIgnoreCase("User") ) {
             navigationView.getMenu().getItem(2).getSubMenu().getItem(2).setVisible(true); //Activar Clientes
         }
-
 
         IMEI = variables_publicas.IMEI;
         if (IMEI == null) {
@@ -449,7 +451,6 @@ public class MenuActivity extends AppCompatActivity
                 Intent newCli = new Intent(getApplicationContext(), ClientesNew.class);
                 startActivity(newCli);
                 break;
-
             case R.id.btnActivarCliente:
                 fragmentManager.executePendingTransactions();
                 tran = getFragmentManager().beginTransaction();
@@ -499,18 +500,120 @@ public class MenuActivity extends AppCompatActivity
                 break;
 
             case R.id.btnNuevoPedido:
-                fragmentManager.executePendingTransactions();
-                tran = getFragmentManager().beginTransaction();
-                tran.add(R.id.content_frame, new PedidosFragment());
-                tran.addToBackStack(null);
-                tran.commit();
-                break;
+                int dia=0;
+                int dia2=0;
+                String fechaInicio="";
+                String fechaFin="";
+                variables_publicas.diasCierre = UsuariosH.ObtenerDiasCierre();
+                if (variables_publicas.diasCierre != null){
+                    if (variables_publicas.diasCierre.getDiaInicio().equalsIgnoreCase("Domingo")){
+                        dia=1 ;
+                    }else if  (variables_publicas.diasCierre.getDiaInicio().equalsIgnoreCase("Lunes")){
+                        dia=2;
+                    }else if  (variables_publicas.diasCierre.getDiaInicio().equalsIgnoreCase("Martes")){
+                        dia=3;
+                    }else if  (variables_publicas.diasCierre.getDiaInicio().equalsIgnoreCase("Miércoles")){
+                        dia=4;
+                    }else if  (variables_publicas.diasCierre.getDiaInicio().equalsIgnoreCase("Jueves")){
+                        dia=5;
+                    }else if  (variables_publicas.diasCierre.getDiaInicio().equalsIgnoreCase("Viernes")){
+                        dia=6;
+                    }else {
+                        dia=7;
+                    }
 
+                    if (variables_publicas.diasCierre.getDiaFin().equalsIgnoreCase("Domingo")){
+                        dia2=1 ;
+                    }else if  (variables_publicas.diasCierre.getDiaFin().equalsIgnoreCase("Lunes")){
+                        dia2=2;
+                    }else if  (variables_publicas.diasCierre.getDiaFin().equalsIgnoreCase("Martes")){
+                        dia2=3;
+                    }else if  (variables_publicas.diasCierre.getDiaFin().equalsIgnoreCase("Miércoles")){
+                        dia2=4;
+                    }else if  (variables_publicas.diasCierre.getDiaFin().equalsIgnoreCase("Jueves")){
+                        dia2=5;
+                    }else if  (variables_publicas.diasCierre.getDiaFin().equalsIgnoreCase("Viernes")){
+                        dia2=6;
+                    }else {
+                        dia2=7;
+                    }
+                    try {
+                        int vanio =0;
+                        int semana=0;
+                        int vdiasemanainicio=0;
+                        int vdiassumar=0;
+                        String vFechaResultado="";
+                        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                        Date inicioanio = null;
+                        Date fecha =null;
+                        Date fecha2 =null;
+                        String fechaSF =null;
+                        Calendar c = new GregorianCalendar();
+                        vanio=c.get(Calendar.YEAR);
+                        semana=c.get(Calendar.WEEK_OF_YEAR);
+                        fechaSF=String.valueOf(vanio)+"-01-01";
+                        inicioanio= formato.parse( fechaSF);
+                        c.setTime(inicioanio);
+                        vdiasemanainicio=c.get(Calendar.DAY_OF_WEEK);//dia en que inicio el año
+                        if (dia2-dia>0){
+                            vdiassumar=(semana-1)*7 + dia -vdiasemanainicio;
+                            c.add(Calendar.DAY_OF_YEAR, vdiassumar);
+                            fecha=c.getTime();
+                            vFechaResultadoFInicio=formato.format(fecha);
+                            fecha2=new Date(fecha.getTime()+((1000 * 60 * 60 * 24)*(dia2-dia)));
+                            vFechaResultadoFFin=formato.format(fecha2);
+                        }else{
+                            vdiassumar=(semana-2)*7 + dia -vdiasemanainicio;
+                            c.add(Calendar.DAY_OF_YEAR, vdiassumar);
+                            fecha=c.getTime();
+                            vFechaResultadoFInicio=formato.format(fecha);
+                            fecha2=new Date(fecha.getTime()+((1000 * 60 * 60 * 24)*(7-Math.abs(dia2-dia))));
+                            vFechaResultadoFFin=formato.format(fecha2);
+                        }
+                        fechaInicio=vFechaResultadoFInicio+ " " + variables_publicas.diasCierre.getHoraInicio();
+                        fechaFin=vFechaResultadoFFin + " " + variables_publicas.diasCierre.getHoraFin();
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date fechaActual = new Date();
+                    Date fecha1 = new Date();
+                    Date fecha2 = new Date();
+                    try {
+                        fechaActual = dateFormat.parse(variables_publicas.FechaActual);
+                        fecha1 = dateFormat.parse(fechaInicio);
+                        fecha2= dateFormat.parse(fechaFin);
+                    } catch (ParseException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    if(fechaActual.after(fecha1) && fechaActual.before(fecha2)){
+                        fragmentManager.executePendingTransactions();
+                        tran = getFragmentManager().beginTransaction();
+                        tran.add(R.id.content_frame, new PedidosFragment());
+                        tran.addToBackStack(null);
+                        tran.commit();
+                        break;
+                    }else{
+                        MensajeAviso("No está permitido registrar pedidos en este momento. Se reabre nuevamente los días " + variables_publicas.diasCierre.getDiaInicio() + " a las " + variables_publicas.diasCierre.getHoraInicio()  +" ");
+                        break ;
+                    }
+                }
             case R.id.btnReporteVentasAlDia:
 
                 fragmentManager.executePendingTransactions();
                 tran = getFragmentManager().beginTransaction();
                 tran.add(R.id.content_frame, new ListaPedidosSupFragment());
+                tran.addToBackStack(null);
+                tran.commit();
+                break;
+
+            case R.id.btnReporteFacturacion:
+
+                fragmentManager.executePendingTransactions();
+                tran = getFragmentManager().beginTransaction();
+                tran.add(R.id.content_frame, new ListaTotalFacturado());
                 tran.addToBackStack(null);
                 tran.commit();
                 break;
@@ -536,6 +639,20 @@ public class MenuActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void MensajeAviso(String texto) {
+        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+        dlgAlert.setMessage(texto);
+        dlgAlert.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+             /*   if (finalizar) {
+                    finish();
+                }*/
+            }
+        });
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
     }
 
     private void removeAllFragments(FragmentManager fragmentManager) {

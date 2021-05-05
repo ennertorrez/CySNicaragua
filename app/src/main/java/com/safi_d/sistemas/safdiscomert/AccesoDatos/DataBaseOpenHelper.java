@@ -90,6 +90,8 @@ public class DataBaseOpenHelper {
                     + variables_publicas.ARTICULO_COLUMN_DescuentoMaximo + " TEXT, "
                     + variables_publicas.ARTICULO_COLUMN_Existencia + " TEXT, "
                     + variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta + " TEXT, "
+                    + variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta2 + " TEXT, "
+                    + variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta3 + " TEXT, "
                     + variables_publicas.ARTICULO_COLUMN_IdProveedor + " TEXT ) ");
 
             db.execSQL("CREATE TABLE " + variables_publicas.TABLE_VENDEDORES + "( "
@@ -287,6 +289,12 @@ public class DataBaseOpenHelper {
                     + variables_publicas.SERIERECIBOS_COLUMN_nInicial + " TEXT , "
                     + variables_publicas.SERIERECIBOS_COLUMN_nFinal + " TEXT , "
                     + variables_publicas.SERIERECIBOS_COLUMN_Numero + " TEXT ) ");
+
+            db.execSQL("CREATE TABLE " + variables_publicas.TABLE_DIASCIERRE + "( "
+                    + variables_publicas.DIASCIERRE_COLUMN_DiaInicio + " TEXT , "
+                    + variables_publicas.DIASCIERRE_COLUMN_DiaFin + " TEXT , "
+                    + variables_publicas.DIASCIERRE_COLUMN_HoraInicio + " TEXT , "
+                    + variables_publicas.DIASCIERRE_COLUMN_HoraFin + " TEXT ) ");
         }
 
         @Override
@@ -314,6 +322,7 @@ public class DataBaseOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS " + variables_publicas.TABLE_RUTAS);
             db.execSQL("DROP TABLE IF EXISTS " + variables_publicas.TABLE_CATEGORIAS);
             db.execSQL("DROP TABLE IF EXISTS " + variables_publicas.TABLE_SERIE_RECIBOS);
+            db.execSQL("DROP TABLE IF EXISTS " + variables_publicas.TABLE_DIASCIERRE);
             onCreate(db);
         }
     }

@@ -48,7 +48,7 @@ import com.safi_d.sistemas.safdiscomert.R;
 public class HistoricoventasClienteFragment extends Fragment{
     View myView;
     private String TAG = HistoricoventasClienteFragment.class.getSimpleName();
-    private String busqueda = "1";
+    private String busqueda = "";
     private String tipoBusqueda = "1";
     private ProgressDialog pDialog;
     private ListView lv;

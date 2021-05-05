@@ -199,8 +199,6 @@ public class VendedoresHelper {
         cursor.close();
         return vendedor;
     }
-
-
     public List<Vendedor> ObtenerVendedorxSup(String vCodSupervisor) {
         List<Vendedor> list = new ArrayList<Vendedor>();
 //        String selectQuery = "SELECT  * FROM " + variables_publicas.TABLE_VENDEDORES+ " WHERE "+ variables_publicas.VENDEDORES_COLUMN_codsuper +"= "+ vCodSupervisor +" ORDER BY "+ variables_publicas.VENDEDORES_COLUMN_NOMBRE ;

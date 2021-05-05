@@ -2,6 +2,7 @@ package com.safi_d.sistemas.safdiscomert.Auxiliar;
 
 
 import com.safi_d.sistemas.safdiscomert.Entidades.Configuraciones;
+import com.safi_d.sistemas.safdiscomert.Entidades.DiasCierre;
 import com.safi_d.sistemas.safdiscomert.Entidades.Informe;
 import com.safi_d.sistemas.safdiscomert.Entidades.Pedido;
 import com.safi_d.sistemas.safdiscomert.Entidades.Usuario;
@@ -9,6 +10,7 @@ import com.safi_d.sistemas.safdiscomert.Entidades.Usuario;
 public class variables_publicas {
 
     public static Usuario usuario = null;
+    public static DiasCierre diasCierre = null;
     public static Configuraciones Configuracion = null;
     public static Pedido Pedidos = null;
     public static Informe Informes = null;
@@ -49,13 +51,13 @@ public class variables_publicas {
     public static String nombreCed = "";
     public static String direccionCedula = "";
 
-    public static final String direccionIp = "http://192.168.0.7:8087";
-//    public static final String direccionIp = "http://192.168.1.244:8087";
-//    public static final String direccionIp = "http://200.62.90.235:8087";
+    // public static final String direccionIp = "http://192.168.0.7:8087";
+    //     public static final String direccionIp = "http://192.168.1.244:8087";
+    public static final String direccionIp = "http://200.62.90.235:8087";
     public static final String correosErrores = "cysnicaragua@gmail.com";
     public  static final String correoError= "cysnicaragua@gmail.com";
     //Variables BD
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "Safi_D.db";
     //Variables TB
     public static final String TABLE_ARTICULOS = "Articulos";
@@ -80,6 +82,7 @@ public class variables_publicas {
     public static final String TABLE_TPRECIOS = "TipoPrecio";
     public static final String TABLE_CATEGORIAS = "Categorias";
     public static final String TABLE_RUTAS= "Rutas";
+    public static final String TABLE_DIASCIERRE= "DiasCierre";
     //Variables CamposTbArticulos
     public static final String ARTICULO_COLUMN_Codigo = "Codigo";
     public static final String ARTICULO_COLUMN_Nombre = "Nombre";
@@ -95,6 +98,8 @@ public class variables_publicas {
     public static final String ARTICULO_COLUMN_DescuentoMaximo = "DescuentoMaximo";
     public static final String ARTICULO_COLUMN_Existencia="Existencia";
     public static final String ARTICULO_COLUMN_UnidadCajaVenta = "UnidadCajaVenta";
+    public static final String ARTICULO_COLUMN_UnidadCajaVenta2 = "UnidadCajaVenta2";
+    public static final String ARTICULO_COLUMN_UnidadCajaVenta3 = "UnidadCajaVenta3";
     public static final String ARTICULO_COLUMN_IdProveedor = "IdProveedor";
 
     //Variables CamposTbClientes
@@ -322,6 +327,11 @@ public class variables_publicas {
 
     public static final String TPRECIOS_COLUMN_COD_TIPO_PRECIO = "COD_TIPO_PRECIO";
     public static final String TPRECIOS_COLUMN_TIPO_PRECIO = "TIPO_PRECIO";
+
+    public static final String DIASCIERRE_COLUMN_DiaInicio = "DiaInicio";
+    public static final String DIASCIERRE_COLUMN_DiaFin = "DiaFin";
+    public static final String DIASCIERRE_COLUMN_HoraInicio = "HoraInicio";
+    public static final String DIASCIERRE_COLUMN_HoraFin= "HoraFin";
 
     public final static int COUNTDOWN_FREQUENCY = 1000;
     public final static int VIBRATE_THRESHOLD = 30 * 1000;

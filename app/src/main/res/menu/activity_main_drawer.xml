@@ -78,10 +78,16 @@
         android:title="Reportes">
         <menu>
             <item android:iconTint="@color/colorPrimary"
-                android:id="@+id/btnReporteVentasAlDia"
-                android:icon="@drawable/ic_menu_share"
+            android:id="@+id/btnReporteVentasAlDia"
+            android:icon="@drawable/ic_menu_share"
 
-                android:title="Reporte Pre-Ventas" />
+            android:title="Reporte Pre-Ventas" />
+
+            <item android:iconTint="@color/colorPrimary"
+                android:id="@+id/btnReporteFacturacion"
+                android:icon="@drawable/ic_mr_button_connected_00_dark"
+
+                android:title="Reporte Facturacion" />
             <item
                 android:id="@+id/btnReporteHistVentas"
                 android:icon="@drawable/ic_menu_send"

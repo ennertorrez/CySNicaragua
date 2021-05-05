@@ -7,7 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.safi_d.sistemas.safdiscomert.Auxiliar.variables_publicas;
+import com.safi_d.sistemas.safdiscomert.Entidades.Ruta;
 import com.safi_d.sistemas.safdiscomert.Entidades.Usuario;
+import com.safi_d.sistemas.safdiscomert.Entidades.DiasCierre;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsuariosHelper {
 
@@ -95,5 +100,40 @@ public class UsuariosHelper {
         Log.d("Usuario_elimina", "Datos eliminados");
     }
 
+    public void GuardarDiasCierre(String diaInicio,
+                             String diaFin,
+                             String horaInicio,
+                                String horaFin) {
 
+        long rows =0;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(variables_publicas.DIASCIERRE_COLUMN_DiaInicio, diaInicio);
+        contentValues.put(variables_publicas.DIASCIERRE_COLUMN_DiaFin, diaFin);
+        contentValues.put(variables_publicas.DIASCIERRE_COLUMN_HoraInicio, horaInicio);
+        contentValues.put(variables_publicas.DIASCIERRE_COLUMN_HoraFin, horaFin);
+        database.insert(variables_publicas.TABLE_DIASCIERRE, null, contentValues);
+    }
+
+    public  void EliminaDiasCierre() {
+        database.execSQL("DELETE FROM "+variables_publicas.TABLE_DIASCIERRE+";");
+        Log.d("DiasCierre_elimina", "Datos eliminados");
+    }
+
+
+    public DiasCierre ObtenerDiasCierre() {
+        DiasCierre diacierre=null;
+        String selectQuery="SELECT * FROM " + variables_publicas.TABLE_DIASCIERRE + ";";
+        Cursor c= database.rawQuery(selectQuery , null);
+        if (c.moveToFirst()) {
+            do {
+                diacierre = (new DiasCierre(c.getString(c.getColumnIndex(variables_publicas.DIASCIERRE_COLUMN_DiaInicio)),
+                        c.getString(c.getColumnIndex(variables_publicas.DIASCIERRE_COLUMN_DiaFin)),
+                        c.getString(c.getColumnIndex(variables_publicas.DIASCIERRE_COLUMN_HoraInicio)),
+                        c.getString(c.getColumnIndex(variables_publicas.DIASCIERRE_COLUMN_HoraFin))
+                ));
+            } while (c.moveToNext());
+        }
+        c.close();
+        return  diacierre;
+    }
     }

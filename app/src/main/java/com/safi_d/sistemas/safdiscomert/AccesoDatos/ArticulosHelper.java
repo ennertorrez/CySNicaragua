@@ -8,9 +8,11 @@ import android.util.Log;
 
 import com.safi_d.sistemas.safdiscomert.Auxiliar.variables_publicas;
 import com.safi_d.sistemas.safdiscomert.Entidades.Articulo;
+import com.safi_d.sistemas.safdiscomert.Entidades.Model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ArticulosHelper {
 
@@ -22,7 +24,7 @@ public class ArticulosHelper {
     public void GuardarTotalArticulos(String Codigo, String Nombre,
                                       String COSTO,String UNIDAD,String UnidadCaja,String Precio,String Precio2
                                       ,String Precio3,String Precio4,String CodUM,String PorIVA,String DESCUENTO_MAXIMO,
-                                      String existencia,String UnidadCajaVenta,String IdProveedor
+                                      String existencia,String UnidadCajaVenta,String UnidadCajaVenta2,String UnidadCajaVenta3,String IdProveedor
                                       ) {
         long rows =0;
         ContentValues contentValues = new ContentValues();
@@ -40,6 +42,8 @@ public class ArticulosHelper {
          contentValues.put(variables_publicas.ARTICULO_COLUMN_DescuentoMaximo, DESCUENTO_MAXIMO);
         contentValues.put(variables_publicas.ARTICULO_COLUMN_Existencia, existencia);
         contentValues.put(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta , UnidadCajaVenta);
+        contentValues.put(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta2 , UnidadCajaVenta2);
+        contentValues.put(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta3 , UnidadCajaVenta3);
         contentValues.put(variables_publicas.ARTICULO_COLUMN_IdProveedor , IdProveedor);
 
         database.insert(variables_publicas.TABLE_ARTICULOS, null, contentValues);
@@ -66,6 +70,8 @@ public class ArticulosHelper {
                         c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_DescuentoMaximo)),
                         c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_Existencia)),
                         c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta2)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta3)),
                         c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_IdProveedor))
                 ));
             } while (c.moveToNext());
@@ -95,6 +101,8 @@ public class ArticulosHelper {
                 articulo.put(variables_publicas.ARTICULO_COLUMN_DescuentoMaximo, c.getString(c.getColumnIndex("DescuentoMaximo")));
                 articulo.put(variables_publicas.ARTICULO_COLUMN_Existencia, c.getString(c.getColumnIndex("Existencia")));
                 articulo.put(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta,c.getString(c.getColumnIndex("UnidadCajaVenta")));
+                articulo.put(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta2,c.getString(c.getColumnIndex("UnidadCajaVenta2")));
+                articulo.put(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta3,c.getString(c.getColumnIndex("UnidadCajaVenta3")));
                 articulo.put(variables_publicas.ARTICULO_COLUMN_IdProveedor,c.getString(c.getColumnIndex("IdProveedor")));
             } while (c.moveToNext());
         }
@@ -122,6 +130,8 @@ public class ArticulosHelper {
                 articulos.put(variables_publicas.ARTICULO_COLUMN_DescuentoMaximo, c.getString(c.getColumnIndex("DescuentoMaximo")));
                 articulos.put(variables_publicas.ARTICULO_COLUMN_Existencia, String.valueOf((int) Double.parseDouble( c.getString(c.getColumnIndex("Existencia")) ) ) );
                 articulos.put(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta, c.getString(c.getColumnIndex("UnidadCajaVenta")));
+                articulos.put(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta2, c.getString(c.getColumnIndex("UnidadCajaVenta2")));
+                articulos.put(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta3, c.getString(c.getColumnIndex("UnidadCajaVenta3")));
                 articulos.put(variables_publicas.ARTICULO_COLUMN_IdProveedor, c.getString(c.getColumnIndex("IdProveedor")));
                 lst.add(articulos);
 
@@ -152,6 +162,8 @@ public class ArticulosHelper {
                 articulos.put(variables_publicas.ARTICULO_COLUMN_DescuentoMaximo, c.getString(c.getColumnIndex("DescuentoMaximo")));
                 articulos.put(variables_publicas.ARTICULO_COLUMN_Existencia, String.valueOf((int) Double.parseDouble( c.getString(c.getColumnIndex("Existencia")) ) ) );
                 articulos.put(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta, c.getString(c.getColumnIndex("UnidadCajaVenta")));
+                articulos.put(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta2, c.getString(c.getColumnIndex("UnidadCajaVenta2")));
+                articulos.put(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta3, c.getString(c.getColumnIndex("UnidadCajaVenta3")));
                 articulos.put(variables_publicas.ARTICULO_COLUMN_IdProveedor, c.getString(c.getColumnIndex("IdProveedor")));
                 lst.add(articulos);
 
@@ -159,6 +171,31 @@ public class ArticulosHelper {
         }
         return  lst;
     }
+
+    public List<Model> BuscarArticuloCodigoNew(String Busqueda) {
+        Cursor c= database.rawQuery("select * from " + variables_publicas.TABLE_ARTICULOS+" where "+variables_publicas.ARTICULO_COLUMN_Codigo+" like '%"+Busqueda+"%'", null);
+        List<Model> lst= new ArrayList<Model>();
+
+        if(c.moveToFirst()){
+            do{
+                lst.add(new Model(c.getString(c.getColumnIndex("Codigo")),c.getString(c.getColumnIndex("Precio")),c.getString(c.getColumnIndex("Nombre"))));
+            }while (c.moveToNext());
+        }
+        return  lst;
+    }
+    public List<Model> BuscarArticuloNombreNew(String Busqueda) {
+        Busqueda= Busqueda.replace(" ","%");
+        Cursor c= database.rawQuery("select * from " + variables_publicas.TABLE_ARTICULOS+" where "+variables_publicas.ARTICULO_COLUMN_Nombre+" like '%"+Busqueda+"%'", null);
+        List<Model> lst= new ArrayList<Model>();
+
+        if(c.moveToFirst()){
+            do{
+                lst.add(new Model(c.getString(c.getColumnIndex("Codigo")),c.getString(c.getColumnIndex("Precio")),c.getString(c.getColumnIndex("Nombre"))));
+            }while (c.moveToNext());
+        }
+        return  lst;
+    }
+
     public  void EliminaArticulos() {
         database.execSQL("DELETE FROM "+variables_publicas.TABLE_ARTICULOS+";");
         Log.d("Articulo_elimina", "Datos eliminados");

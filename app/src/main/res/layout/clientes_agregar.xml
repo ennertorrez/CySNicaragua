@@ -71,7 +71,7 @@
                         android:layout_height="30dp"
                         android:background="@drawable/rounded_edittext"
                         android:hint="Nombre"
-                        android:inputType="text"
+                        android:inputType="textCapCharacters"
                         android:maxLines="1"></EditText>
                 </LinearLayout>
                 <LinearLayout

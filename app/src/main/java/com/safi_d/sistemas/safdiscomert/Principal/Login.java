@@ -78,12 +78,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
-
-
-/**
- * Created by usuario on 20/3/2017.
- */
-
 public class Login extends Activity {
     private static final int REQUEST_READ_PHONE_STATE = 0;
     private static final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 0;
@@ -110,8 +104,6 @@ public class Login extends Activity {
     private UsuariosHelper UsuariosH;
     private ClientesHelper ClientesH;
     private VendedoresHelper VendedoresH;
-    //private ZonasHelper ZonasH;
-    //private PreciosHelper PreciosH;
     private RutasHelper RutasH;
     private TPreciosHelper TPreciosH;
     private CategoriasClienteHelper CategoriaH;
@@ -154,8 +146,6 @@ public class Login extends Activity {
         UsuariosH = new UsuariosHelper(DbOpenHelper.database);
         PedidoH = new PedidosHelper(DbOpenHelper.database);
         RutasH = new RutasHelper(DbOpenHelper.database);
-/*        ZonasH = new ZonasHelper(DbOpenHelper.database);
-        PreciosH = new PreciosHelper(DbOpenHelper.database);*/
         TPreciosH = new TPreciosHelper(DbOpenHelper.database);
         CategoriaH = new CategoriasClienteHelper(DbOpenHelper.database);
         PedidoDetalleH = new PedidosDetalleHelper(DbOpenHelper.database);
@@ -249,7 +239,7 @@ public class Login extends Activity {
         TextView lblVersion = (TextView) findViewById(R.id.login_version);
         lblVersion.setText("Versión " + getCurrentVersion());
         /*NO CAMBIAR ESTA DIRECCION: VERIFICA SI ES SERVIDOR DE PRUEBAS*/
-        if (variables_publicas.direccionIp == "http://192.168.0.7:8087") {
+        if (variables_publicas.direccionIp == "http://200.62.90.235:8087") {
             lblVersion.setText("Versión " + getCurrentVersion() + " Desarrollo");
         }
         txtPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -807,11 +797,6 @@ public class Login extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            // Showing progress dialog
-          /*  pDialog = new ProgressDialog(Login.this);
-            pDialog.setMessage("Inicializando el sistema, por favor espere...");
-            pDialog.setCancelable(false);
-            pDialog.show();*/
         }
 
         @Override
@@ -874,8 +859,6 @@ public class Login extends Activity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-           /* if (pDialog.isShowing())
-                pDialog.dismiss();*/
 
             if (isOnline && variables_publicas.usuario != null && variables_publicas.Configuracion != null) {
                 try {
@@ -896,6 +879,14 @@ public class Login extends Activity {
 
 
                     } else {
+
+                        if (Build.VERSION.SDK_INT >= 11) {
+                            //--post GB use serial executor by default --
+                            new GetUser().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+                        } else {
+                            //--GB uses ThreadPoolExecutor by default--
+                            new GetUser().execute();
+                        }
 
                         if (Build.VERSION.SDK_INT >= 11) {
                             //--post GB use serial executor by default --
@@ -1042,34 +1033,6 @@ public class Login extends Activity {
         }
     }
 
-    /*private class SincronizardorPedidos extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(Login.this);
-            pDialog.setMessage("Sincronizando pedidos locales, por favor espere...");
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try{
-                sd.SincronizarPedidosLocales();
-            }catch (Exception e){
-                Log.e("Error:", e.getMessage());
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            if (pDialog.isShowing())
-                pDialog.dismiss();
-        }
-    }
-*/
     @Override
     public void onResume(){
         super.onResume();

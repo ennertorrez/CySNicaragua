@@ -295,7 +295,7 @@ public class Funciones {
 
     public static String GetLocalDateTime() {
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         variables_publicas.FechaActual = sdf.format(c.getTime());
         return variables_publicas.FechaActual;
     }
