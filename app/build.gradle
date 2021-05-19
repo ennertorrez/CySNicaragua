@@ -9,14 +9,14 @@ android {
             storePassword '1234567'
         }
     }
-    compileSdkVersion 29
-    buildToolsVersion '29.0.2'
+    compileSdkVersion 30
+    buildToolsVersion '30.0.3'
     defaultConfig {
         applicationId 'com.safi_d.sistemas.safdiscomert'
         minSdkVersion 17
-        targetSdkVersion 29
-        versionCode 7
-        versionName "1.6"
+        targetSdkVersion 30
+        versionCode 9
+        versionName "1.8"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true
@@ -35,6 +35,7 @@ android {
 
         lintOptions {
             abortOnError false
+            checkReleaseBuilds false
         }
 
 }

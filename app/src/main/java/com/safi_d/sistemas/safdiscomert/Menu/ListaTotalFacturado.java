@@ -378,7 +378,7 @@ public class ListaTotalFacturado extends Fragment {
                 for (int i = 0; i < Facturacion.length(); i++) {
                     JSONObject c = Facturacion.getJSONObject(i);
 
-                    String Cantidad = c.getString("cantidad");
+                    String Cantidad = c.getString("Cantidad");
                     String Ruta = c.getString("Vendedor");
                     String Total = c.getString("Total");
 

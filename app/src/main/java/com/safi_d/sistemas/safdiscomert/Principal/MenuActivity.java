@@ -539,6 +539,7 @@ public class MenuActivity extends AppCompatActivity
                     }
                     try {
                         int vanio =0;
+                        int diahoy=0;
                         int semana=0;
                         int vdiasemanainicio=0;
                         int vdiassumar=0;
@@ -551,6 +552,7 @@ public class MenuActivity extends AppCompatActivity
                         Calendar c = new GregorianCalendar();
                         vanio=c.get(Calendar.YEAR);
                         semana=c.get(Calendar.WEEK_OF_YEAR);
+                        diahoy=c.get(Calendar.DAY_OF_WEEK);
                         fechaSF=String.valueOf(vanio)+"-01-01";
                         inicioanio= formato.parse( fechaSF);
                         c.setTime(inicioanio);
@@ -563,12 +565,28 @@ public class MenuActivity extends AppCompatActivity
                             fecha2=new Date(fecha.getTime()+((1000 * 60 * 60 * 24)*(dia2-dia)));
                             vFechaResultadoFFin=formato.format(fecha2);
                         }else{
-                            vdiassumar=(semana-2)*7 + dia -vdiasemanainicio;
-                            c.add(Calendar.DAY_OF_YEAR, vdiassumar);
-                            fecha=c.getTime();
-                            vFechaResultadoFInicio=formato.format(fecha);
-                            fecha2=new Date(fecha.getTime()+((1000 * 60 * 60 * 24)*(7-Math.abs(dia2-dia))));
-                            vFechaResultadoFFin=formato.format(fecha2);
+                            if(diahoy<dia && diahoy>dia2){
+                                vdiassumar = (semana - 2) * 7 + dia - vdiasemanainicio;
+                                c.add(Calendar.DAY_OF_YEAR, vdiassumar);
+                                fecha = c.getTime();
+                                vFechaResultadoFInicio = formato.format(fecha);
+                                fecha2 = new Date(fecha.getTime() + ((1000 * 60 * 60 * 24) * (7 - Math.abs(dia2 - dia))));
+                                vFechaResultadoFFin = formato.format(fecha2);
+                            }else if(diahoy<dia && diahoy<=dia2) {
+                                vdiassumar = (semana - 2) * 7 + dia - vdiasemanainicio;
+                                c.add(Calendar.DAY_OF_YEAR, vdiassumar);
+                                fecha = c.getTime();
+                                vFechaResultadoFInicio = formato.format(fecha);
+                                fecha2 = new Date(fecha.getTime() + ((1000 * 60 * 60 * 24) * (7 - Math.abs(dia2 - dia))));
+                                vFechaResultadoFFin = formato.format(fecha2);
+                            }else if (diahoy==dia){
+                                vdiassumar = (semana - 1) * 7 + dia - vdiasemanainicio;
+                                c.add(Calendar.DAY_OF_YEAR, vdiassumar);
+                                fecha = c.getTime();
+                                vFechaResultadoFInicio = formato.format(fecha);
+                                fecha2 = new Date(fecha.getTime() + ((1000 * 60 * 60 * 24) * (7 - Math.abs(dia2 - dia))));
+                                vFechaResultadoFFin = formato.format(fecha2);
+                            }
                         }
                         fechaInicio=vFechaResultadoFInicio+ " " + variables_publicas.diasCierre.getHoraInicio();
                         fechaFin=vFechaResultadoFFin + " " + variables_publicas.diasCierre.getHoraFin();

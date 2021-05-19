@@ -51,8 +51,8 @@ public class variables_publicas {
     public static String nombreCed = "";
     public static String direccionCedula = "";
 
-    // public static final String direccionIp = "http://192.168.0.7:8087";
-    //     public static final String direccionIp = "http://192.168.1.244:8087";
+    //public static final String direccionIp = "http://192.168.0.7:8087";
+    //public static final String direccionIp = "http://192.168.1.244:8087";
     public static final String direccionIp = "http://200.62.90.235:8087";
     public static final String correosErrores = "cysnicaragua@gmail.com";
     public  static final String correoError= "cysnicaragua@gmail.com";

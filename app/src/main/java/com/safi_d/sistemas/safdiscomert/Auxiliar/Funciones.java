@@ -233,7 +233,7 @@ public class Funciones {
     public static boolean TestServerConectivity() {
         HttpURLConnection conn=null;
         try {
-            URL url = new URL(variables_publicas.direccionIp+"/ServicioPedidos.svc/ObtenerInventarioArticulo/01-005");
+            URL url = new URL(variables_publicas.direccionIp+"/ServicioPedidos.svc/ObtenerInventarioArticulo/01-3-001");
             conn = (HttpURLConnection) url.openConnection();
             conn.setConnectTimeout(10000);
             conn.setReadTimeout(10000);

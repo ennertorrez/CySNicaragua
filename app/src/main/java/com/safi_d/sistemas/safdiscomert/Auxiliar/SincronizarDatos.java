@@ -809,14 +809,14 @@ public class SincronizarDatos {
                                              if (SincronizarClientesSucursal()) {
                                                  if (SincronizarConfiguracionSistema()) {
                                                      if (ActualizarUsuario()) {
-                                                         if (ObtenerBancos()) {
-                                                             if (ObtenerSerieRecibos()) {
-                                                                 if (SincronizarFacturasPendientes(variables_publicas.usuario.getCodigo(), "0")) {
+                                                         //if (ObtenerBancos()) {
+                                                             //if (ObtenerSerieRecibos()) {
+                                                                 //if (SincronizarFacturasPendientes(variables_publicas.usuario.getCodigo(), "0")) {
                                                                      SincronizarPedidosLocales();
                                                                      return true;
-                                                                 }
-                                                             }
-                                                         }
+                                                                // }
+                                                             //}
+                                                         //}
                                                      }
                                                  }
                                              }
