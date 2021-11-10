@@ -2,18 +2,15 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+        <!--<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimaryGreen</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
-
 
         <item name="android:spinnerItemStyle">
             @style/spinnerItemStyle
         </item>
-
         <!--&lt;!&ndash; For each individual Spinner list item once clicked on &ndash;&gt;-->
         <item name="android:spinnerDropDownItemStyle">
             @style/spinnerDropDownItemStyle
@@ -31,7 +28,7 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-     <style name="spinnerItemStyle" >
+    <style name="spinnerItemStyle" >
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingBottom">7dp</item>
         <item name="android:textSize">12sp</item>
@@ -66,5 +63,6 @@
     <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
 </resources>

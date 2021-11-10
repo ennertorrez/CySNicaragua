@@ -210,7 +210,7 @@ public class MenuActivity extends AppCompatActivity
             ex.printStackTrace();
         }
 
-        //navigationView.getMenu().getItem(2).getSubMenu().getItem(1).setVisible(false); //Clientes nuevos
+        navigationView.getMenu().getItem(2).getSubMenu().getItem(0).setVisible(false); //Maestro Clientes
         //navigationView.getMenu().getItem(2).getSubMenu().getItem(2).setVisible(false); //Activar Clientes
         navigationView.getMenu().getItem(3).setVisible(false); //Recibos
         navigationView.getMenu().getItem(1).getSubMenu().getItem(2).setVisible(false); //Pedidos vs Facturado
@@ -235,9 +235,9 @@ public class MenuActivity extends AppCompatActivity
             navigationView.getMenu().getItem(2).getSubMenu().getItem(1).setVisible(true); //Clientes nuevos
         }
 
-        if (variables_publicas.usuario.getTipo().equalsIgnoreCase("Supervisor") || variables_publicas.usuario.getTipo().equalsIgnoreCase("User") ) {
-            navigationView.getMenu().getItem(2).getSubMenu().getItem(2).setVisible(true); //Activar Clientes
-        }
+//        if (variables_publicas.usuario.getTipo().equalsIgnoreCase("Supervisor") || variables_publicas.usuario.getTipo().equalsIgnoreCase("User") ) {
+//            navigationView.getMenu().getItem(2).getSubMenu().getItem(2).setVisible(true); //Activar Clientes
+//        }
 
         IMEI = variables_publicas.IMEI;
         if (IMEI == null) {

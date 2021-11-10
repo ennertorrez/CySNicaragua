@@ -80,6 +80,36 @@ public class ArticulosHelper {
         return articulo;
     }
 
+    public Articulo BuscarArticulo2(String Codigo) {
+        String selectQuery = "select * from " + variables_publicas.TABLE_ARTICULOS + " where " + variables_publicas.ARTICULO_COLUMN_Codigo + " = '" + Codigo + "' LIMIT 1";
+        Cursor c = database.rawQuery(selectQuery, null);
+        Articulo articulo=null;
+        if (c.moveToFirst()) {
+            do {
+                articulo = (new Articulo(c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_Codigo)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_Nombre)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_Costo)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_Unidad)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_UnidadCaja)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_Precio)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_Precio2)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_Precio3)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_Precio4)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_CodUM)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_PorIva)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_DescuentoMaximo)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_Existencia)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta2)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta3)),
+                        c.getString(c.getColumnIndex(variables_publicas.ARTICULO_COLUMN_IdProveedor))
+                ));
+            } while (c.moveToNext());
+        }
+        c.close();
+        return articulo;
+    }
+
     public HashMap<String,String> BuscarArticuloHashMap(String Codigo) {
         String selectQuery = "select * from " + variables_publicas.TABLE_ARTICULOS + " where " + variables_publicas.ARTICULO_COLUMN_Codigo + " like '%" + Codigo + "' LIMIT 1";
         Cursor c = database.rawQuery(selectQuery, null);

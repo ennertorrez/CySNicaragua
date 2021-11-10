@@ -4,7 +4,7 @@
 
         <layer-list>
 
-            <item android:height="25dp">
+            <item android:height="35dp">
 
                 <shape>
                     <solid android:color="@color/colorPrimaryGreen"></solid>
@@ -28,6 +28,8 @@
             <item>
                 <bitmap
                     android:gravity="center_vertical|right"
+                    android:layout_gravity="right"
+                    android:tint="@color/colorPrimary"
                     android:src="@drawable/quantum_ic_keyboard_arrow_down_white_36"  />
             </item>
 

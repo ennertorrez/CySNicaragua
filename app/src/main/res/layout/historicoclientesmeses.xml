@@ -24,14 +24,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/RlHeader">
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="40dp"
+            android:layout_marginTop="1dp">
             <RadioGroup
                 android:id="@+id/rgGrupo"
                 android:layout_width="200dp"
-                android:layout_height="45dp"
-                android:layout_marginTop="3dp"
+                android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:checkedButton="@+id/rbCodigo"
@@ -42,18 +42,22 @@
                     android:id="@+id/rbCodigo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:checked="false"
                     android:text="Codigo" />
 
                 <RadioButton
                     android:id="@+id/rbNombre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="Nombre" />
             </RadioGroup>
             <TextView
                 android:id="@+id/lblMes"
-                android:layout_width="60dp"
-                android:layout_height="fill_parent"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/rgGrupo"
                 android:gravity="center"
                 android:text="Meses"
                 android:textColor="@color/colorAccent"
@@ -61,12 +65,13 @@
                 android:textStyle="bold" />
             <Spinner
                 android:id="@+id/cboMeses"
-                android:layout_marginTop="6dp"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
                 android:background="@drawable/spinner_background_big"
                 android:textSize="25dp"></Spinner>
-            </LinearLayout>
+            </RelativeLayout>
 
     </RelativeLayout>
 
@@ -116,7 +121,6 @@
         android:layout_above="@+id/lblFooter"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/Rl2"
-        />
+        android:layout_below="@+id/Rl2" />
 
 </RelativeLayout>

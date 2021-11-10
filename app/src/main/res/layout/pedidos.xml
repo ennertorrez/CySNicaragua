@@ -128,49 +128,54 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="35dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="2dp">
 
                 <Spinner
                     android:id="@+id/cboVendedor"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
-                    android:layout_marginBottom="2dp"></Spinner>
-
-
+                    android:layout_height="match_parent"
+                    ></Spinner>
+            </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="25dp">
+                    android:layout_height="35dp"
+                    android:layout_marginBottom="2dp">
 
                     <Spinner
                         android:id="@+id/cboCondicion"
                         android:layout_width="150dp"
-                        android:layout_height="wrap_content"></Spinner>
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical" >
+                    </Spinner>
 
                     <Spinner
                         android:id="@+id/cboSucursal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         ></Spinner>
-                </LinearLayout>
+
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="2dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp">
+                    android:layout_height="35dp">
 
                     <EditText
                         android:id="@+id/txtCodigoArticulo"
                         android:layout_width="0dp"
-                        android:layout_height="30dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="2"
+                        android:gravity="center_vertical"
                         android:background="@drawable/rounded_edittext"
                         android:hint="Codigo Articulo"
                         android:inputType="text"
@@ -187,12 +192,13 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="20dp">
+                    android:layout_height="28dp"
+                    android:layout_marginTop="2dp">
 
                     <TextView
                         android:id="@+id/lblDescripcionArticulo"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="top"
                         android:text=""
                         android:textColor="@color/colorPrimaryDark"
@@ -204,7 +210,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="20dp">
+                    android:layout_height="20dp"
+                    android:layout_marginTop="2dp">
 
                     <TextView
                         android:id="@+id/lblDescPrecioArticulo"
@@ -282,7 +289,7 @@
                     <TextView
                         android:id="@+id/lblExistencia"
                         android:layout_width="80dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="top"
                         android:text="N/A"
                         android:textColor="@color/colorAccent"
@@ -294,17 +301,19 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="35dp">
+                    android:layout_height="35dp"
+                    android:layout_marginTop="2dp">
 
                     <Spinner
                         android:id="@+id/cboTPrecio"
                         android:layout_width="150dp"
-                        android:layout_height="35dp"
-                        android:layout_marginBottom="1dp"></Spinner>
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"></Spinner>
                     <EditText
                         android:id="@+id/txtCantidad"
                         android:layout_width="0dp"
-                        android:layout_height="30dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:layout_weight="2"
                         android:background="@drawable/rounded_edittext"
                         android:hint="Cantidad"
@@ -316,7 +325,7 @@
                     <Button
                         android:id="@+id/btnAgregar"
                         android:layout_width="50dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="@mipmap/ic_check_circle_black_48dp"
                         android:backgroundTint="#1cd100" />
                 </LinearLayout>
@@ -324,13 +333,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginTop="2dp">
 
                     <EditText
                         android:id="@+id/txtObservacion"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:background="@drawable/rounded_edittext"
                         android:hint="Observaciones"
                         android:inputType="text"
@@ -342,7 +352,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="2dp">
 
 
                 <HorizontalScrollView

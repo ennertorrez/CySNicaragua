@@ -85,6 +85,7 @@ public class SincronizarDatos {
     private FacturasPendientesHelper FacturasPendientesH;
     //private PreciosHelper PreciosH;
     private TPreciosHelper TPreciosH;
+    private boolean isOnline=false;
 
     public SincronizarDatos(DataBaseOpenHelper dbh, ClientesHelper Clientesh,
                             VendedoresHelper Vendedoresh, CartillasBcHelper CatillasBch,
@@ -164,7 +165,10 @@ public class SincronizarDatos {
         String jsonStrC = shC.makeServiceCall(urlStringC);
 
         if (jsonStrC == null) {
-            new Funciones().SendMail("Ha ocurrido un error al sincronizar Articulos, Respuesta nula GET", variables_publicas.info + urlStringC, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            isOnline = Funciones.TestServerConectivity();
+            if (isOnline) {
+                new Funciones().SendMail("Ha ocurrido un error al sincronizar Articulos, Respuesta nula GET", variables_publicas.info + urlStringC, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
         //Log.e(TAG, "Response from url: " + jsonStrC);
@@ -217,7 +221,11 @@ public class SincronizarDatos {
        String jsonStrC = shC.makeServiceCall(urlStringC);
 
        if (jsonStrC == null) {
-           new Funciones().SendMail("Ha ocurrido un error al sincronizar TiposPrecios, Respuesta nula GET", variables_publicas.info + urlStringC, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+           isOnline = Funciones.TestServerConectivity();
+           if (isOnline) {
+               new Funciones().SendMail("Ha ocurrido un error al sincronizar TiposPrecios, Respuesta nula GET", variables_publicas.info + urlStringC, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+           }
+
            return false;
        }
        //Log.e(TAG, "Response from url: " + jsonStrC);
@@ -254,7 +262,10 @@ public class SincronizarDatos {
         String jsonStrC = shC.makeServiceCall(urlStringC);
 
         if (jsonStrC == null) {
-            new Funciones().SendMail("Ha ocurrido un error al sincronizar lista de Categorias, Respuesta nula GET", variables_publicas.info + urlStringC, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            isOnline = Funciones.TestServerConectivity();
+            if (isOnline) {
+                new Funciones().SendMail("Ha ocurrido un error al sincronizar lista de Categorias, Respuesta nula GET", variables_publicas.info + urlStringC, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
         //Log.e(TAG, "Response from url: " + jsonStrC);
@@ -302,7 +313,10 @@ public class SincronizarDatos {
         String jsonStrC = shC.makeServiceCall(urlStringC);
 
         if (jsonStrC == null) {
-            new Funciones().SendMail("Ha ocurrido un error al sincronizar clientes, Respuesta nula GET", variables_publicas.info + urlStringC, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            isOnline = Funciones.TestServerConectivity();
+            if (isOnline) {
+                new Funciones().SendMail("Ha ocurrido un error al sincronizar clientes, Respuesta nula GET", variables_publicas.info + urlStringC, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
         //Log.e(TAG, "Response from url: " + jsonStrC);
@@ -378,7 +392,10 @@ public class SincronizarDatos {
         String jsonStrC = shC.makeServiceCall(urlStringC);
 
         if (jsonStrC == null) {
-            new Funciones().SendMail("Ha ocurrido un error al sincronizar la tabla DiasCierre, Respuesta nula GET", variables_publicas.info + urlStringC, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            isOnline = Funciones.TestServerConectivity();
+            if (isOnline) {
+                new Funciones().SendMail("Ha ocurrido un error al sincronizar la tabla DiasCierre, Respuesta nula GET", variables_publicas.info + urlStringC, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
 
@@ -414,7 +431,10 @@ public class SincronizarDatos {
         String jsonStrV = shV.makeServiceCall(urlStringV);
 
         if (jsonStrV == null) {
-            new Funciones().SendMail("Ha ocurrido un error: al sincronizar vendedores, Respuesta Nula GET", variables_publicas.info + urlStringV, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            isOnline = Funciones.TestServerConectivity();
+            if (isOnline) {
+                new Funciones().SendMail("Ha ocurrido un error: al sincronizar vendedores, Respuesta Nula GET", variables_publicas.info + urlStringV, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
         //Log.e(TAG, "Response from url: " + jsonStrC);
@@ -459,7 +479,10 @@ public class SincronizarDatos {
         String jsonStrCartillas = shCartillas.makeServiceCall(urlStringCartillas);
 
         if (jsonStrCartillas == null) {
-            new Funciones().SendMail("Ha ocurrido un error al sincronicar CartillasBC, Respuesta nula GET", variables_publicas.info + urlStringCartillas, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            isOnline = Funciones.TestServerConectivity();
+            if (isOnline) {
+                new Funciones().SendMail("Ha ocurrido un error al sincronicar CartillasBC, Respuesta nula GET", variables_publicas.info + urlStringCartillas, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
 
@@ -495,54 +518,16 @@ public class SincronizarDatos {
 
     }
 
-   /* public boolean SincronizarZonas() throws JSONException {
-        HttpHandler shZonas= new HttpHandler();
-        String urlStringZonas= urlZonas;
-        String jsonStrZonas = shZonas.makeServiceCall(urlStringZonas);
-
-        if (jsonStrZonas == null) {
-            new Funciones().SendMail("Ha ocurrido un error al sincronicar Zonas, Respuesta nula GET", variables_publicas.info + urlStringZonas, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
-            return false;
-        }
-
-        DbOpenHelper.database.beginTransaction();
-        ZonasH.EliminaZonas();
-        JSONObject jsonObjZonas = new JSONObject(jsonStrZonas);
-        // Getting JSON Array node
-        JSONArray zonas = jsonObjZonas.getJSONArray("GetZonasResult");
-
-
-        try {
-            // looping through All Contacts
-            for (int i = 0; i < zonas.length(); i++) {
-                JSONObject c = zonas.getJSONObject(i);
-
-                String empresa = c.getString("EMPRESA");
-                String codZona = c.getString("COD_ZONA");
-                String zona = c.getString("ZONA");
-                String codSubZona = c.getString("COD_SUB_ZONA");
-                String subZona = c.getString("SUBZONA");
-
-                ZonasH.GuardarZonas(empresa, codZona, zona, codSubZona, subZona);
-            }
-            DbOpenHelper.database.setTransactionSuccessful();
-            return true;
-        } catch (Exception ex) {
-            new Funciones().SendMail("Ha ocurrido un error al sincronicar Zonas, Excepcion controlada", variables_publicas.info + ex.getMessage(), "dlunasistemas@gmail.com", variables_publicas.correosErrores);
-            return false;
-        } finally {
-            DbOpenHelper.database.endTransaction();
-        }
-
-    }
-*/
    public boolean SincronizarRutas() throws JSONException {
        HttpHandler shRutas= new HttpHandler();
        String urlStringRutas= urlRutas + variables_publicas.usuario.getCodigo();
        String jsonStrRutas = shRutas.makeServiceCall(urlStringRutas);
 
        if (jsonStrRutas == null) {
-           new Funciones().SendMail("Ha ocurrido un error al sincronicar las Rutas, Respuesta nula GET", variables_publicas.info + urlStringRutas, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+           isOnline = Funciones.TestServerConectivity();
+           if (isOnline) {
+               new Funciones().SendMail("Ha ocurrido un error al sincronicar las Rutas, Respuesta nula GET", variables_publicas.info + urlStringRutas, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+           }
            return false;
        }
 
@@ -581,7 +566,10 @@ public class SincronizarDatos {
         String jsonStrCartillasD = shCartillasD.makeServiceCall(urlStringCartillasD);
 
         if (jsonStrCartillasD == null) {
-            new Funciones().SendMail("Ha ocurrido un error DetallaCartillaBC", variables_publicas.info + urlStringCartillasD, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            isOnline = Funciones.TestServerConectivity();
+            if (isOnline) {
+                new Funciones().SendMail("Ha ocurrido un error DetallaCartillaBC", variables_publicas.info + urlStringCartillasD, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
         DbOpenHelper.database.beginTransaction();
@@ -629,7 +617,10 @@ public class SincronizarDatos {
         String jsonStrFormaPago = shFormaPago.makeServiceCall(urlStringFormaPago);
 
         if (jsonStrFormaPago == null) {
-            new Funciones().SendMail("Ha ocurrido un error al sincronizar Forma de pago, Respuesta nula GET", variables_publicas.info + urlStringFormaPago, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            isOnline = Funciones.TestServerConectivity();
+            if (isOnline) {
+                new Funciones().SendMail("Ha ocurrido un error al sincronizar Forma de pago, Respuesta nula GET", variables_publicas.info + urlStringFormaPago, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
         DbOpenHelper.database.beginTransaction();
@@ -668,7 +659,10 @@ public class SincronizarDatos {
         String jsonStrConfiguracionSistema = shConfiguracionSistema.makeServiceCall(urlStringConfiguracionSistema);
 
         if (jsonStrConfiguracionSistema == null) {
-            new Funciones().SendMail("Ha ocurrido un error al Sincronizar ConfiguracionSistema, Respuesta nula GET", variables_publicas.info + urlStringConfiguracionSistema, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            isOnline = Funciones.TestServerConectivity();
+            if (isOnline) {
+                new Funciones().SendMail("Ha ocurrido un error al Sincronizar ConfiguracionSistema, Respuesta nula GET", variables_publicas.info + urlStringConfiguracionSistema, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
 
@@ -755,7 +749,10 @@ public class SincronizarDatos {
         String jsonStrClientesSucursal = shClientesSucursal.makeServiceCall(urlStringClientesSucursal);
 
         if (jsonStrClientesSucursal == null) {
-            new Funciones().SendMail("Ha ocurrido un error al SincronizarClientesSucursal, Respuesta nula", variables_publicas.info + urlStringClientesSucursal, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            isOnline = Funciones.TestServerConectivity();
+            if (isOnline) {
+                new Funciones().SendMail("Ha ocurrido un error al SincronizarClientesSucursal, Respuesta nula", variables_publicas.info + urlStringClientesSucursal, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
 
@@ -798,9 +795,8 @@ public class SincronizarDatos {
         if (SincronizarDiasCierre()) {
             if (SincronizarArticulos()) {
                  if (SincronizarClientes()) {
-                     // if (SincronizarPrecios()) {
                      if (SincronizarTPrecios()) {
-                     if (SincronizarCategorias()) {
+                        if (SincronizarCategorias()) {
                          if (SincronizarVendedores()) {
                              if (SincronizarCartillasBc()) {
                                  if (SincronizarCartillasBcDetalle()) {
@@ -809,25 +805,18 @@ public class SincronizarDatos {
                                              if (SincronizarClientesSucursal()) {
                                                  if (SincronizarConfiguracionSistema()) {
                                                      if (ActualizarUsuario()) {
-                                                         //if (ObtenerBancos()) {
-                                                             //if (ObtenerSerieRecibos()) {
-                                                                 //if (SincronizarFacturasPendientes(variables_publicas.usuario.getCodigo(), "0")) {
-                                                                     SincronizarPedidosLocales();
-                                                                     return true;
-                                                                // }
-                                                             //}
-                                                         //}
-                                                     }
-                                                 }
-                                             }
-                                         }
-                                     }
-                                 }
-                             }
-                         }
-                     }
-                     // }
-                 }
+                                                         SincronizarPedidosLocales();
+                                                         return true;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -923,7 +912,10 @@ public class SincronizarDatos {
             }
 
         } else {
-            new Funciones().SendMail("Ha ocurrido un error al obtener los datos del usuario,Respuesta nula", variables_publicas.info + urlString, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            isOnline = Funciones.TestServerConectivity();
+            if (isOnline) {
+                new Funciones().SendMail("Ha ocurrido un error al obtener los datos del usuario,Respuesta nula", variables_publicas.info + urlString, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
        return false;
@@ -968,7 +960,10 @@ public class SincronizarDatos {
             }
 
         } else {
-            new Funciones().SendMail("Ha ocurrido un error al obtener los Departamentos y Municipios,Respuesta nula", variables_publicas.info + urlString, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            isOnline = Funciones.TestServerConectivity();
+            if (isOnline) {
+                new Funciones().SendMail("Ha ocurrido un error al obtener los Departamentos y Municipios,Respuesta nula", variables_publicas.info + urlString, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
         return false;
@@ -1005,7 +1000,9 @@ public class SincronizarDatos {
 
       //  String jsonStrPedido = sh.makeServiceCallPost(encodeUrl);
         if (jsonStrPedido == null || jsonPedido.isEmpty()) {
-            new Funciones().SendMail("Ha ocurrido un error al sincronizar el pedido,Respuesta nula POST", variables_publicas.info + urlStringDetalle, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            if (Funciones.TestServerConectivity()) {
+                new Funciones().SendMail("Ha ocurrido un error al sincronizar el pedido,Respuesta nula POST", variables_publicas.info + urlStringDetalle, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return "false,Ha ocurrido un error al sincronizar el detalle del pedido,Respuesta nula";
         } else {
             try {
@@ -1165,7 +1162,10 @@ public class SincronizarDatos {
             }*/
 
         } else {
-            new Funciones().SendMail("Ha ocurrido un error al obtener el Listado de bancos,Respuesta nula", variables_publicas.info + urlString, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            isOnline = Funciones.TestServerConectivity();
+            if (isOnline) {
+                new Funciones().SendMail("Ha ocurrido un error al obtener el Listado de bancos,Respuesta nula", variables_publicas.info + urlString, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
         //return false;
@@ -1217,7 +1217,10 @@ public class SincronizarDatos {
             }*/
 
         } else {
-            new Funciones().SendMail("Ha ocurrido un error al obtener las Series de Recibos, Respuesta nula", variables_publicas.info + urlString, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            isOnline = Funciones.TestServerConectivity();
+            if (isOnline) {
+                new Funciones().SendMail("Ha ocurrido un error al obtener las Series de Recibos, Respuesta nula", variables_publicas.info + urlString, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
         //return false;
@@ -1249,7 +1252,9 @@ public class SincronizarDatos {
 
         //  String jsonStrPedido = sh.makeServiceCallPost(encodeUrl);
         if (jsonStrCliente == null || jsonCliente.isEmpty()) {
-            new Funciones().SendMail("Ha ocurrido un error al sincronizar el Cliente,Respuesta nula POST", variables_publicas.info + urlStringDetalle, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            if (Funciones.TestServerConectivity()) {
+                new Funciones().SendMail("Ha ocurrido un error al sincronizar el Cliente,Respuesta nula POST", variables_publicas.info + urlStringDetalle, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return "false,Ha ocurrido un error al sincronizar el cliente,Respuesta nula";
         } else {
             try {
@@ -1296,7 +1301,9 @@ public class SincronizarDatos {
 
         //  String jsonStrPedido = sh.makeServiceCallPost(encodeUrl);
         if (jsonStrCliente == null || jsonCliente.isEmpty()) {
-            new Funciones().SendMail("Ha ocurrido un error al activar al cliente. Respuesta nula POST", variables_publicas.info + urlStringDetalle, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            if (Funciones.TestServerConectivity()) {
+                new Funciones().SendMail("Ha ocurrido un error al activar al cliente. Respuesta nula POST", variables_publicas.info + urlStringDetalle, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return "false,Ha ocurrido un error al activar al cliente. Respuesta nula";
         } else {
             try {
@@ -1331,7 +1338,10 @@ public class SincronizarDatos {
         String jsonStrC = shC.makeServiceCall(urlStringC);
 
         if (jsonStrC == null) {
-            new Funciones().SendMail("Ha ocurrido un error al sincronizar las Facturas Pendientes, Respuesta nula GET", variables_publicas.info + urlStringC, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            isOnline = Funciones.TestServerConectivity();
+            if (isOnline) {
+                new Funciones().SendMail("Ha ocurrido un error al sincronizar las Facturas Pendientes, Respuesta nula GET", variables_publicas.info + urlStringC, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
         //Log.e(TAG, "Response from url: " + jsonStrC);
@@ -1422,7 +1432,9 @@ public class SincronizarDatos {
 
         //  String jsonStrPedido = sh.makeServiceCallPost(encodeUrl);
         if (jsonStrInforme == null || jsonInforme.isEmpty()) {
-            new Funciones().SendMail("Ha ocurrido un error al sincronizar el informe, Respuesta nula POST", variables_publicas.info + urlStringDetalle, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            if (Funciones.TestServerConectivity()) {
+                new Funciones().SendMail("Ha ocurrido un error al sincronizar el informe, Respuesta nula POST", variables_publicas.info + urlStringDetalle, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return "false,Ha ocurrido un error al sincronizar el detalle del informe, Respuesta nula";
         } else {
             try {
@@ -1489,7 +1501,9 @@ public class SincronizarDatos {
             }
 
         } else {
-            new Funciones().SendMail("Ha ocurrido un error al obtener el Pedido. Respuesta nula", variables_publicas.info + urlString, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            if (Funciones.TestServerConectivity()) {
+                new Funciones().SendMail("Ha ocurrido un error al obtener el Pedido. Respuesta nula", variables_publicas.info + urlString, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
     }
@@ -1530,7 +1544,9 @@ public class SincronizarDatos {
             }
 
         } else {
-            new Funciones().SendMail("Ha ocurrido un error al obtener el detalle del pedido. Respuesta nula", variables_publicas.info + urlString, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            if (Funciones.TestServerConectivity()) {
+                new Funciones().SendMail("Ha ocurrido un error al obtener el detalle del pedido. Respuesta nula", variables_publicas.info + urlString, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            }
             return false;
         }
     }

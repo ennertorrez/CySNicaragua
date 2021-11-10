@@ -103,6 +103,7 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
     private EditText txtCedula;
     private EditText txtNombreCliente;
     private EditText txtDireccion;
+    private EditText txtCiudad;
     private Spinner cboDpto;
     private Spinner cboMuni;
     //private Spinner cboZona;
@@ -132,11 +133,9 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
     private String vExcento;
     private String vPrecioespecial;
     private String vUltCompra;
-    private String vCiudad;
     private String vDescTipoCliente;
     private String vNombreRuta;
     private String vDescTipoNegocio;
-    //private ZonaL vZona;
     private String vDescuento;
     private String vEmpleado;
     //private SubZona vSubZona;
@@ -182,6 +181,7 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
         txtCedula = (EditText) findViewById(R.id.txtCedulaB);
         txtNombreCliente = (EditText) findViewById(R.id.txtNombCliente);
         txtDireccion = (EditText) findViewById(R.id.txtDirCliente);
+        txtCiudad = (EditText) findViewById(R.id.txtCiudad);
         cboDpto = (Spinner) findViewById(R.id.cboDpto);
         cboMuni = (Spinner) findViewById(R.id.cboMun);
         //cboZona = (Spinner) findViewById(R.id.cboZona);
@@ -231,6 +231,7 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
             txtNombreCliente.setText(in.getStringExtra(variables_publicas.CLIENTES_COLUMN_Nombre));
             txtCedula.setText(in.getStringExtra(variables_publicas.CLIENTES_COLUMN_Cedula));
             txtDireccion.setText(in.getStringExtra(variables_publicas.CLIENTES_COLUMN_Direccion));
+            txtCiudad.setText(in.getStringExtra(variables_publicas.CLIENTES_COLUMN_Ciudad));
             String vValorFiltro = ClientesH.ObtenerDescripcion(variables_publicas.DPTOMUNIBARRIOS_COLUMN_Nombre_Departamento,variables_publicas.TABLE_DPTOMUNIBARRIOS,variables_publicas.DPTOMUNIBARRIOS_COLUMN_Codigo_Departamento,in.getStringExtra(variables_publicas.CLIENTES_COLUMN_IdDepartamento));
             cboDpto.setSelection(getIndex(cboDpto, vValorFiltro));
 
@@ -239,8 +240,7 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
             vValorFiltro = ClientesH.ObtenerDescripcion(variables_publicas.DPTOMUNIBARRIOS_COLUMN_Nombre_Municipio,variables_publicas.TABLE_DPTOMUNIBARRIOS,variables_publicas.DPTOMUNIBARRIOS_COLUMN_Codigo_Municipio,in.getStringExtra(variables_publicas.CLIENTES_COLUMN_IdMunicipio));
             cboMuni.setSelection(getIndex(cboMuni, vValorFiltro));
 
-            vCiudad= in.getStringExtra(variables_publicas.CLIENTES_COLUMN_Ciudad);
-/*            vValorFiltro = ClientesH.ObtenerDescripcion(variables_publicas.ZONAS_COLUMN_ZONA,variables_publicas.TABLE_ZONAS,variables_publicas.ZONAS_COLUMN_CODZONA,in.getStringExtra(variables_publicas.CLIENTES_COLUMN_Cod_Zona));
+ /*           vValorFiltro = ClientesH.ObtenerDescripcion(variables_publicas.ZONAS_COLUMN_ZONA,variables_publicas.TABLE_ZONAS,variables_publicas.ZONAS_COLUMN_CODZONA,in.getStringExtra(variables_publicas.CLIENTES_COLUMN_Cod_Zona));
             cboZona.setSelection(getIndex(cboZona, vValorFiltro));*/
 
             //CargarSubZonas(vValorFiltro);
@@ -313,6 +313,7 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
             }
         });
 */
+        cboTipoCliente.setEnabled(false);
         cboVendedor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
@@ -429,6 +430,11 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
                         txtDireccion.requestFocus();
                         return ;
                     }
+                    if (TextUtils.isEmpty(txtCiudad.getText().toString())) {
+                        MensajeAviso("Ingrese el nombre de la Ciudad.");
+                        txtCiudad.requestFocus();
+                        return ;
+                    }
                     if (TextUtils.isEmpty(txtTelefono.getText().toString())) {
                         MensajeAviso("Ingrese un número de teléfono.");
                         txtTelefono.requestFocus();
@@ -490,8 +496,7 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
             cliente.setDireccion(txtDireccion.getText().toString());
             cliente.setIdDepartamento(dpto.getCodigo_Departamento());
             cliente.setIdMunicipio(muni.getCodigo_Municipio());
-            vCiudad = ClientesH.ObtenerDescripcion(variables_publicas.DPTOMUNIBARRIOS_COLUMN_Nombre_Municipio,variables_publicas.TABLE_DPTOMUNIBARRIOS,variables_publicas.DPTOMUNIBARRIOS_COLUMN_Codigo_Municipio,muni.getCodigo_Municipio());
-            cliente.setCiudad(vCiudad);
+            cliente.setCiudad(txtCiudad.getText().toString());
             cliente.setRuc("");
             cliente.setCedula(txtCedula.getText().toString());
             cliente.setLimiteCredito("0");
@@ -527,8 +532,7 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
             cliente.setDireccion(txtDireccion.getText().toString());
             cliente.setIdDepartamento(dpto.getCodigo_Departamento());
             cliente.setIdMunicipio(muni.getCodigo_Municipio());
-            vCiudad = ClientesH.ObtenerDescripcion(variables_publicas.DPTOMUNIBARRIOS_COLUMN_Nombre_Municipio,variables_publicas.TABLE_DPTOMUNIBARRIOS,variables_publicas.DPTOMUNIBARRIOS_COLUMN_Codigo_Municipio,muni.getCodigo_Municipio());
-            cliente.setCiudad(vCiudad);
+            cliente.setCiudad(txtCiudad.getText().toString());
             cliente.setRuc(vRuc);
             cliente.setCedula(txtCedula.getText().toString());
             cliente.setLimiteCredito(vLimiteCredito);
@@ -761,7 +765,8 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
              adapterRuta.setDropDownViewResource(android.R.layout.simple_list_item_checked);
              cboRuta.setAdapter(adapterRuta);
              if (!adapterRuta.isEmpty()) {
-                 cboRuta.setSelection(0);
+                 cboRuta.setSelection(getIndex(cboRuta,variables_publicas.rutacargadadescripcion));
+                 //cboRuta.setSelection(0);
              }
          }
         //Combo Dias de Visita

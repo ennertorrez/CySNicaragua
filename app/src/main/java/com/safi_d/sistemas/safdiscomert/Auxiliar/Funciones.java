@@ -231,7 +231,7 @@ public class Funciones {
     }*/
 
     public static boolean TestServerConectivity() {
-        HttpURLConnection conn=null;
+        /*HttpURLConnection conn=null;
         try {
             URL url = new URL(variables_publicas.direccionIp+"/ServicioPedidos.svc/ObtenerInventarioArticulo/01-3-001");
             conn = (HttpURLConnection) url.openConnection();
@@ -249,9 +249,55 @@ public class Funciones {
         }
         finally {
             conn.disconnect();
+        }*/
+        HttpURLConnection conn=null;
+        try {
+            URL url = new URL(variables_publicas.direccionIp+"/ServicioPedidos.svc/ObtenerInventarioArticulo/4000-01-01-01-001");
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(10000);
+            conn.setReadTimeout(10000);
+            conn.setUseCaches(false);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            int responceCode = conn.getResponseCode();
+            if (is != null) {
+                if (responceCode==200){
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+        finally {
+            conn.disconnect();
         }
     }
 
+    public static boolean TestServerConectivity2() {
+        HttpURLConnection conn=null;
+        try {
+            URL url = new URL(variables_publicas.direccionIp+"/ServicioPedidos.svc/ObtenerInventarioArticulo/4000-01-01-01-001");
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(10000);
+            conn.setReadTimeout(10000);
+            conn.setUseCaches(false);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            int responceCode = conn.getResponseCode();
+            if (is != null) {
+                if (responceCode==200){
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+        finally {
+            conn.disconnect();
+        }
+    }
     public static String getDatePhone() {
         Calendar cal = new GregorianCalendar();
         Date date = cal.getTime();

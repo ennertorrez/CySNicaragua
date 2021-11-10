@@ -308,7 +308,7 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
             }
         });
 
-
+        cboTPrecio.setEnabled(false);
 
         variables_publicas.AplicaIVAGral = ConfiguracionSistemaH.BuscarValorConfig("aplicaIVA").getValor();
         variables_publicas.ValorIVAGral = ConfiguracionSistemaH.BuscarValorConfig("valorIVA").getValor();
@@ -420,7 +420,7 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
         lblCanal.setText(cliente.getTipoPrecio());
         idTipo=Integer.parseInt(cliente.getTipo());
 
-        cboTPrecio.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       /* cboTPrecio.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
                 // On selecting a spinner item
@@ -459,7 +459,7 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
-
+*/
         btnAgregar = (Button) findViewById(R.id.btnAgregar);
         btnBuscar = (Button) findViewById(R.id.btnBuscar);
         btnGuardar = (Button) findViewById(R.id.btnGuardar);
@@ -537,45 +537,11 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
                                 txtPrecioArticulo.setText(precios.get(i).getPrecio4());
                                 codTipoPrecio.setCod_Tipo_Precio("4");
                             }
-/*
-                            if (((int) Integer.parseInt(s1.toString())>=Integer.parseInt(precios.get(i).getUnidadCajaVenta()))){
-                                if (idTipo==1){
-                                    txtPrecioArticulo.setText(precios.get(i).getPrecio2());
-                                    codTipoPrecio.setCod_Tipo_Precio("2");
-                                }
-                                if (idTipo==2){
-                                    txtPrecioArticulo.setText(precios.get(i).getPrecio3());
-                                    codTipoPrecio.setCod_Tipo_Precio("3");
-                                }
-                                if (idTipo==3){
-                                    txtPrecioArticulo.setText(precios.get(i).getPrecio4());
-                                    codTipoPrecio.setCod_Tipo_Precio("4");
-                                }
-                                if (idTipo==4){
-                                    txtPrecioArticulo.setText(precios.get(i).getPrecio4());
-                                    codTipoPrecio.setCod_Tipo_Precio("4");
-                                }
-                            }else{
-                                if (idTipo==1){
-                                    txtPrecioArticulo.setText(precios.get(i).getPrecio());
-                                    codTipoPrecio.setCod_Tipo_Precio("1");
-                                }
-                                if (idTipo==2){
-                                    txtPrecioArticulo.setText(precios.get(i).getPrecio2());
-                                    codTipoPrecio.setCod_Tipo_Precio("2");
-                                }
-                                if (idTipo==3){
-                                    txtPrecioArticulo.setText(precios.get(i).getPrecio3());
-                                    codTipoPrecio.setCod_Tipo_Precio("3");
-                                }
-                                if (idTipo==4){
-                                    txtPrecioArticulo.setText(precios.get(i).getPrecio4());
-                                    codTipoPrecio.setCod_Tipo_Precio("4");
-                                }
-                            }*/
                             String vValorFiltro = ClientesH.ObtenerDescripcion(variables_publicas.TPRECIOS_COLUMN_TIPO_PRECIO,variables_publicas.TABLE_TPRECIOS,variables_publicas.TPRECIOS_COLUMN_COD_TIPO_PRECIO,codTipoPrecio.getCod_Tipo_Precio());
                             cboTPrecio.setSelection(getIndex(cboTPrecio, vValorFiltro));
                             vTipoPrecio = cboTPrecio.getSelectedItem().toString();
+                            vUnidades = Integer.parseInt(precios.get(i).getUnidadCaja());
+                            vCodUM = precios.get(i).getCodUM();
                         }
                     }
 
@@ -591,10 +557,11 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
         btnBuscar.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
 //
+                validarTipoBusqueda = true;
                 //BuscarArticulo();
                 CreateDialog();// Click to create Dialog
 
-                validarTipoBusqueda = true;
+
                 //btnOK.performClick();
                 txtCantidad.requestFocus();
                 focusedControl = "";
@@ -865,7 +832,7 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
                         if (selectedItems.size()==1){
                             String CodigoArticulo = selectedItems.get(0).getCodigo();
 
-                            articulo = ArticulosH.BuscarArticulo(CodigoArticulo);
+                            articulo = ArticulosH.BuscarArticulo2(CodigoArticulo);
 
                             txtCodigoArticulo.setText(CodigoArticulo);
                             lblDescripcionArticulo.setText(articulo.getNombre());
@@ -895,7 +862,7 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
                             {
                                 String CodigoArticulo = selectedItems.get(indice).getCodigo();
 
-                                articulo = ArticulosH.BuscarArticulo(CodigoArticulo);
+                                articulo = ArticulosH.BuscarArticulo2(CodigoArticulo);
 
                                 try{
                                     boolean repetido = EsArticuloRepetido(CodigoArticulo);
