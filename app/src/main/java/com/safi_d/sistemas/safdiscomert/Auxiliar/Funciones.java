@@ -252,10 +252,10 @@ public class Funciones {
         }*/
         HttpURLConnection conn=null;
         try {
-            URL url = new URL(variables_publicas.direccionIp+"/ServicioPedidos.svc/ObtenerInventarioArticulo/4000-01-01-01-001");
+            URL url = new URL(variables_publicas.direccionIp+"/ServicioTotalArticulos.svc/BuscarArticulo/1/0");
             conn = (HttpURLConnection) url.openConnection();
-            conn.setConnectTimeout(10000);
-            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(200000);
+            conn.setReadTimeout(200000);
             conn.setUseCaches(false);
             conn.connect();
             InputStream is = conn.getInputStream();

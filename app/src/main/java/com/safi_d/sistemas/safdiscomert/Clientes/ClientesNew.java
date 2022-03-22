@@ -99,6 +99,7 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
     private int IdDepartamento;
 
     private TextView txtCodLetra;
+    private TextView txtBarrio;
     private EditText txtCodCliente;
     private EditText txtCedula;
     private EditText txtNombreCliente;
@@ -190,6 +191,7 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
         cboRuta = (Spinner) findViewById(R.id.cboRutaCliente);
         cboTipoCliente = (Spinner) findViewById(R.id.cboTipoCliente);
         cboTipoNeg = (Spinner) findViewById(R.id.cboTipoNeg);
+        txtBarrio = (EditText) findViewById(R.id.txtBarrio);
         cboVendedor = (Spinner) findViewById(R.id.cboVendedor);
         txtTelefono = (EditText) findViewById(R.id.txtTelefono);
         txtCedula.setFocusable(true);
@@ -232,6 +234,7 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
             txtCedula.setText(in.getStringExtra(variables_publicas.CLIENTES_COLUMN_Cedula));
             txtDireccion.setText(in.getStringExtra(variables_publicas.CLIENTES_COLUMN_Direccion));
             txtCiudad.setText(in.getStringExtra(variables_publicas.CLIENTES_COLUMN_Ciudad));
+            txtBarrio.setText(in.getStringExtra(variables_publicas.CLIENTES_COLUMN_Barrio));
             String vValorFiltro = ClientesH.ObtenerDescripcion(variables_publicas.DPTOMUNIBARRIOS_COLUMN_Nombre_Departamento,variables_publicas.TABLE_DPTOMUNIBARRIOS,variables_publicas.DPTOMUNIBARRIOS_COLUMN_Codigo_Departamento,in.getStringExtra(variables_publicas.CLIENTES_COLUMN_IdDepartamento));
             cboDpto.setSelection(getIndex(cboDpto, vValorFiltro));
 
@@ -239,9 +242,6 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
 
             vValorFiltro = ClientesH.ObtenerDescripcion(variables_publicas.DPTOMUNIBARRIOS_COLUMN_Nombre_Municipio,variables_publicas.TABLE_DPTOMUNIBARRIOS,variables_publicas.DPTOMUNIBARRIOS_COLUMN_Codigo_Municipio,in.getStringExtra(variables_publicas.CLIENTES_COLUMN_IdMunicipio));
             cboMuni.setSelection(getIndex(cboMuni, vValorFiltro));
-
- /*           vValorFiltro = ClientesH.ObtenerDescripcion(variables_publicas.ZONAS_COLUMN_ZONA,variables_publicas.TABLE_ZONAS,variables_publicas.ZONAS_COLUMN_CODZONA,in.getStringExtra(variables_publicas.CLIENTES_COLUMN_Cod_Zona));
-            cboZona.setSelection(getIndex(cboZona, vValorFiltro));*/
 
             //CargarSubZonas(vValorFiltro);
             if (getIndex(cboDiaVisita,in.getStringExtra(variables_publicas.CLIENTES_COLUMN_Frecuencia))==0) {
@@ -283,36 +283,6 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
             vDescTipoNegocio =in.getStringExtra(variables_publicas.CLIENTES_COLUMN_TipoNegocio);
         }
 
-        /*iCurrentSelection = cboZona.getSelectedItemPosition();
-
-        cboZona.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
-                if (iCurrentSelection != position) {
-                    String itemval = adapter.getItemAtPosition(position).toString();
-                    CargarSubZonas(itemval);
-                }
-                iCurrentSelection = position;
-                vZona.setCodZona(((ZonaL) adapter.getItemAtPosition(position)).getCodZona());
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-            }
-        });
-
-        iCurrentSelection = cboSubZona.getSelectedItemPosition();
-        cboSubZona.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
-                iCurrentSelection = position;
-                vSubZona.setCodSubZona(((SubZona) adapter.getItemAtPosition(position)).getCodSubZona());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-            }
-        });
-*/
         cboTipoCliente.setEnabled(false);
         cboVendedor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -435,6 +405,11 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
                         txtCiudad.requestFocus();
                         return ;
                     }
+                    if (TextUtils.isEmpty(txtBarrio.getText().toString())) {
+                        MensajeAviso("Ingrese el nombre del Barrio.");
+                        txtBarrio.requestFocus();
+                        return ;
+                    }
                     if (TextUtils.isEmpty(txtTelefono.getText().toString())) {
                         MensajeAviso("Ingrese un número de teléfono.");
                         txtTelefono.requestFocus();
@@ -497,6 +472,7 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
             cliente.setIdDepartamento(dpto.getCodigo_Departamento());
             cliente.setIdMunicipio(muni.getCodigo_Municipio());
             cliente.setCiudad(txtCiudad.getText().toString());
+            cliente.setBarrio(txtBarrio.getText().toString());
             cliente.setRuc("");
             cliente.setCedula(txtCedula.getText().toString());
             cliente.setLimiteCredito("0");
@@ -533,6 +509,7 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
             cliente.setIdDepartamento(dpto.getCodigo_Departamento());
             cliente.setIdMunicipio(muni.getCodigo_Municipio());
             cliente.setCiudad(txtCiudad.getText().toString());
+            cliente.setBarrio(txtBarrio.getText().toString());
             cliente.setRuc(vRuc);
             cliente.setCedula(txtCedula.getText().toString());
             cliente.setLimiteCredito(vLimiteCredito);
@@ -596,7 +573,7 @@ public class ClientesNew extends Activity implements ActivityCompat.OnRequestPer
                         cliente.getDireccion(), cliente.getIdDepartamento(), cliente.getIdMunicipio(), cliente.getCiudad(), cliente.getRuc(), cliente.getCedula(), cliente.getLimiteCredito(),
                         cliente.getIdFormaPago(), cliente.getIdVendedor(), cliente.getExcento(), cliente.getCodigoLetra(), cliente.getRuta(), cliente.getNombreRuta(),cliente.getFrecuencia(), cliente.getPrecioEspecial(),
                         cliente.getFechaUltimaCompra(), cliente.getTipo(),cliente.getTipoPrecio(), cliente.getDescuento(), cliente.getEmpleado(), cliente.getIdSupervisor(), cliente.getEmpresa(),
-                        cliente.getCod_Zona(), cliente.getCod_SubZona(),cliente.getPais_Id(),cliente.getPais_Nombre(),cliente.getIdTipoNegocio(), cliente.getTipoNegocio());
+                        cliente.getCod_Zona(), cliente.getCod_SubZona(),cliente.getPais_Id(),cliente.getPais_Nombre(),cliente.getIdTipoNegocio(), cliente.getTipoNegocio(),cliente.getBarrio());
         if (!saved) {
             MensajeAviso("Ha Ocurrido un error al guardar los datos");
             return false;

@@ -202,7 +202,8 @@ public class SincronizarDatos {
                 String UnidadCajaVenta2 = c.getString("UnidadCajaVenta2");
                 String UnidadCajaVenta3 = c.getString("UnidadCajaVenta3");
                 String IdProveedor = c.getString("IdProveedor");
-                ArticulosH.GuardarTotalArticulos(Codigo, Nombre, COSTO, UNIDAD, UnidadCaja, Precio,Precio2,Precio3,Precio4,CodUM, PorIVA, DESCUENTO_MAXIMO,  existencia, UnidadCajaVenta,UnidadCajaVenta2,UnidadCajaVenta3, IdProveedor);
+                String UnidadMinima = c.getString("UnidadMinima");
+                ArticulosH.GuardarTotalArticulos(Codigo, Nombre, COSTO, UNIDAD, UnidadCaja, Precio,Precio2,Precio3,Precio4,CodUM, PorIVA, DESCUENTO_MAXIMO,  existencia, UnidadCajaVenta,UnidadCajaVenta2,UnidadCajaVenta3, IdProveedor,UnidadMinima);
             }
             DbOpenHelper.database.setTransactionSuccessful();
             return true;
@@ -364,10 +365,11 @@ public class SincronizarDatos {
                 String Pais_Nombre = c.getString("Pais_Nombre");
                 String IdTipoNegocio = c.getString("IdTipoNegocio");
                 String TipoNegocio = c.getString("TipoNegocio");
+                String Barrio = c.getString("Barrio");
                 ClientesH.GuardarClientes(IdCliente, Nombre,  FechaCreacion, Telefono, Direccion, IdDepartamento, IdMunicipio,
                         Ciudad, Ruc, Cedula, LimiteCredito, IdFormaPago, IdVendedor, Excento, CodigoLetra, Ruta,NombreRuta,
                         Frecuencia, PrecioEspecial, FechaUltimaCompra, Tipo,TipoPrecio, Descuento, Empleado, IdSupervisor,Empresa,
-                        Cod_Zona,Cod_SubZona,Pais_Id,Pais_Nombre,IdTipoNegocio,TipoNegocio);
+                        Cod_Zona,Cod_SubZona,Pais_Id,Pais_Nombre,IdTipoNegocio,TipoNegocio,Barrio);
             }
             DbOpenHelper.database.setTransactionSuccessful();
             return true;
@@ -1237,7 +1239,7 @@ public class SincronizarDatos {
         String encodeUrl = "";
         Gson gson = new Gson();
 
-        final String urlCliente = variables_publicas.direccionIp + "/ServicioClientes.svc/SincronizarClienteTotal/";
+        final String urlCliente = variables_publicas.direccionIp + "/ServicioClientes.svc/SincronizarClienteTotal2/";
         final String urlStringDetalle = urlCliente + cliente.getIdCliente() + "/" + String.valueOf(Editar) + "/" + cliente.getEmpresa() + "/" + jsonCliente;
 
 
@@ -1259,12 +1261,12 @@ public class SincronizarDatos {
         } else {
             try {
                 JSONObject result = new JSONObject(jsonStrCliente);
-                String resultState = (String) ((String) result.get("SincronizarClienteTotalResult")).split(",")[0];
-                String NoCliente = (String) ((String) result.get("SincronizarClienteTotalResult")).split(",")[1];
+                String resultState = (String) ((String) result.get("SincronizarClienteTotal2Result")).split(",")[0];
+                String NoCliente = (String) ((String) result.get("SincronizarClienteTotal2Result")).split(",")[1];
                 if (resultState.equals("false")) {
 
                     if (NoCliente.equalsIgnoreCase("Cliente ya existe en base de datos")) {
-                        NoCliente =  ((String) result.get("SincronizarClienteTotalResult")).split(",")[1];
+                        NoCliente =  ((String) result.get("SincronizarClienteTotal2Result")).split(",")[1];
                     } else {
                         new Funciones().SendMail("Ha ocurrido un error al sincronizar el Cliente ,Respuesta false", variables_publicas.info + NoCliente +" *** "+urlStringDetalle, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
                         return "false," + NoCliente;
@@ -1491,7 +1493,7 @@ public class SincronizarDatos {
                 vpedidoh.EliminaPedido(vPedido);
                 for (int i = 0; i < pedido.length(); i++) {
                     JSONObject c = pedido.getJSONObject(i);
-                    vpedidoh.GuardarPedido(c.get("CodigoPedido").toString(),c.get("IdVendedor").toString(),c.get("IdCliente").toString(),c.get("Tipo").toString(),c.get("Observacion").toString(),c.get("IdFormaPago").toString(),c.get("IdSucursal").toString(),c.get("Fecha").toString(),c.get("Usuario").toString(),c.get("IMEI").toString(),c.get("Subtotal").toString(),c.get("Total").toString(),c.get("TCambio").toString(),c.get("Empresa").toString());
+                    vpedidoh.GuardarPedido(c.get("CodigoPedido").toString(),c.get("IdVendedor").toString(),c.get("IdCliente").toString(),c.get("Tipo").toString(),c.get("Observacion").toString(),c.get("IdFormaPago").toString(),c.get("IdSucursal").toString(),c.get("Fecha").toString(),c.get("Usuario").toString(),c.get("IMEI").toString(),c.get("SubTotal").toString(),c.get("Total").toString(),c.get("TCambio").toString(),c.get("Empresa").toString());
                 }
                 return true;
             } catch (Exception ex) {
@@ -1534,7 +1536,7 @@ public class SincronizarDatos {
                 vpedidodetalleh.EliminarDetallePedido(vPedido);
                 for (int i = 0; i < pedido.length(); i++) {
                     JSONObject c = pedido.getJSONObject(i);
-                    vpedidodetalleh.GuardarDetallePedido(c.get("CodigoPedido").toString(),c.get("CodigoArticulo").toString(),c.get("Descripcion").toString(),c.get("Cantidad").toString().substring(0,c.get("Cantidad").toString().indexOf(".")),c.get("BonificaA").toString(),c.get("TipoArt").toString(),c.get("PorDescuento").toString(),c.get("Descuento").toString(),c.get("CodUM").toString(),c.get("Unidades").toString(),c.get("Costo").toString(),c.get("Precio").toString(),c.get("TipoPrecio").toString(),c.get("PorcentajeIva").toString(),c.get("Iva").toString(),c.get("Um").toString(),c.get("Subtotal").toString(),c.get("Total").toString(),c.get("Bodega").toString());
+                    vpedidodetalleh.GuardarDetallePedido(c.get("CodigoPedido").toString(),c.get("CodigoArticulo").toString(),c.get("Descripcion").toString(),c.get("Cantidad").toString().substring(0,c.get("Cantidad").toString().indexOf(".")),c.get("BonificaA").toString(),c.get("TipoArt").toString(),c.get("PorDescuento").toString(),c.get("Descuento").toString(),c.get("CodUM").toString(),c.get("Unidades").toString(),c.get("Costo").toString(),c.get("Precio").toString(),c.get("TipoPrecio").toString(),c.get("PorcentajeIva").toString(),c.get("Iva").toString(),c.get("Um").toString(),"1",c.get("Subtotal").toString(),c.get("Total").toString(),c.get("Bodega").toString());
                 }
                 return true;
             } catch (Exception ex) {

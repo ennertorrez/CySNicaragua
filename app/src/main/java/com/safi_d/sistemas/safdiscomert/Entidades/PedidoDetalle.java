@@ -22,6 +22,7 @@ public class PedidoDetalle {
     String PorcentajeIva="";
     String Iva="";
     String Um="";
+    String UnidadMinima="";
     String Subtotal ="";
     String Total ="";
     String Bodega="";
@@ -30,7 +31,7 @@ public class PedidoDetalle {
     public PedidoDetalle() {
     }
 
-    public PedidoDetalle(String codigoPedido, String codigoArticulo, String descripcion, String cantidad, String bonificaA,String tipoArt, String descuento, String codUM, String unidades, String costo, String precio,String tipoPrecio, String porcentajeIva, String iva, String um, String subtotal, String total,String porDescuento, String bodega) {
+    public PedidoDetalle(String codigoPedido, String codigoArticulo, String descripcion, String cantidad, String bonificaA,String tipoArt, String descuento, String codUM, String unidades, String costo, String precio,String tipoPrecio, String porcentajeIva, String iva, String um, String unidadMinima, String subtotal, String total,String porDescuento, String bodega) {
         CodigoPedido = codigoPedido;
         CodigoArticulo = codigoArticulo;
         Descripcion = descripcion;
@@ -45,6 +46,7 @@ public class PedidoDetalle {
         PorcentajeIva = porcentajeIva;
         Iva = iva;
         Um = um;
+        UnidadMinima = unidadMinima;
         Subtotal = subtotal;
         Total = total;
         PorDescuento=porDescuento;
@@ -154,6 +156,14 @@ public class PedidoDetalle {
 
     public void setUm(String um) {
         Um = um;
+    }
+
+    public String getUnidadMinima() {
+        return UnidadMinima;
+    }
+
+    public void setUnidadMinima(String unidadMinima) {
+        UnidadMinima = unidadMinima;
     }
 
     public String getSubtotal() {

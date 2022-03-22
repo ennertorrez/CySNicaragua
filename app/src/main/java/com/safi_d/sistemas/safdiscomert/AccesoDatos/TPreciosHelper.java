@@ -92,7 +92,8 @@ public class TPreciosHelper {
                         cursor.getString(cursor.getColumnIndex("UnidadCajaVenta")),
                         cursor.getString(cursor.getColumnIndex("UnidadCajaVenta2")),
                         cursor.getString(cursor.getColumnIndex("UnidadCajaVenta3")),
-                        cursor.getString(cursor.getColumnIndex("IdProveedor")
+                        cursor.getString(cursor.getColumnIndex("IdProveedor")),
+                        cursor.getString(cursor.getColumnIndex("UnidadMinima")
                         )));
             } while (cursor.moveToNext());
         }

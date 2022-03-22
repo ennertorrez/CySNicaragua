@@ -57,7 +57,7 @@ public class variables_publicas {
     public static final String correosErrores = "cysnicaragua@gmail.com";
     public  static final String correoError= "cysnicaragua@gmail.com";
     //Variables BD
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 6;
     public static final String DATABASE_NAME = "Safi_D.db";
     //Variables TB
     public static final String TABLE_ARTICULOS = "Articulos";
@@ -101,6 +101,7 @@ public class variables_publicas {
     public static final String ARTICULO_COLUMN_UnidadCajaVenta2 = "UnidadCajaVenta2";
     public static final String ARTICULO_COLUMN_UnidadCajaVenta3 = "UnidadCajaVenta3";
     public static final String ARTICULO_COLUMN_IdProveedor = "IdProveedor";
+    public static final String ARTICULO_COLUMN_UnidadMinima = "UnidadMinima";
 
     //Variables CamposTbClientes
     public static final String CLIENTES_COLUMN_IdCliente = "IdCliente";
@@ -135,6 +136,7 @@ public class variables_publicas {
     public static final String CLIENTES_COLUMN_Pais_Nombre="Pais_Nombre";
     public static final String CLIENTES_COLUMN_IdTipoNegocio="IdTipoNegocio";
     public static final String CLIENTES_COLUMN_TipoNegocio="TipoNegocio";
+    public static final String CLIENTES_COLUMN_Barrio="Barrio";
     public static String VersionSistema = "";
     public static String info = "";
     //Variables CamposTbPedidos
@@ -169,6 +171,7 @@ public class variables_publicas {
     public static final String PEDIDOS_DETALLE_COLUMN_PorcentajeIva = "PorcentajeIva";
     public static final String PEDIDOS_DETALLE_COLUMN_Iva = "Iva";
     public static final String PEDIDOS_DETALLE_COLUMN_Um = "Um";
+    public static final String PEDIDOS_DETALLE_COLUMN_UnidadMinima = "UnidadMinima";
     public static final String PEDIDOS_DETALLE_COLUMN_Subtotal = "SubTotal";
     public static final String PEDIDOS_DETALLE_COLUMN_Total = "Total";
     public static final String PEDIDOS_DETALLE_COLUMN_Bodega = "Bodega";

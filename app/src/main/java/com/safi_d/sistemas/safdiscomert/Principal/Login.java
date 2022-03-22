@@ -127,6 +127,11 @@ public class Login extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.iniciosesion);
 
+        //Esto sirve para permitir realizar conexion a internet en el Hilo principal
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         MsjLoging = variables_publicas.MensajeLogin;
         if (MsjLoging != "") {
             mensajeAviso(MsjLoging);
@@ -287,10 +292,7 @@ public class Login extends Activity {
                     return;
                 }
 
-                //Esto sirve para permitir realizar conexion a internet en el Hilo principal
 
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(policy);
                 isOnline =Funciones.TestServerConectivity();
 
                 variables_publicas.usuario = UsuariosH.BuscarUsuarios(Usuario, Contrasenia);

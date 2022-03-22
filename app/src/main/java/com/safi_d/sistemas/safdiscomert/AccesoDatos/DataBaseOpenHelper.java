@@ -58,7 +58,8 @@ public class DataBaseOpenHelper {
                     + variables_publicas.CLIENTES_COLUMN_Pais_Id + " TEXT,"
                     + variables_publicas.CLIENTES_COLUMN_Pais_Nombre + " TEXT, "
                     + variables_publicas.CLIENTES_COLUMN_IdTipoNegocio + " TEXT, "
-                    + variables_publicas.CLIENTES_COLUMN_TipoNegocio + " TEXT)");
+                    + variables_publicas.CLIENTES_COLUMN_TipoNegocio + " TEXT, "
+                    + variables_publicas.CLIENTES_COLUMN_Barrio + " TEXT)");
 
             db.execSQL("CREATE TABLE " + variables_publicas.TABLE_USUARIOS + "( "
                     + variables_publicas.USUARIOS_COLUMN_Codigo + " TEXT , "
@@ -92,7 +93,8 @@ public class DataBaseOpenHelper {
                     + variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta + " TEXT, "
                     + variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta2 + " TEXT, "
                     + variables_publicas.ARTICULO_COLUMN_UnidadCajaVenta3 + " TEXT, "
-                    + variables_publicas.ARTICULO_COLUMN_IdProveedor + " TEXT ) ");
+                    + variables_publicas.ARTICULO_COLUMN_IdProveedor + " TEXT, "
+                    + variables_publicas.ARTICULO_COLUMN_UnidadMinima+ " TEXT ) ");
 
             db.execSQL("CREATE TABLE " + variables_publicas.TABLE_VENDEDORES + "( "
                     + variables_publicas.VENDEDORES_COLUMN_CODIGO + " TEXT , "
@@ -204,6 +206,7 @@ public class DataBaseOpenHelper {
                     + variables_publicas.PEDIDOS_DETALLE_COLUMN_PorcentajeIva + " TEXT ,"
                     + variables_publicas.PEDIDOS_DETALLE_COLUMN_Iva + " TEXT ,"
                     + variables_publicas.PEDIDOS_DETALLE_COLUMN_Um + " TEXT ,"
+                    + variables_publicas.PEDIDOS_DETALLE_COLUMN_UnidadMinima + " TEXT ,"
                     + variables_publicas.PEDIDOS_DETALLE_COLUMN_Subtotal + " TEXT ,"
                     + variables_publicas.PEDIDOS_DETALLE_COLUMN_Total + " TEXT ,"
                     + variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega + " TEXT )");

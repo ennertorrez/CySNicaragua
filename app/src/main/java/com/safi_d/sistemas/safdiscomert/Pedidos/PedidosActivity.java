@@ -143,6 +143,7 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
     private ProgressDialog pDialog;
     AlertDialog alertDialog;
     private String existencia = "N/A";
+    private int unidadminima = 0;
     private SincronizarDatos sd;
     private boolean isOnline = false;
     private String visualizando="False";
@@ -384,6 +385,7 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
                     item.put("IdProveedor", art.getIdProveedor());
                     item.put("UnidadCajaVenta", art.getUnidadCajaVenta());
                     item.put("UnidadCaja",art.getUnidadCaja());
+                    item.put("UnidadMinima",art.getUnidadMinima());
                 }
             }
             txtObservaciones.setText(pedido.getObservacion());
@@ -491,6 +493,12 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String s1=s.toString();
                 if (s.length() > 0 && !s.toString().equalsIgnoreCase("")) {
+                    if (Integer.parseInt(s1.toString()) < unidadminima){
+                        txtCantidad.setText(String.valueOf(unidadminima));
+                    }
+   /*                 else{
+                        txtCantidad.setText(s1.toString());
+                    }*/
                     String tmpcodigoart =txtCodigoArticulo.getText().toString();
                     List<Articulo> precios = TPreciosH.ObtenerPrecioPorUM(tmpcodigoart);
                     if (precios.size()==0){
@@ -850,8 +858,9 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
                             vUM=articulo.getUnidad();
                             lblUM.setText(articulo.getUnidadCaja());
                             lblUMV.setText(articulo.getUnidadCajaVenta());
+                            unidadminima=Integer.parseInt(articulo.getUnidadMinima());
                             existencia = articulo.getExistencia();
-                            lblExistentias.setText(String.valueOf((int) (Double.parseDouble(existencia))));
+                            lblExistentias.setText(String.valueOf((int) unidadminima));
 
                             cboTPrecio.setSelection(getIndex(cboTPrecio, vDesTPrecio));
 
@@ -875,8 +884,9 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
                                         itemPedidos.put("CodigoArticulo", articulo.getCodigo());
                                         itemPedidos.put("Cod", articulo.getCodigo().split("-")[articulo.getCodigo().split("-").length - 1]);
                                         //itemPedidos.put("Cod", articulo.getCodigo());
-                                        itemPedidos.put("Cantidad", "1");
+                                        itemPedidos.put("Cantidad", articulo.getUnidadMinima());
                                         itemPedidos.put("Um", articulo.getUnidad().trim());
+                                        itemPedidos.put("UnidadMinima", articulo.getUnidadMinima());
                                         itemPedidos.put("Precio", String.valueOf(Precio));
                                         itemPedidos.put("TipoPrecio", vTipoPrecio);
                                         itemPedidos.put("Descripcion", DescripcionArt);
@@ -1005,6 +1015,7 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
                             //articuloBonificado.put("Cod", itemBonificado.get(variables_publicas.CARTILLAS_BC_DETALLE_COLUMN_itemB));
                             articuloBonificado.put("CodigoArticulo", itemBonificado.get(variables_publicas.CARTILLAS_BC_DETALLE_COLUMN_itemB));
                             articuloBonificado.put("Um", itemBonificado.get(variables_publicas.CARTILLAS_BC_DETALLE_COLUMN_umB));
+                            articuloBonificado.put("UnidadMinima", articuloB.getUnidadMinima());
                             int factor = (int) Math.floor(Double.parseDouble(itemPedidos.get("Cantidad")) / Double.parseDouble(itemBonificado.get(variables_publicas.CARTILLAS_BC_DETALLE_COLUMN_cantidad)));
                             articuloBonificado.put("Cantidad", String.valueOf((int) (factor * Double.parseDouble(itemBonificado.get(variables_publicas.CARTILLAS_BC_DETALLE_COLUMN_cantidadB)))));
                             articuloBonificado.put("Precio", "0");
@@ -1423,7 +1434,7 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
             txtCodigoArticulo.requestFocus();
             lblUM.setText("N/A");
             lblUMV.setText("N/A");
-            lblExistentias.setText("N/A");
+            lblExistentias.setText("0");
             InputMethodManager inputManager = (InputMethodManager)
                     getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -1469,6 +1480,7 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
         //itemPedidos.put("Cod", articulo.getCodigo());
         itemPedidos.put("Cantidad", txtCantidad.getText().toString().trim());
         itemPedidos.put("Um", vUM.trim());
+        itemPedidos.put("UnidadMinima", articulo.getUnidadMinima());
         itemPedidos.put("Precio", String.valueOf(Precio));
         itemPedidos.put("TipoPrecio", vTipoPrecio);
         itemPedidos.put("Descripcion", DescripcionArt);
@@ -1531,8 +1543,8 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
         adapter = new SimpleAdapter(
                 getApplicationContext(), listaArticulos,
                 R.layout.pedidos_list_item, new
-                String[]{"Cod", "Cantidad","Um", "Precio", "TipoPrecio", "Descripcion", "PorDescuento","Unidades","CodUM", "Descuento", "SubTotal", "Iva", "Total"}, new
-                int[]{R.id.lblDetalleCodProducto, R.id.lblDetalleCantidad, R.id.lblDetalleUM, R.id.lblDetallePrecio, R.id.lblDetalleTipoPrecio, R.id.lblDetalleDescripcion, R.id.lblDetallePorDescuento, R.id.lblDetalleUnidades, R.id.lblDetalleCodUM, R.id.lblDetalleDescuento, R.id.lblDetalleSubTotal, R.id.lblDetalleIva, R.id.lblDetalleTotal}) {
+                String[]{"Cod", "Cantidad","Um", "UnidadMinima","Precio", "TipoPrecio", "Descripcion", "PorDescuento","Unidades","CodUM", "Descuento", "SubTotal", "Iva", "Total"}, new
+                int[]{R.id.lblDetalleCodProducto, R.id.lblDetalleCantidad, R.id.lblDetalleUM,R.id.lblDetalleMinimo, R.id.lblDetallePrecio, R.id.lblDetalleTipoPrecio, R.id.lblDetalleDescripcion, R.id.lblDetallePorDescuento, R.id.lblDetalleUnidades, R.id.lblDetalleCodUM, R.id.lblDetalleDescuento, R.id.lblDetalleSubTotal, R.id.lblDetalleIva, R.id.lblDetalleTotal}) {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -1951,7 +1963,12 @@ public class PedidosActivity extends Activity implements ActivityCompat.OnReques
 
                                 double subtotal, iva, total, descuento, porIva;
                                 String vprecio="0";
-                                itemArticulo2.put("Cantidad", result[0]);
+                                if (Integer.parseInt(result[0])< Integer.parseInt(itemArticulo2.get("UnidadMinima"))){
+                                    itemArticulo2.put("Cantidad",itemArticulo2.get("UnidadMinima"));
+                                }else{
+                                    itemArticulo2.put("Cantidad", result[0]);
+                                }
+
 
                                 String tmpcodigoart =itemArticulo2.get("CodigoArticulo");
                                 List<Articulo> precios = TPreciosH.ObtenerPrecioPorUM(tmpcodigoart);

@@ -34,6 +34,7 @@ public class PedidosDetalleHelper {
                                      String PorcentajeIva,
                                      String Iva,
                                      String Um,
+                                     String UnidadMinima,
                                      String Subtotal,
                                      String Total,
                                      String Bodega
@@ -55,6 +56,7 @@ public class PedidosDetalleHelper {
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_PorcentajeIva, PorcentajeIva);
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Iva, Iva);
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Um, Um);
+        contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_UnidadMinima, UnidadMinima);
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Subtotal, Subtotal);
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Total, Total);
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega, Bodega);
@@ -80,6 +82,7 @@ public class PedidosDetalleHelper {
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_PorcentajeIva, lstArticulos.get(variables_publicas.PEDIDOS_DETALLE_COLUMN_PorcentajeIva));
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Iva, lstArticulos.get(variables_publicas.PEDIDOS_DETALLE_COLUMN_Iva));
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Um, lstArticulos.get(variables_publicas.PEDIDOS_DETALLE_COLUMN_Um));
+        contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_UnidadMinima, lstArticulos.get(variables_publicas.PEDIDOS_DETALLE_COLUMN_UnidadMinima));
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Subtotal, lstArticulos.get(variables_publicas.PEDIDOS_DETALLE_COLUMN_Subtotal));
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Total, lstArticulos.get(variables_publicas.PEDIDOS_DETALLE_COLUMN_Total));
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega, lstArticulos.get(variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega));
@@ -112,6 +115,7 @@ public class PedidosDetalleHelper {
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_PorcentajeIva, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_PorcentajeIva)));
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Iva, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_Iva)));
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Um, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_Um)));
+                detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_UnidadMinima, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_UnidadMinima)));
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Subtotal, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_Subtotal)));
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Total, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_Total)));
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega)));
@@ -145,6 +149,7 @@ public class PedidosDetalleHelper {
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_PorcentajeIva, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_PorcentajeIva)));
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Iva, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_Iva)));
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Um, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_Um)));
+                detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_UnidadMinima, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_UnidadMinima)));
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Subtotal, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_Subtotal)));
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Total, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_Total)));
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega)));

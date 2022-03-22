@@ -38,6 +38,7 @@ public class Cliente {
     private String Pais_Nombre= "";
     private String IdTipoNegocio= "";
     private String TipoNegocio= "";
+    private String Barrio= "";
     public Cliente() {
 
     }
@@ -47,7 +48,7 @@ public class Cliente {
     }
     public Cliente(String idCliente, String nombre, String fechaCreacion, String telefono, String direccion, String idDepartamento, String idMunicipio, String ciudad, String ruc, String cedula, String limiteCredito,
                    String idFormaPago, String idVendedor, String excento, String codigoLetra, String ruta,  String nombreRuta,String frecuencia, String precioEspecial, String fechaUltimaCompra, String tipo,String tipoPrecio,
-                   String descuento, String empleado, String idSupervisor, String empresa, String codZona, String codSubZona, String idPais,String nombrePais, String idTipoNegocio,String tipoNegocio) {
+                   String descuento, String empleado, String idSupervisor, String empresa, String codZona, String codSubZona, String idPais,String nombrePais, String idTipoNegocio,String tipoNegocio,String barrio) {
         IdCliente = idCliente;
         Nombre = nombre;
         FechaCreacion = fechaCreacion;
@@ -80,6 +81,7 @@ public class Cliente {
         Pais_Nombre=nombrePais;
         IdTipoNegocio=idTipoNegocio;
         TipoNegocio =tipoNegocio;
+        Barrio =barrio;
     }
 
     public String getIdCliente() {
@@ -320,6 +322,14 @@ public class Cliente {
 
     public void setCod_SubZona(String codSubZona) {
         Cod_SubZona = codSubZona;
+    }
+
+    public String getBarrio() {
+        return Barrio;
+    }
+
+    public void setBarrio(String barrio) {
+        Barrio = barrio;
     }
 
     public String toString(){

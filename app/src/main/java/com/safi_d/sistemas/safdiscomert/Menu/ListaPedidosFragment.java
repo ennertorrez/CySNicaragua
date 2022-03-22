@@ -85,8 +85,10 @@ public class ListaPedidosFragment extends Fragment {
     public static ArrayList<HashMap<String, String>> listapedidos;
     public Calendar myCalendar = Calendar.getInstance();
     final String urlPedidosVendedor = variables_publicas.direccionIp + "/ServicioPedidos.svc/ObtenerPedidosVendedor";
+    final String urlPedidosVendedorRuta = variables_publicas.direccionIp + "/ServicioPedidos.svc/ObtenerPedidosVendedorRuta";
     private String jsonAnulaPedido;
     private String IdPedido;
+    private String codPedido="";
     private boolean guardadoOK = true;
     private DecimalFormat df;
     private boolean isOnline = false;
@@ -413,7 +415,8 @@ public class ListaPedidosFragment extends Fragment {
         String encodeUrl = "";
         HttpHandler sh = new HttpHandler();
         busqueda = busqueda.isEmpty() ? "%" : busqueda;
-        String urlString = urlPedidosVendedor + "/" + CodigoVendedor + "/" + fecha + "/" + busqueda + "/" + Empresa;
+        //String urlString = urlPedidosVendedor + "/" + CodigoVendedor + "/" + fecha + "/" + busqueda + "/" + Empresa;
+        String urlString = urlPedidosVendedorRuta + "/" + CodigoVendedor + "/" + fecha + "/" + busqueda + "/" + Empresa + "/" + variables_publicas.rutacargada;
         try {
             URL Url = new URL(urlString);
             URI uri = new URI(Url.getProtocol(), Url.getUserInfo(), Url.getHost(), Url.getPort(), Url.getPath(), Url.getQuery(), Url.getRef());
@@ -432,7 +435,8 @@ public class ListaPedidosFragment extends Fragment {
 
                 JSONObject jsonObj = new JSONObject(jsonStr);
                 // Getting JSON Array node
-                JSONArray Pedidos = jsonObj.getJSONArray("ObtenerPedidosVendedorResult");
+                //JSONArray Pedidos = jsonObj.getJSONArray("ObtenerPedidosVendedorResult");
+                JSONArray Pedidos = jsonObj.getJSONArray("ObtenerPedidosVendedorRutaResult");
 
                 for (int i = 0; i < Pedidos.length(); i++) {
                     JSONObject c = Pedidos.getJSONObject(i);
@@ -683,6 +687,7 @@ public class ListaPedidosFragment extends Fragment {
             } else {
                 tv.setEnabled(true);
             }
+            ((MenuItem) menu.getItem(0)).setEnabled(false);
             if (obj.get("Estado").equalsIgnoreCase("ANULADO") || !obj.get("Factura").equalsIgnoreCase(""))
                  //   || (obj.get("Estado").equalsIgnoreCase("APROBADO")) )
             {
@@ -791,11 +796,18 @@ public class ListaPedidosFragment extends Fragment {
                     String CodigoPedido = obj.get("CodigoPedido");
                     if (obj.get("Factura").equalsIgnoreCase("")) {
                         if (((obj.get("FormaPago").equalsIgnoreCase("Contado") || obj.get("FormaPago").equalsIgnoreCase("CONTADO (*)")) && (obj.get("Estado").equalsIgnoreCase("Aprobado")) || obj.get("Estado").equalsIgnoreCase("NO ENVIADO") || obj.get("Estado").equalsIgnoreCase("Pendiente"))) {
-
+                            codPedido=CodigoPedido;
                             pedido = PedidosH.ObtenerPedido(CodigoPedido);
                             if (pedido == null) {
-                                Funciones.MensajeAviso(getActivity(), "Este pedido no se puede editar, ya que no fue creado en este dispositivo");
-                                return true;
+//                                Funciones.MensajeAviso(getActivity(), "Este pedido no se puede editar, ya que no fue creado en este dispositivo");
+//                                return true;
+                                if (SincronizarDatos.ObtenerPedidoGuardado(CodigoPedido,PedidosH)){
+                                    SincronizarDatos.ObtenerPedidoGuardadoDetalle(CodigoPedido,PedidosDetalleH);
+                                    pedido = PedidosH.ObtenerPedido(CodigoPedido);
+                                }else{
+                                    Funciones.MensajeAviso(getActivity(), "Este pedido no se puede Editar. Ocurrió un error al obtener los datos.");
+                                    return true;
+                                }
                             }
 
                             String IdCliente = pedido.get("IdCliente");

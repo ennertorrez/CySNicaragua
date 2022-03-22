@@ -53,7 +53,8 @@ public class ClientesHelper {
                                       String Pais_Id,
                                       String Pais_Nombre,
                                       String IdTipoNegocio,
-                                      String tipoNegocio) {
+                                      String tipoNegocio,
+                                      String Barrio) {
         long rows =0;
 
         ContentValues contentValues = new ContentValues();
@@ -90,6 +91,7 @@ public class ClientesHelper {
         contentValues.put(variables_publicas.CLIENTES_COLUMN_Pais_Nombre, Pais_Nombre );
         contentValues.put(variables_publicas.CLIENTES_COLUMN_IdTipoNegocio, IdTipoNegocio );
         contentValues.put(variables_publicas.CLIENTES_COLUMN_TipoNegocio, tipoNegocio );
+        contentValues.put(variables_publicas.CLIENTES_COLUMN_Barrio, Barrio );
 
        long inserted= database.insert(variables_publicas.TABLE_CLIENTES, null, contentValues);
         if(inserted!=-1)
@@ -136,6 +138,7 @@ public class ClientesHelper {
         contentValues.put(variables_publicas.CLIENTES_COLUMN_Pais_Nombre, cliente.get(variables_publicas.CLIENTES_COLUMN_Pais_Nombre));
         contentValues.put(variables_publicas.CLIENTES_COLUMN_IdTipoNegocio, cliente.get(variables_publicas.CLIENTES_COLUMN_IdTipoNegocio));
         contentValues.put(variables_publicas.CLIENTES_COLUMN_TipoNegocio, cliente.get(variables_publicas.CLIENTES_COLUMN_TipoNegocio));
+        contentValues.put(variables_publicas.CLIENTES_COLUMN_Barrio, cliente.get(variables_publicas.CLIENTES_COLUMN_Barrio));
         database.insert(variables_publicas.TABLE_CLIENTES, null, contentValues);
     }
 
@@ -180,6 +183,7 @@ public class ClientesHelper {
                 cliente.put(variables_publicas.CLIENTES_COLUMN_Pais_Nombre, c.getString(c.getColumnIndex("Pais_Nombre")));
                 cliente.put(variables_publicas.CLIENTES_COLUMN_IdTipoNegocio, c.getString(c.getColumnIndex("IdTipoNegocio")));
                 cliente.put(variables_publicas.CLIENTES_COLUMN_TipoNegocio, c.getString(c.getColumnIndex("TipoNegocio")));
+                cliente.put(variables_publicas.CLIENTES_COLUMN_Barrio, c.getString(c.getColumnIndex("Barrio")));
                         lst.add(cliente);
 
             }while (c.moveToNext());
@@ -228,6 +232,7 @@ public class ClientesHelper {
                 cliente.put(variables_publicas.CLIENTES_COLUMN_Pais_Nombre, c.getString(c.getColumnIndex("Pais_Nombre")));
                 cliente.put(variables_publicas.CLIENTES_COLUMN_IdTipoNegocio, c.getString(c.getColumnIndex("IdTipoNegocio")));
                 cliente.put(variables_publicas.CLIENTES_COLUMN_TipoNegocio, c.getString(c.getColumnIndex("TipoNegocio")));
+                cliente.put(variables_publicas.CLIENTES_COLUMN_Barrio, c.getString(c.getColumnIndex("Barrio")));
                 lst.add(cliente);
 
             }while (c.moveToNext());
@@ -279,7 +284,7 @@ public class ClientesHelper {
                 vCliente.put(variables_publicas.CLIENTES_COLUMN_Pais_Nombre, c.getString(c.getColumnIndex("Pais_Nombre")));
                 vCliente.put(variables_publicas.CLIENTES_COLUMN_IdTipoNegocio, c.getString(c.getColumnIndex("IdTipoNegocio")));
                 vCliente.put(variables_publicas.CLIENTES_COLUMN_TipoNegocio, c.getString(c.getColumnIndex("TipoNegocio")));
-
+                vCliente.put(variables_publicas.CLIENTES_COLUMN_Barrio, c.getString(c.getColumnIndex("Barrio")));
             }while (c.moveToNext());
         }
         c.close();
@@ -333,7 +338,8 @@ public class ClientesHelper {
                         c.getString(c.getColumnIndex(variables_publicas.CLIENTES_COLUMN_Pais_Id)),
                         c.getString(c.getColumnIndex(variables_publicas.CLIENTES_COLUMN_Pais_Nombre)),
                         c.getString(c.getColumnIndex(variables_publicas.CLIENTES_COLUMN_IdTipoNegocio)),
-                        c.getString(c.getColumnIndex(variables_publicas.CLIENTES_COLUMN_TipoNegocio))
+                        c.getString(c.getColumnIndex(variables_publicas.CLIENTES_COLUMN_TipoNegocio)),
+                        c.getString(c.getColumnIndex(variables_publicas.CLIENTES_COLUMN_Barrio))
                 );
             }while (c.moveToNext());
         }
@@ -458,6 +464,7 @@ public class ClientesHelper {
                 cliente.put(variables_publicas.CLIENTES_COLUMN_TipoPrecio, c.getString(c.getColumnIndex(variables_publicas.CLIENTES_COLUMN_TipoPrecio)));
                 cliente.put(variables_publicas.CLIENTES_COLUMN_NombreRuta, c.getString(c.getColumnIndex(variables_publicas.CLIENTES_COLUMN_NombreRuta)));
                 cliente.put(variables_publicas.CLIENTES_COLUMN_Frecuencia, c.getString(c.getColumnIndex(variables_publicas.CLIENTES_COLUMN_Frecuencia)));
+                cliente.put(variables_publicas.CLIENTES_COLUMN_Barrio, c.getString(c.getColumnIndex(variables_publicas.CLIENTES_COLUMN_Barrio)));
             } while (c.moveToNext());
         }
         c.close();

@@ -69,6 +69,20 @@
             android:textSize="16dp"
             android:visibility="invisible"
             android:textStyle="bold" />
+        <TextView
+            android:id="@+id/lblDetalleMinimo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="left"
+            android:ellipsize="end"
+            android:focusable="false"
+            android:gravity="center"
+            android:maxLines="3"
+            android:paddingLeft="2dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16dp"
+            android:visibility="invisible"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/lblDetallePrecio"

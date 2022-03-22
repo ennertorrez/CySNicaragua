@@ -33,7 +33,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.text.ParseException;
-
 import android.os.Handler;
 
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.ArticulosHelper;
@@ -549,40 +548,49 @@ public class MenuActivity extends AppCompatActivity
                         Date fecha =null;
                         Date fecha2 =null;
                         String fechaSF =null;
-                        Calendar c = new GregorianCalendar();
-                        vanio=c.get(Calendar.YEAR);
-                        semana=c.get(Calendar.WEEK_OF_YEAR);
-                        diahoy=c.get(Calendar.DAY_OF_WEEK);
+
+                        Date currentdate = new Date();
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setFirstDayOfWeek( Calendar.MONDAY);
+                        calendar.setMinimalDaysInFirstWeek( 4 );
+                        calendar.setTime(currentdate);
+                        int numberWeekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
+
+                        //Calendar c = Calendar.getInstance();// new GregorianCalendar();
+                        vanio=calendar.get(Calendar.YEAR);
+                        semana=numberWeekOfYear + 1;
+                        diahoy=calendar.get(Calendar.DAY_OF_WEEK);
                         fechaSF=String.valueOf(vanio)+"-01-01";
                         inicioanio= formato.parse( fechaSF);
-                        c.setTime(inicioanio);
-                        vdiasemanainicio=c.get(Calendar.DAY_OF_WEEK);//dia en que inicio el año
+                        calendar.setTime(inicioanio);
+                        vdiasemanainicio=calendar.get(Calendar.DAY_OF_WEEK);//dia en que inicio el año
                         if (dia2-dia>0){
                             vdiassumar=(semana-1)*7 + dia -vdiasemanainicio;
-                            c.add(Calendar.DAY_OF_YEAR, vdiassumar);
-                            fecha=c.getTime();
+                            calendar.add(Calendar.DAY_OF_YEAR, vdiassumar);
+                            fecha=calendar.getTime();
                             vFechaResultadoFInicio=formato.format(fecha);
                             fecha2=new Date(fecha.getTime()+((1000 * 60 * 60 * 24)*(dia2-dia)));
                             vFechaResultadoFFin=formato.format(fecha2);
                         }else{
                             if(diahoy<dia && diahoy>dia2){
                                 vdiassumar = (semana - 2) * 7 + dia - vdiasemanainicio;
-                                c.add(Calendar.DAY_OF_YEAR, vdiassumar);
-                                fecha = c.getTime();
+                                calendar.add(Calendar.DAY_OF_YEAR, vdiassumar);
+                                fecha = calendar.getTime();
                                 vFechaResultadoFInicio = formato.format(fecha);
                                 fecha2 = new Date(fecha.getTime() + ((1000 * 60 * 60 * 24) * (7 - Math.abs(dia2 - dia))));
                                 vFechaResultadoFFin = formato.format(fecha2);
                             }else if(diahoy<dia && diahoy<=dia2) {
                                 vdiassumar = (semana - 2) * 7 + dia - vdiasemanainicio;
-                                c.add(Calendar.DAY_OF_YEAR, vdiassumar);
-                                fecha = c.getTime();
+                                calendar.add(Calendar.DAY_OF_YEAR, vdiassumar);
+                                fecha = calendar.getTime();
                                 vFechaResultadoFInicio = formato.format(fecha);
                                 fecha2 = new Date(fecha.getTime() + ((1000 * 60 * 60 * 24) * (7 - Math.abs(dia2 - dia))));
                                 vFechaResultadoFFin = formato.format(fecha2);
                             }else if (diahoy==dia){
                                 vdiassumar = (semana - 1) * 7 + dia - vdiasemanainicio;
-                                c.add(Calendar.DAY_OF_YEAR, vdiassumar);
-                                fecha = c.getTime();
+                                calendar.add(Calendar.DAY_OF_YEAR, vdiassumar);
+                                fecha = calendar.getTime();
                                 vFechaResultadoFInicio = formato.format(fecha);
                                 fecha2 = new Date(fecha.getTime() + ((1000 * 60 * 60 * 24) * (7 - Math.abs(dia2 - dia))));
                                 vFechaResultadoFFin = formato.format(fecha2);

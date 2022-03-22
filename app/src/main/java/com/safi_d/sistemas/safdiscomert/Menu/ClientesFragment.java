@@ -208,6 +208,7 @@ public class ClientesFragment extends Fragment {
                     String Pais_Nombre = clientes.get("Pais_Nombre");
                     String IdTipoNegocio = clientes.get("IdTipoNegocio");
                     String TipoNegocio = clientes.get("TipoNegocio");
+                    String Barrio = clientes.get("Barrio");
 
                     Intent in = new Intent(getActivity().getApplicationContext(), ClientesNew.class);
 
@@ -243,6 +244,7 @@ public class ClientesFragment extends Fragment {
                     in.putExtra(variables_publicas.CLIENTES_COLUMN_Pais_Nombre, Pais_Nombre);
                     in.putExtra(variables_publicas.CLIENTES_COLUMN_IdTipoNegocio, IdTipoNegocio);
                     in.putExtra(variables_publicas.CLIENTES_COLUMN_TipoNegocio, TipoNegocio);
+                    in.putExtra(variables_publicas.CLIENTES_COLUMN_Barrio, Barrio);
                     // Starting new intent
                     variables_publicas.vEditando= true;
                     startActivity(in);
@@ -333,7 +335,7 @@ public class ClientesFragment extends Fragment {
                         cliente.put(variables_publicas.CLIENTES_COLUMN_Pais_Nombre, c.getString("Pais_Nombre"));
                         cliente.put(variables_publicas.CLIENTES_COLUMN_IdTipoNegocio, c.getString("IdTipoNegocio"));
                         cliente.put(variables_publicas.CLIENTES_COLUMN_TipoNegocio, c.getString("TipoNegocio"));
-
+                        cliente.put(variables_publicas.CLIENTES_COLUMN_Barrio, c.getString("Barrio"));
                         listaClientes.add(cliente);
 
                         if (variables_publicas.usuario.getTipo().equals("Supervisor")||variables_publicas.usuario.getTipo().equals("User")) {
@@ -347,7 +349,7 @@ public class ClientesFragment extends Fragment {
                                         c.getString("Telefono"), c.getString("Direccion"), c.getString("IdDepartamento"), c.getString("IdMunicipio"), c.getString("Ciudad"), c.getString("Ruc"), c.getString("Cedula"), c.getString("LimiteCredito"),
                                         c.getString("IdFormaPago"), c.getString("IdVendedor"), c.getString("Excento"), c.getString("CodigoLetra"), c.getString("Ruta"),c.getString("NombreRuta"), c.getString("Frecuencia"), c.getString("PrecioEspecial"), c.getString("FechaUltimaCompra"),
                                         c.getString("Tipo"),c.getString("TipoPrecio"), c.getString("Descuento"), c.getString("Empleado"), c.getString("IdSupervisor"),c.getString("EMPRESA"),
-                                        c.getString("COD_ZONA"), c.getString("COD_SUBZONA"),c.getString("Pais_Id"),c.getString("Pais_Nombre"), c.getString("IdTipoNegocio"),c.getString("TipoNegocio"));
+                                        c.getString("COD_ZONA"), c.getString("COD_SUBZONA"),c.getString("Pais_Id"),c.getString("Pais_Nombre"), c.getString("IdTipoNegocio"),c.getString("TipoNegocio"),c.getString("Barrio"));
                                 DbOpenHelper.database.setTransactionSuccessful();
                                 DbOpenHelper.database.endTransaction();
                             }
