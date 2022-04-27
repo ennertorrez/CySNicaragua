@@ -1,8 +1,10 @@
 package com.safi_d.sistemas.safdiscomert.Menu;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -32,11 +34,16 @@ import com.safi_d.sistemas.safdiscomert.AccesoDatos.ClientesHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.DataBaseOpenHelper;
 import com.safi_d.sistemas.safdiscomert.Auxiliar.variables_publicas;
 import com.safi_d.sistemas.safdiscomert.Pedidos.PedidosActivity;
+import com.safi_d.sistemas.safdiscomert.AccesoDatos.UsuariosHelper;
+import com.safi_d.sistemas.safdiscomert.Principal.MenuActivity;
 import com.safi_d.sistemas.safdiscomert.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by usuario on 20/3/2017.
@@ -46,6 +53,7 @@ public class PedidosFragment extends Fragment {
     View myView;
     private DataBaseOpenHelper DbOpenHelper;
     private ClientesHelper ClientesH;
+    private UsuariosHelper UsuariosH;
     private String TAG = PedidosFragment.class.getSimpleName();
     private String busqueda = "";
     private String tipoBusqueda = "2";
@@ -64,6 +72,8 @@ public class PedidosFragment extends Fragment {
         getActivity().setTitle("Nuevo Pedido");
         lv = (ListView) myView.findViewById(R.id.list);
         registerForContextMenu(lv);
+        DbOpenHelper = new DataBaseOpenHelper(getActivity());
+        UsuariosH = new UsuariosHelper(DbOpenHelper.database);
         btnBuscar = (Button) myView.findViewById(R.id.btnBuscar);
         lblFooter = (TextView) myView.findViewById(R.id.lblFooter);
         rgGrupo = (RadioGroup) myView.findViewById(R.id.rgGrupo);
@@ -124,16 +134,36 @@ public class PedidosFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                // getting values from selected ListItem
-                String IdCliente = ((TextView) view.findViewById(R.id.IdCliente)).getText().toString();
-                String Nombre = ((TextView) view.findViewById(R.id.Nombre)).getText().toString();
-                // Starting new intent
-                Intent in = new Intent(getActivity().getApplicationContext(), PedidosActivity.class);
+                variables_publicas.diasCierre = UsuariosH.ObtenerDiasCierre();
+                if (variables_publicas.diasCierre != null){
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date fechaActual = new Date();
+                    Date fecha1 = new Date();
+                    Date fecha2 = new Date();
+                    try {
+                        fechaActual = dateFormat.parse(variables_publicas.FechaActual);
+                        fecha1 = dateFormat.parse(variables_publicas.diasCierre.getFechaInicio());
+                        fecha2= dateFormat.parse(variables_publicas.diasCierre.getFechaFin());
+                    } catch (ParseException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    if(fechaActual.after(fecha1) && fechaActual.before(fecha2)){
+                        // getting values from selected ListItem
+                        String IdCliente = ((TextView) view.findViewById(R.id.IdCliente)).getText().toString();
+                        String Nombre = ((TextView) view.findViewById(R.id.Nombre)).getText().toString();
+                        // Starting new intent
+                        Intent in = new Intent(getActivity().getApplicationContext(), PedidosActivity.class);
 
-                in.putExtra(variables_publicas.CLIENTES_COLUMN_IdCliente, IdCliente );
-                in.putExtra(variables_publicas.CLIENTES_COLUMN_Nombre, Nombre );
-                in.putExtra(variables_publicas.vVisualizar,"False");
-                startActivity(in);
+                        in.putExtra(variables_publicas.CLIENTES_COLUMN_IdCliente, IdCliente );
+                        in.putExtra(variables_publicas.CLIENTES_COLUMN_Nombre, Nombre );
+                        in.putExtra(variables_publicas.vVisualizar,"False");
+                        startActivity(in);
+                    }else{
+                        MensajeAviso("No está permitido registrar pedidos en este momento. Se reabre nuevamente los días " + variables_publicas.diasCierre.getDiaInicio() + " a las " + variables_publicas.diasCierre.getHoraInicio()  +" ");
+                    }
+                }
+
             }
         });
 
@@ -226,5 +256,18 @@ public class PedidosFragment extends Fragment {
                });
            }
         }
+    }
+    public void MensajeAviso(String texto) {
+        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
+        dlgAlert.setMessage(texto);
+        dlgAlert.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+             /*   if (finalizar) {
+                    finish();
+                }*/
+            }
+        });
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
     }
 }

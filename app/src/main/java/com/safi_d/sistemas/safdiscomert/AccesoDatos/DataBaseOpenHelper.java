@@ -297,7 +297,9 @@ public class DataBaseOpenHelper {
                     + variables_publicas.DIASCIERRE_COLUMN_DiaInicio + " TEXT , "
                     + variables_publicas.DIASCIERRE_COLUMN_DiaFin + " TEXT , "
                     + variables_publicas.DIASCIERRE_COLUMN_HoraInicio + " TEXT , "
-                    + variables_publicas.DIASCIERRE_COLUMN_HoraFin + " TEXT ) ");
+                    + variables_publicas.DIASCIERRE_COLUMN_HoraFin + " TEXT , "
+                    + variables_publicas.DIASCIERRE_COLUMN_FechaInicio + " TEXT , "
+                    + variables_publicas.DIASCIERRE_COLUMN_FechaFin + " TEXT ) ");
         }
 
         @Override

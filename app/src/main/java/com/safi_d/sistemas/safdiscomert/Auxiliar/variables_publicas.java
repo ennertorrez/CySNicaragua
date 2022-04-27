@@ -57,7 +57,7 @@ public class variables_publicas {
     public static final String correosErrores = "cysnicaragua@gmail.com";
     public  static final String correoError= "cysnicaragua@gmail.com";
     //Variables BD
-    public static final int DATABASE_VERSION = 6;
+    public static final int DATABASE_VERSION = 8;
     public static final String DATABASE_NAME = "Safi_D.db";
     //Variables TB
     public static final String TABLE_ARTICULOS = "Articulos";
@@ -335,6 +335,8 @@ public class variables_publicas {
     public static final String DIASCIERRE_COLUMN_DiaFin = "DiaFin";
     public static final String DIASCIERRE_COLUMN_HoraInicio = "HoraInicio";
     public static final String DIASCIERRE_COLUMN_HoraFin= "HoraFin";
+    public static final String DIASCIERRE_COLUMN_FechaInicio= "FechaInicio";
+    public static final String DIASCIERRE_COLUMN_FechaFin= "FechaFin";
 
     public final static int COUNTDOWN_FREQUENCY = 1000;
     public final static int VIBRATE_THRESHOLD = 30 * 1000;

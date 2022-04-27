@@ -35,6 +35,7 @@ import com.safi_d.sistemas.safdiscomert.AccesoDatos.ClientesHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.DataBaseOpenHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.PedidosDetalleHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.PedidosHelper;
+import com.safi_d.sistemas.safdiscomert.AccesoDatos.UsuariosHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.VendedoresHelper;
 import com.safi_d.sistemas.safdiscomert.Auxiliar.Funciones;
 import com.safi_d.sistemas.safdiscomert.Auxiliar.SincronizarDatos;
@@ -60,10 +61,13 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
+import java.text.ParseException;
+
 public class ListaPedidosFragment extends Fragment {
     View myView;
     private DataBaseOpenHelper DbOpenHelper;
     private PedidosHelper PedidosH;
+    private UsuariosHelper UsuariosH;
     private PedidosDetalleHelper PedidosDetalleH;
     private ClientesHelper ClientesH;
     private VendedoresHelper VendedoresH;
@@ -129,6 +133,7 @@ public class ListaPedidosFragment extends Fragment {
         PedidosH = new PedidosHelper(DbOpenHelper.database);
         PedidosDetalleH = new PedidosDetalleHelper(DbOpenHelper.database);
         ClientesH = new ClientesHelper(DbOpenHelper.database);
+        UsuariosH = new UsuariosHelper(DbOpenHelper.database);
         VendedoresH = new VendedoresHelper(DbOpenHelper.database);
         variables_publicas.Pedidos = PedidosH.BuscarPedidosSinconizar();
         txtFechaPedido.setText(getDatePhone());
@@ -775,58 +780,75 @@ public class ListaPedidosFragment extends Fragment {
                     return true;
 
                 case R.id.itemEditarPedido: {
-                    fecha = txtFechaPedido.getText().toString();
-                    listapedidos.clear();
-                    inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(txtBusqueda.getWindowToken(), 0);
-                    busqueda = txtBusqueda.getText().toString();
-                    try {
-                        new GetListaPedidos().execute().get();
-                    } catch (Exception e) {
+                    variables_publicas.diasCierre = UsuariosH.ObtenerDiasCierre();
+                    if (variables_publicas.diasCierre != null){
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date fechaActual = new Date();
+                        Date fecha1 = new Date();
+                        Date fecha2 = new Date();
+                        try {
+                            fechaActual = dateFormat.parse(variables_publicas.FechaActual);
+                            fecha1 = dateFormat.parse(variables_publicas.diasCierre.getFechaInicio());
+                            fecha2= dateFormat.parse(variables_publicas.diasCierre.getFechaFin());
+                        } catch (ParseException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                        if(fechaActual.after(fecha1) && fechaActual.before(fecha2)){
+                        fecha = txtFechaPedido.getText().toString();
+                        listapedidos.clear();
+                        inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(txtBusqueda.getWindowToken(), 0);
+                        busqueda = txtBusqueda.getText().toString();
+                        try {
+                            new GetListaPedidos().execute().get();
+                        } catch (Exception e) {
 
-                    }
-                    ActualizarFooter();
+                        }
+                        ActualizarFooter();
 
-                    if (listapedidos.size() == 0) {
-                        return true;
-                    }
+                        if (listapedidos.size() == 0) {
+                            return true;
+                        }
 
-                    //Editar
-                    HashMap<String, String> obj = listapedidos.get(info.position);
-                    String CodigoPedido = obj.get("CodigoPedido");
-                    if (obj.get("Factura").equalsIgnoreCase("")) {
-                        if (((obj.get("FormaPago").equalsIgnoreCase("Contado") || obj.get("FormaPago").equalsIgnoreCase("CONTADO (*)")) && (obj.get("Estado").equalsIgnoreCase("Aprobado")) || obj.get("Estado").equalsIgnoreCase("NO ENVIADO") || obj.get("Estado").equalsIgnoreCase("Pendiente"))) {
-                            codPedido=CodigoPedido;
-                            pedido = PedidosH.ObtenerPedido(CodigoPedido);
-                            if (pedido == null) {
+                        //Editar
+                        HashMap<String, String> obj = listapedidos.get(info.position);
+                        String CodigoPedido = obj.get("CodigoPedido");
+                        if (obj.get("Factura").equalsIgnoreCase("")) {
+                            if (((obj.get("FormaPago").equalsIgnoreCase("Contado") || obj.get("FormaPago").equalsIgnoreCase("CONTADO (*)")) && (obj.get("Estado").equalsIgnoreCase("Aprobado")) || obj.get("Estado").equalsIgnoreCase("NO ENVIADO") || obj.get("Estado").equalsIgnoreCase("Pendiente"))) {
+                                codPedido=CodigoPedido;
+                                pedido = PedidosH.ObtenerPedido(CodigoPedido);
+                                if (pedido == null) {
 //                                Funciones.MensajeAviso(getActivity(), "Este pedido no se puede editar, ya que no fue creado en este dispositivo");
 //                                return true;
-                                if (SincronizarDatos.ObtenerPedidoGuardado(CodigoPedido,PedidosH)){
-                                    SincronizarDatos.ObtenerPedidoGuardadoDetalle(CodigoPedido,PedidosDetalleH);
-                                    pedido = PedidosH.ObtenerPedido(CodigoPedido);
-                                }else{
-                                    Funciones.MensajeAviso(getActivity(), "Este pedido no se puede Editar. Ocurrió un error al obtener los datos.");
-                                    return true;
+                                    if (SincronizarDatos.ObtenerPedidoGuardado(CodigoPedido,PedidosH)){
+                                        SincronizarDatos.ObtenerPedidoGuardadoDetalle(CodigoPedido,PedidosDetalleH);
+                                        pedido = PedidosH.ObtenerPedido(CodigoPedido);
+                                    }else{
+                                        Funciones.MensajeAviso(getActivity(), "Este pedido no se puede Editar. Ocurrió un error al obtener los datos.");
+                                        return true;
+                                    }
                                 }
+
+                                String IdCliente = pedido.get("IdCliente");
+                                Cliente cliente = ClientesH.BuscarCliente(IdCliente);
+                                String Nombre = cliente.getNombre();
+                                // Starting new intent
+                                Intent in = new Intent(getActivity().getApplicationContext(), PedidosActivity.class);
+
+                                in.putExtra(variables_publicas.CLIENTES_COLUMN_IdCliente, IdCliente);
+                                in.putExtra(variables_publicas.CLIENTES_COLUMN_Nombre, Nombre);
+                                in.putExtra(variables_publicas.PEDIDOS_COLUMN_CodigoPedido, CodigoPedido);
+                                in.putExtra(variables_publicas.vVisualizar,"False");
+                                startActivity(in);
                             }
-
-                            String IdCliente = pedido.get("IdCliente");
-                            Cliente cliente = ClientesH.BuscarCliente(IdCliente);
-                            String Nombre = cliente.getNombre();
-                            // Starting new intent
-                            Intent in = new Intent(getActivity().getApplicationContext(), PedidosActivity.class);
-
-                            in.putExtra(variables_publicas.CLIENTES_COLUMN_IdCliente, IdCliente);
-                            in.putExtra(variables_publicas.CLIENTES_COLUMN_Nombre, Nombre);
-                            in.putExtra(variables_publicas.PEDIDOS_COLUMN_CodigoPedido, CodigoPedido);
-                            in.putExtra(variables_publicas.vVisualizar,"False");
-                            startActivity(in);
+                        } else {
+                            Funciones.MensajeAviso(getActivity(), "Este pedido no se puede editar, ya que fue facturado");
                         }
-                    } else {
-                        Funciones.MensajeAviso(getActivity(), "Este pedido no se puede anular, ya que fue facturado");
+                    }else {
+                            MensajeAviso("No está permitido editar pedidos en este momento. Se reabre nuevamente los días " + variables_publicas.diasCierre.getDiaInicio() + " a las " + variables_publicas.diasCierre.getHoraInicio()  +" ");
+                        }
                     }
-
-
                     return true;
                 }
                 case R.id.itemVerPedido: {
@@ -894,7 +916,19 @@ public class ListaPedidosFragment extends Fragment {
         dlgAlert.setCancelable(true);
         dlgAlert.create().show();
     }
-
+    public void MensajeAviso(String texto) {
+        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
+        dlgAlert.setMessage(texto);
+        dlgAlert.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+             /*   if (finalizar) {
+                    finish();
+                }*/
+            }
+        });
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
+    }
     private void updateLabel() {
         String myFormat = ("yyyy-MM-dd");
         ; //In which you need put here

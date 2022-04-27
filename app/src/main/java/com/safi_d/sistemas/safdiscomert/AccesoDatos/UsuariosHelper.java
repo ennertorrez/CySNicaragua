@@ -103,7 +103,7 @@ public class UsuariosHelper {
     public void GuardarDiasCierre(String diaInicio,
                              String diaFin,
                              String horaInicio,
-                                String horaFin) {
+                                String horaFin,String fechaInicio, String fechaFin) {
 
         long rows =0;
         ContentValues contentValues = new ContentValues();
@@ -111,6 +111,8 @@ public class UsuariosHelper {
         contentValues.put(variables_publicas.DIASCIERRE_COLUMN_DiaFin, diaFin);
         contentValues.put(variables_publicas.DIASCIERRE_COLUMN_HoraInicio, horaInicio);
         contentValues.put(variables_publicas.DIASCIERRE_COLUMN_HoraFin, horaFin);
+        contentValues.put(variables_publicas.DIASCIERRE_COLUMN_FechaInicio,fechaInicio);
+        contentValues.put(variables_publicas.DIASCIERRE_COLUMN_FechaFin, fechaFin);
         database.insert(variables_publicas.TABLE_DIASCIERRE, null, contentValues);
     }
 
@@ -129,7 +131,9 @@ public class UsuariosHelper {
                 diacierre = (new DiasCierre(c.getString(c.getColumnIndex(variables_publicas.DIASCIERRE_COLUMN_DiaInicio)),
                         c.getString(c.getColumnIndex(variables_publicas.DIASCIERRE_COLUMN_DiaFin)),
                         c.getString(c.getColumnIndex(variables_publicas.DIASCIERRE_COLUMN_HoraInicio)),
-                        c.getString(c.getColumnIndex(variables_publicas.DIASCIERRE_COLUMN_HoraFin))
+                        c.getString(c.getColumnIndex(variables_publicas.DIASCIERRE_COLUMN_HoraFin)),
+                        c.getString(c.getColumnIndex(variables_publicas.DIASCIERRE_COLUMN_FechaInicio)),
+                        c.getString(c.getColumnIndex(variables_publicas.DIASCIERRE_COLUMN_FechaFin))
                 ));
             } while (c.moveToNext());
         }

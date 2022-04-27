@@ -64,6 +64,7 @@ public class SincronizarDatos {
     final String urlGetCategorias = variables_publicas.direccionIp + "/ServicioClientes.svc/GetListaCategorias";
     static final String urlPrecios = variables_publicas.direccionIp + "/ServicioPedidos.svc/GetPreciosArticulos/1";
     static final String urlDiasCierre= variables_publicas.direccionIp + "/ServicioLogin.svc/GetDiasCierre/";
+    static final String urlDiasCierreNew= variables_publicas.direccionIp + "/ServicioLogin.svc/GetDiasCierreNew/";
     private String TAG = SincronizarDatos.class.getSimpleName();
     private DataBaseOpenHelper DbOpenHelper;
     private ClientesHelper ClientesH;
@@ -389,7 +390,7 @@ public class SincronizarDatos {
         String urlStringC="";
         HttpHandler shC = new HttpHandler();
 
-        urlStringC = urlDiasCierre ;
+        urlStringC = urlDiasCierreNew ;
 
         String jsonStrC = shC.makeServiceCall(urlStringC);
 
@@ -403,7 +404,7 @@ public class SincronizarDatos {
 
         UsuariosH.EliminaDiasCierre();
         JSONObject jsonObjC = new JSONObject(jsonStrC);
-        JSONArray dias = jsonObjC.getJSONArray("GetDiasCierreResult");
+        JSONArray dias = jsonObjC.getJSONArray("GetDiasCierreNewResult");
 
         try {
             for (int i = 0; i < dias.length(); i++) {
@@ -413,7 +414,9 @@ public class SincronizarDatos {
                 String diaFin = c.getString("DiaFin");
                 String horaInicio = c.getString("HoraInicio");
                 String horaFin = c.getString("HoraFin");
-                UsuariosH.GuardarDiasCierre(diaInicio, diaFin,  horaInicio, horaFin);
+                String fechaInicio = c.getString("FechaInicio");
+                String fechaFin = c.getString("FechaFin");
+                UsuariosH.GuardarDiasCierre(diaInicio, diaFin,  horaInicio, horaFin,fechaInicio,fechaFin);
             }
             DbOpenHelper.database.setTransactionSuccessful();
             return true;

@@ -188,7 +188,6 @@ public class MenuActivity extends AppCompatActivity
         CartillasBcDetalleH = new CartillasBcDetalleHelper(DbOpenHelper.database);
         FormaPagoH = new FormaPagoHelper(DbOpenHelper.database);
         ArticulosH = new ArticulosHelper(DbOpenHelper.database);
-        UsuariosH = new UsuariosHelper(DbOpenHelper.database);
         PedidoH = new PedidosHelper(DbOpenHelper.database);
         PedidoDetalleH = new PedidosDetalleHelper(DbOpenHelper.database);
         InformesH = new InformesHelper(DbOpenHelper.database);
@@ -499,12 +498,45 @@ public class MenuActivity extends AppCompatActivity
                 break;
 
             case R.id.btnNuevoPedido:
-                int dia=0;
+                fragmentManager.executePendingTransactions();
+                tran = getFragmentManager().beginTransaction();
+                tran.add(R.id.content_frame, new PedidosFragment());
+                tran.addToBackStack(null);
+                tran.commit();
+                break;
+                /*int dia=0;
                 int dia2=0;
-                String fechaInicio="";
-                String fechaFin="";
+                //String fechaInicio="";
+                //String fechaFin="";
+                Date fechaInicio;
+                Date fechaFin;
+
                 variables_publicas.diasCierre = UsuariosH.ObtenerDiasCierre();
                 if (variables_publicas.diasCierre != null){
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date fechaActual = new Date();
+                    Date fecha1 = new Date();
+                    Date fecha2 = new Date();
+                    try {
+                        fechaActual = dateFormat.parse(variables_publicas.FechaActual);
+                        fecha1 = dateFormat.parse(variables_publicas.diasCierre.getFechaInicio());
+                        fecha2= dateFormat.parse(variables_publicas.diasCierre.getFechaFin());
+                    } catch (ParseException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    if(fechaActual.after(fecha1) && fechaActual.before(fecha2)){
+                        fragmentManager.executePendingTransactions();
+                        tran = getFragmentManager().beginTransaction();
+                        tran.add(R.id.content_frame, new PedidosFragment());
+                        tran.addToBackStack(null);
+                        tran.commit();
+                        break;
+                    }else{
+                        MensajeAviso("No está permitido registrar pedidos en este momento. Se reabre nuevamente los días " + variables_publicas.diasCierre.getDiaInicio() + " a las " + variables_publicas.diasCierre.getHoraInicio()  +" ");
+                        break ;
+                    }
+                    *//*
                     if (variables_publicas.diasCierre.getDiaInicio().equalsIgnoreCase("Domingo")){
                         dia=1 ;
                     }else if  (variables_publicas.diasCierre.getDiaInicio().equalsIgnoreCase("Lunes")){
@@ -624,8 +656,8 @@ public class MenuActivity extends AppCompatActivity
                     }else{
                         MensajeAviso("No está permitido registrar pedidos en este momento. Se reabre nuevamente los días " + variables_publicas.diasCierre.getDiaInicio() + " a las " + variables_publicas.diasCierre.getHoraInicio()  +" ");
                         break ;
-                    }
-                }
+                    }*//*
+                }*/
             case R.id.btnReporteVentasAlDia:
 
                 fragmentManager.executePendingTransactions();
