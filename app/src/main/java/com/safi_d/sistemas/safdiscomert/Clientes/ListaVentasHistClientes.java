@@ -106,8 +106,8 @@ public class ListaVentasHistClientes extends Activity {
         adapter = new SimpleAdapter(
                 getApplicationContext(), listaVentas,
                 R.layout.resumen_hist_ventas_list_item, new
-                String[]{"Proveedor","Item", "Descripcion", "Cantidad", "Total"}, new
-                int[]{R.id.lblProveedor,R.id.lblItemDev, R.id.lblDetArt, R.id.lblDetCantidad, R.id.lblDetSubtotal}) {
+                String[]{"Item", "Descripcion", "Cantidad", "Total"}, new
+                int[]{R.id.lblItemDev, R.id.lblDetArt, R.id.lblDetCantidad, R.id.lblDetSubtotal}) {
 
         };
 

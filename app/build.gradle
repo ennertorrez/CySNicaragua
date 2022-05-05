@@ -15,8 +15,8 @@ android {
         applicationId 'com.safi_d.sistemas.safdiscomert'
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 22
-        versionName "1.21"
+        versionCode 23
+        versionName "1.22"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true
