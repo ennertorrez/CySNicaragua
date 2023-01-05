@@ -63,6 +63,7 @@ import com.safi_d.sistemas.safdiscomert.Menu.ClientesInactivosFragment;
 import com.safi_d.sistemas.safdiscomert.Menu.FacturasMoraClienteFragment;
 import com.safi_d.sistemas.safdiscomert.Menu.HistoricoventasClienteFragment;
 import com.safi_d.sistemas.safdiscomert.Menu.ListaInformesFragment;
+import com.safi_d.sistemas.safdiscomert.Menu.ListaPedidosClientesFragment;
 import com.safi_d.sistemas.safdiscomert.Menu.ListaPedidosFragment;
 import com.safi_d.sistemas.safdiscomert.Menu.ListaPedidosSupFragment;
 import com.safi_d.sistemas.safdiscomert.Menu.ListaPedidovsFacturado;
@@ -70,6 +71,7 @@ import com.safi_d.sistemas.safdiscomert.Menu.ListaRecibosPendFragment;
 import com.safi_d.sistemas.safdiscomert.Menu.ListaTotalFacturado;
 import com.safi_d.sistemas.safdiscomert.Menu.MaestroProductoFragment;
 import com.safi_d.sistemas.safdiscomert.Menu.PedidosFragment;
+import com.safi_d.sistemas.safdiscomert.Pedidos.PedidosCliente;
 import com.safi_d.sistemas.safdiscomert.R;
 
 import org.json.JSONException;
@@ -208,31 +210,44 @@ public class MenuActivity extends AppCompatActivity
             ex.printStackTrace();
         }
 
-        navigationView.getMenu().getItem(2).getSubMenu().getItem(0).setVisible(false); //Maestro Clientes
-        //navigationView.getMenu().getItem(2).getSubMenu().getItem(2).setVisible(false); //Activar Clientes
-        navigationView.getMenu().getItem(3).setVisible(false); //Recibos
-        navigationView.getMenu().getItem(1).getSubMenu().getItem(2).setVisible(false); //Pedidos vs Facturado
-        navigationView.getMenu().getItem(2).getSubMenu().getItem(2).setVisible(false); //Activar Clientes
+        if (variables_publicas.usuario.getTipo().equalsIgnoreCase("Cliente")){
+            navigationView.getMenu().getItem(0).setVisible(false); //Menu Articulos
+            navigationView.getMenu().getItem(1).getSubMenu().getItem(0).setVisible(false); //Lista Pedidos
+            navigationView.getMenu().getItem(1).getSubMenu().getItem(1).setVisible(false); //Nuevo Pedido
+            navigationView.getMenu().getItem(1).getSubMenu().getItem(2).setVisible(false); //Pedido Facturado
+            navigationView.getMenu().getItem(1).getSubMenu().getItem(3).setVisible(true); //Pedido Clientes
+            navigationView.getMenu().getItem(1).getSubMenu().getItem(4).setVisible(true); //Lista Pedidos Cliente
+            navigationView.getMenu().getItem(2).setVisible(false); //Menu Clientes
+            navigationView.getMenu().getItem(3).setVisible(false); //Menu Recibos
+            navigationView.getMenu().getItem(4).setVisible(false); //Menu Reportes
+        }else {
+            navigationView.getMenu().getItem(2).getSubMenu().getItem(0).setVisible(false); //Maestro Clientes
+            //navigationView.getMenu().getItem(2).getSubMenu().getItem(2).setVisible(false); //Activar Clientes
+            navigationView.getMenu().getItem(3).setVisible(false); //Recibos
+            navigationView.getMenu().getItem(1).getSubMenu().getItem(2).setVisible(false); //Pedidos vs Facturado
+            navigationView.getMenu().getItem(1).getSubMenu().getItem(3).setVisible(false); //Pedido Clientes
+            navigationView.getMenu().getItem(1).getSubMenu().getItem(4).setVisible(false); //Lista Pedidos Cliente
+            navigationView.getMenu().getItem(2).getSubMenu().getItem(2).setVisible(false); //Activar Clientes
 
-        if ((!variables_publicas.usuario.getCanal().equalsIgnoreCase("Detalle")&& variables_publicas.usuario.getTipo().equalsIgnoreCase("Vendedor")) || variables_publicas.usuario.getTipo().equalsIgnoreCase("Supervisor") || variables_publicas.usuario.getTipo().equalsIgnoreCase("User") ) {
-            navigationView.getMenu().getItem(3).setVisible(true); //Recibos
-            if (variables_publicas.usuario.getTipo().equalsIgnoreCase("Supervisor") || variables_publicas.usuario.getTipo().equalsIgnoreCase("User")){
-                navigationView.getMenu().getItem(3).getSubMenu().getItem(0).setVisible(false); //Agregar Recibos
-                navigationView.getMenu().getItem(3).getSubMenu().getItem(1).setVisible(true); //Listado de Recibos
-                navigationView.getMenu().getItem(3).getSubMenu().getItem(2).setVisible(true); //Estado de cuenta
-                navigationView.getMenu().getItem(3).getSubMenu().getItem(3).setVisible(false); //Estado de cuenta
-            }else {
-                navigationView.getMenu().getItem(3).getSubMenu().getItem(0).setVisible(true); //Agregar Recibos
-                navigationView.getMenu().getItem(3).getSubMenu().getItem(1).setVisible(true); //Listado de Recibos
-                navigationView.getMenu().getItem(3).getSubMenu().getItem(2).setVisible(true); //Estado de cuenta
-                navigationView.getMenu().getItem(3).getSubMenu().getItem(3).setVisible(true); //Estado de cuenta
+            if ((!variables_publicas.usuario.getCanal().equalsIgnoreCase("Detalle") && variables_publicas.usuario.getTipo().equalsIgnoreCase("Vendedor")) || variables_publicas.usuario.getTipo().equalsIgnoreCase("Supervisor") || variables_publicas.usuario.getTipo().equalsIgnoreCase("User")) {
+                navigationView.getMenu().getItem(3).setVisible(true); //Recibos
+                if (variables_publicas.usuario.getTipo().equalsIgnoreCase("Supervisor") || variables_publicas.usuario.getTipo().equalsIgnoreCase("User")) {
+                    navigationView.getMenu().getItem(3).getSubMenu().getItem(0).setVisible(false); //Agregar Recibos
+                    navigationView.getMenu().getItem(3).getSubMenu().getItem(1).setVisible(true); //Listado de Recibos
+                    navigationView.getMenu().getItem(3).getSubMenu().getItem(2).setVisible(true); //Estado de cuenta
+                    navigationView.getMenu().getItem(3).getSubMenu().getItem(3).setVisible(false); //Estado de cuenta
+                } else {
+                    navigationView.getMenu().getItem(3).getSubMenu().getItem(0).setVisible(true); //Agregar Recibos
+                    navigationView.getMenu().getItem(3).getSubMenu().getItem(1).setVisible(true); //Listado de Recibos
+                    navigationView.getMenu().getItem(3).getSubMenu().getItem(2).setVisible(true); //Estado de cuenta
+                    navigationView.getMenu().getItem(3).getSubMenu().getItem(3).setVisible(true); //Estado de cuenta
+                }
+            }
+
+            if ((variables_publicas.usuario.getCanal().equalsIgnoreCase("Detalle") && variables_publicas.usuario.getTipo().equalsIgnoreCase("Vendedor")) || variables_publicas.usuario.getTipo().equalsIgnoreCase("Supervisor") || variables_publicas.usuario.getTipo().equalsIgnoreCase("User")) {
+                navigationView.getMenu().getItem(2).getSubMenu().getItem(1).setVisible(true); //Clientes nuevos
             }
         }
-
-        if ((variables_publicas.usuario.getCanal().equalsIgnoreCase("Detalle")&& variables_publicas.usuario.getTipo().equalsIgnoreCase("Vendedor")) || variables_publicas.usuario.getTipo().equalsIgnoreCase("Supervisor") || variables_publicas.usuario.getTipo().equalsIgnoreCase("User") ) {
-            navigationView.getMenu().getItem(2).getSubMenu().getItem(1).setVisible(true); //Clientes nuevos
-        }
-
 //        if (variables_publicas.usuario.getTipo().equalsIgnoreCase("Supervisor") || variables_publicas.usuario.getTipo().equalsIgnoreCase("User") ) {
 //            navigationView.getMenu().getItem(2).getSubMenu().getItem(2).setVisible(true); //Activar Clientes
 //        }
@@ -501,6 +516,24 @@ public class MenuActivity extends AppCompatActivity
                 fragmentManager.executePendingTransactions();
                 tran = getFragmentManager().beginTransaction();
                 tran.add(R.id.content_frame, new PedidosFragment());
+                tran.addToBackStack(null);
+                tran.commit();
+                break;
+
+            case R.id.btnPedidoCliente:
+                // Starting new intent
+                Intent in = new Intent(getApplicationContext(), PedidosCliente.class);
+                in.putExtra(variables_publicas.CLIENTES_COLUMN_IdCliente, variables_publicas.usuario.getCodigo() );
+                in.putExtra(variables_publicas.CLIENTES_COLUMN_Nombre, variables_publicas.usuario.getNombre() );
+                in.putExtra(variables_publicas.vVisualizar,"False");
+                startActivity(in);
+                break;
+
+            case R.id.btnListadoPedidosCliente:
+
+                fragmentManager.executePendingTransactions();
+                tran = getFragmentManager().beginTransaction();
+                tran.add(R.id.content_frame, new ListaPedidosClientesFragment());
                 tran.addToBackStack(null);
                 tran.commit();
                 break;

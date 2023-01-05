@@ -15,6 +15,7 @@
         <entry key="..\:/Users/Enner Torrez/SAFDISCOMERT/app/src/main/res/layout/list_item_pedido.xml" value="0.11730072463768115" />
         <entry key="..\:/Users/Enner Torrez/SAFDISCOMERT/app/src/main/res/layout/lista_ventas_clientes_layout.xml" value="0.28351449275362317" />
         <entry key="..\:/Users/Enner Torrez/SAFDISCOMERT/app/src/main/res/layout/listapedidos_layout.xml" value="0.19157608695652173" />
+        <entry key="..\:/Users/Enner Torrez/SAFDISCOMERT/app/src/main/res/layout/listaresumen_facturado.xml" value="0.11322463768115942" />
         <entry key="..\:/Users/Enner Torrez/SAFDISCOMERT/app/src/main/res/layout/listaresumenpreventa_layout.xml" value="0.1921875" />
         <entry key="..\:/Users/Enner Torrez/SAFDISCOMERT/app/src/main/res/layout/nav_header_main.xml" value="0.11639492753623189" />
         <entry key="..\:/Users/Enner Torrez/SAFDISCOMERT/app/src/main/res/layout/pedidos.xml" value="0.25" />
@@ -23,6 +24,8 @@
         <entry key="..\:/Users/Enner Torrez/SAFDISCOMERT/app/src/main/res/layout/resumen_hist_ventas_list_item.xml" value="0.3546875" />
         <entry key="..\:/Users/Enner Torrez/SAFDISCOMERT/app/src/main/res/layout/resumen_pedido_factura_detalle_list_item.xml" value="0.11730072463768115" />
         <entry key="..\:/Users/Enner Torrez/SAFDISCOMERT/app/src/main/res/layout/resumen_pedido_factura_item.xml" value="0.11730072463768115" />
+        <entry key="..\:/Users/Enner Torrez/SAFDISCOMERT/app/src/main/res/layout/resumenfacturado_list_item.xml" value="0.11322463768115942" />
+        <entry key="..\:/Users/Enner Torrez/SAFDISCOMERT/app/src/main/res/menu/activity_main.xml" value="0.10677083333333333" />
         <entry key="..\:/Users/Enner Torrez/SAFDISCOMERT/app/src/main/res/menu/activity_main_drawer.xml" value="0.16197916666666667" />
         <entry key="..\:/Users/Enner Torrez/SAFDISCOMERT/app/src/main/res/menu/pedidos_list_menu_context.xml" value="0.3546875" />
       </map>

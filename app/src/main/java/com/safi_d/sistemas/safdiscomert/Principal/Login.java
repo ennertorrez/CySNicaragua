@@ -167,26 +167,20 @@ public class Login extends Activity {
         txtPassword = (EditText) findViewById(R.id.txtPassword);
         cboRutas = (Spinner) findViewById(R.id.cboRutas);
 
-        CheckConnectivity();
-     /*   if(isOnline){
-            if (Build.VERSION.SDK_INT >= 11) {
-                //--post GB use serial executor by default --
-                new GetRutasTotal().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-            } else {
-                //--GB uses ThreadPoolExecutor by default--
-                new GetRutasTotal().execute();
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try  {
+                    CheckConnectivity();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        });
 
-        final List<Ruta> CRutas;
-        CRutas= RutasH.ObtenerListaRutas();
+        thread.start();
 
-        ArrayAdapter<Ruta> adapterRutas = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, CRutas);
-        adapterRutas.setDropDownViewResource(android.R.layout.simple_list_item_checked);
-        cboRutas.setAdapter(adapterRutas);
-        if (!adapterRutas.isEmpty()) {
-            cboRutas.setSelection(0);
-        }*/
 
         txtUsuario.addTextChangedListener(new TextWatcher() {
             @Override
@@ -292,7 +286,10 @@ public class Login extends Activity {
                     return;
                 }
 
+                //Esto sirve para permitir realizar conexion a internet en el Hilo principal
 
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
                 isOnline =Funciones.TestServerConectivity();
 
                 variables_publicas.usuario = UsuariosH.BuscarUsuarios(Usuario, Contrasenia);
@@ -313,6 +310,7 @@ public class Login extends Activity {
                     variables_publicas.LoginOk = true;
                     Intent intent = new Intent("android.intent.action.Barra_cargado");
                     startActivity(intent);
+                    variables_publicas.rutacargada=vRuta.getIDRUTA();
                     finish();
                 } else if (!isOnline && variables_publicas.usuario == null) {
                     mensajeAviso("Usuario o contraseña invalido\n O para conectar un nuevo usuario debe conectarse a internet");
@@ -899,6 +897,7 @@ public class Login extends Activity {
                         }
                         variables_publicas.MensajeLogin = "";
                         variables_publicas.LoginOk = true;
+                        variables_publicas.rutacargada= vRuta.getIDRUTA();
                         Intent intent = new Intent("android.intent.action.Barra_cargado");
                         startActivity(intent);
                         finish();

@@ -26,6 +26,14 @@
                     android:id="@+id/btnPedidoFacturado"
                     android:icon="@drawable/ic_menu_send"
                     android:title="Pedido vs Facturado"/>
+                <item
+                    android:id="@+id/btnPedidoCliente"
+                    android:icon="@drawable/ic_menu_plussign"
+                    android:title="Pedido Cliente"/>
+                <item
+                    android:id="@+id/btnListadoPedidosCliente"
+                    android:icon="@drawable/ic_menu_send"
+                    android:title="Lista Pedidos"/>
             </menu>
         </item>
         <item

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.safi_d.sistemas.safdiscomert">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -34,6 +33,7 @@
 
         <activity android:name="com.safi_d.sistemas.safdiscomert.Principal.Login"
             android:configChanges="orientation"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,6 +43,7 @@
         </activity>
         <activity android:name="com.safi_d.sistemas.safdiscomert.Principal.MenuActivity"
             android:configChanges="orientation"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MenuActivity" />
@@ -50,7 +51,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.safi_d.sistemas.safdiscomert.Principal.Barra_cargado">
+        <activity android:name="com.safi_d.sistemas.safdiscomert.Principal.Barra_cargado"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.Barra_cargado" />
 
@@ -58,7 +60,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.safi_d.sistemas.safdiscomert.SingleMenuItemActivity">
+        <activity android:name="com.safi_d.sistemas.safdiscomert.SingleMenuItemActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SingleMenuItemActivity" />
 
@@ -74,6 +77,7 @@
         </activity>-->
         <activity android:name="com.safi_d.sistemas.safdiscomert.Pedidos.PedidosActivity" android:windowSoftInputMode="stateHidden"
             android:configChanges="orientation"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.PedidosActivity" />
@@ -81,9 +85,19 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name="com.safi_d.sistemas.safdiscomert.Pedidos.PedidosCliente" android:windowSoftInputMode="stateHidden"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PedidosCliente" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.safi_d.sistemas.safdiscomert.Clientes.ClientesNew" android:windowSoftInputMode="stateHidden"
             android:configChanges="orientation"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.ClientesNew" />
@@ -94,6 +108,7 @@
 
         <activity android:name="com.safi_d.sistemas.safdiscomert.Informes.InformesActivity" android:windowSoftInputMode="stateHidden"
             android:configChanges="orientation"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.InformesActivity" />
@@ -104,6 +119,7 @@
 
         <activity android:name="com.safi_d.sistemas.safdiscomert.Informes.AgregarRecibo" android:windowSoftInputMode="stateHidden"
             android:configChanges="orientation"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.AgregarRecibo" />
@@ -113,6 +129,7 @@
         </activity>
         <activity android:name="com.safi_d.sistemas.safdiscomert.Clientes.ListaVentasHistClientes" android:windowSoftInputMode="stateHidden"
         android:configChanges="orientation"
+            android:exported="true"
         android:screenOrientation="portrait">
         <intent-filter>
             <action android:name="android.intent.action.ListaVentasHistClientes" />
@@ -122,6 +139,7 @@
         </activity>
         <activity android:name="com.safi_d.sistemas.safdiscomert.Clientes.ClientesInactivosEdit" android:windowSoftInputMode="stateHidden"
             android:configChanges="orientation"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.ClientesInactivosEdit" />
@@ -131,6 +149,7 @@
         </activity>
         <activity android:name="com.safi_d.sistemas.safdiscomert.Informes.ListaDetalleInformesClientes" android:windowSoftInputMode="stateHidden"
             android:configChanges="orientation"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.ListaDetalleInformesClientes" />
@@ -141,6 +160,7 @@
         <activity android:name="com.safi_d.sistemas.safdiscomert.Informes.ListaFacturasMoraClientes" android:windowSoftInputMode="stateHidden"
 
             android:configChanges="orientation"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.ListaFacturasMoraClientes" />
@@ -152,6 +172,7 @@
         <activity android:name="com.safi_d.sistemas.safdiscomert.Menu.ListaDetallePedidoFacturado" android:windowSoftInputMode="stateHidden"
 
             android:configChanges="orientation"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.ListaDetallePedidoFacturado" />

@@ -1,5 +1,6 @@
 package com.safi_d.sistemas.safdiscomert.AccesoDatos;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -61,6 +62,7 @@ public class PedidosHelper {
         else return false;
     }
 
+    @SuppressLint("Range")
     public List<HashMap<String, String>> ObtenerListaPedidos() {
         HashMap<String, String> pedido = null;
         List<HashMap<String, String>> lst = new ArrayList<>();
@@ -111,6 +113,7 @@ public class PedidosHelper {
         return numero + 1;
     }
 
+    @SuppressLint("Range")
     public HashMap<String, String> ObtenerPedido(String CodigoPedido) {
 
         Cursor c = database.rawQuery("select * from " + variables_publicas.TABLE_PEDIDOS  + " Where " + variables_publicas.PEDIDOS_COLUMN_CodigoPedido + " = ?", new String[]{CodigoPedido});
@@ -138,6 +141,7 @@ public class PedidosHelper {
         return pedido;
     }
 
+    @SuppressLint("Range")
     public Pedido GetPedido(String CodigoPedido) {
 
         Cursor c = database.rawQuery("select * from " + variables_publicas.TABLE_PEDIDOS + " Where " + variables_publicas.PEDIDOS_COLUMN_CodigoPedido + " = ?", new String[]{CodigoPedido});
@@ -165,6 +169,7 @@ public class PedidosHelper {
         return pedido;
     }
 
+    @SuppressLint("Range")
     public ArrayList<HashMap<String, String>> ObtenerPedidosLocales(String Fecha, String Nombre) {
 
         String selectQuery = "SELECT P.*,DATE(P.Fecha) as Fecha,'' as Factura,'NO ENVIADO' as Estado,Cl.Nombre as NombreCliente,Fp.NOMBRE as FormaPago FROM " + variables_publicas.TABLE_PEDIDOS +
@@ -203,6 +208,7 @@ public class PedidosHelper {
         c.close();
         return lst;
     }
+    @SuppressLint("Range")
     public Pedido BuscarPedidosSinconizar( ) {
         Pedido pedidos = null;
         String selectQuery="SELECT * FROM " + variables_publicas.TABLE_PEDIDOS+"";

@@ -51,7 +51,8 @@ public class SincronizarDatos {
     private String urlDptoMuniBarrios = variables_publicas.direccionIp + "/ServicioClientes.svc/ObtenerDptoMuniBarrios";
    // private String urlZonas = variables_publicas.direccionIp + "/ServicioClientes.svc/GetZonas";
     private String urlRutas = variables_publicas.direccionIp + "/ServicioClientes.svc/GetRutas/";
-    private String urlArticulos = variables_publicas.direccionIp + "/ServicioTotalArticulos.svc/BuscarTotalArticulo";
+    private String urlArticulos2 = variables_publicas.direccionIp + "/ServicioTotalArticulos.svc/BuscarTotalArticulo";
+    private String urlArticulos = variables_publicas.direccionIp + "/ServicioTotalArticulos.svc/BuscarTotalArticuloVendedor";
     final String urlVendedores = variables_publicas.direccionIp + "/ServicioPedidos.svc/ListaVendedores/";
     final String urlCartillasBc = variables_publicas.direccionIp + "/ServicioPedidos.svc/GetCartillasBC/";
     final String urlDetalleCartillasBc = variables_publicas.direccionIp + "/ServicioPedidos.svc/GetDetalleCartillasBC/";
@@ -162,7 +163,12 @@ public class SincronizarDatos {
 
     private boolean SincronizarArticulos() throws JSONException {
         HttpHandler shC = new HttpHandler();
-        String urlStringC = urlArticulos;
+        String urlStringC="";
+        if (variables_publicas.usuario.getTipo().equalsIgnoreCase("Cliente")){
+             urlStringC = urlArticulos2 ;
+        }else {
+             urlStringC = urlArticulos + "/" + variables_publicas.usuario.getCodigo() + "/1";
+        }
         String jsonStrC = shC.makeServiceCall(urlStringC);
 
         if (jsonStrC == null) {
@@ -178,8 +184,12 @@ public class SincronizarDatos {
         ArticulosH.EliminaArticulos();
         JSONObject jsonObjC = new JSONObject(jsonStrC);
         // Getting JSON Array node
-        JSONArray articulos = jsonObjC.getJSONArray("BuscarTotalArticuloResult");
-
+        JSONArray articulos=null;
+        if (variables_publicas.usuario.getTipo().equalsIgnoreCase("Cliente")){
+            articulos = jsonObjC.getJSONArray("BuscarTotalArticuloResult");
+        }else {
+            articulos = jsonObjC.getJSONArray("BuscarTotalArticuloVendedorResult");
+        }
 
         try {
             // looping through All Contacts
@@ -309,6 +319,8 @@ public class SincronizarDatos {
         HttpHandler shC = new HttpHandler();
         if (variables_publicas.usuario.getTipo().equals("Supervisor") || variables_publicas.usuario.getTipo().equals("User")){
             urlStringC  = urlClientes + "/" + variables_publicas.usuario.getCodigo() + "/" + variables_publicas.rutacargada + "/" + 4;
+        }else if (variables_publicas.usuario.getTipo().equals("Cliente")){
+            urlStringC = urlClientes + "/" + variables_publicas.usuario.getCodigo()  + "/" + variables_publicas.usuario.getCodigo() + "/" + 5;
         }else{
             urlStringC = urlClientes + "/" + variables_publicas.rutacargada + "/" + variables_publicas.usuario.getCodigo() + "/" + 3;
         }

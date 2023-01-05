@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/SAFDISCOMERT.iml" filepath="$PROJECT_DIR$/.idea/modules/SAFDISCOMERT.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SAFDISCOMERT.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SAFDISCOMERT.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SAFDISCOMERT.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SAFDISCOMERT.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SAFDISCOMERT.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SAFDISCOMERT.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/SAFDISCOMERT.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/SAFDISCOMERT.app.unitTest.iml" />
     </modules>
   </component>
 </project>
