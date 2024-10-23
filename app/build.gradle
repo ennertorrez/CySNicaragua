@@ -9,14 +9,14 @@ android {
             storePassword '1234567'
         }
     }
-    compileSdkVersion 31
-    buildToolsVersion '31.0.0'
+    compileSdkVersion 34
+    buildToolsVersion '34.0.0'
     defaultConfig {
         applicationId 'com.safi_d.sistemas.safdiscomert'
-        minSdkVersion 21
-        targetSdkVersion 31
-        versionCode 31
-        versionName "1.30"
+        minSdkVersion 26
+        targetSdkVersion 34
+        versionCode 40
+        versionName "1.39"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true
@@ -43,8 +43,17 @@ android {
     }
     namespace 'com.safi_d.sistemas.safdiscomert'
 
+    configurations {
+        all {
+            exclude group: "com.google.android.play", module: "app-update"
+            exclude group: "com.google.android.play", module: "core"
+        }
+    }
 }
 
+repositories{
+    jcenter()
+}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.volley:volley:1.2.1'
@@ -58,7 +67,7 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'com.google.android.gms:play-services-ads:20.3.0'
+    implementation 'com.google.android.gms:play-services-ads:21.3.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
@@ -87,4 +96,6 @@ dependencies {
     implementation 'com.google.android.libraries.places:places:2.4.0'
     implementation 'com.github.DonMat:searchablespinner:v1.0.1'
     implementation 'com.github.kenmeidearu:SearchableSpinner:1.5.5'
+    //implementation 'me.dm7.barcodescanner:zbar:1.9'
+    implementation 'me.dm7.barcodescanner:zxing:1.8.4'
 }

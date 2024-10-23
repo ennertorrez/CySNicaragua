@@ -1,5 +1,6 @@
 package com.safi_d.sistemas.safdiscomert.AccesoDatos;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -37,7 +38,8 @@ public class PedidosDetalleHelper {
                                      String UnidadMinima,
                                      String Subtotal,
                                      String Total,
-                                     String Bodega
+                                     String Bodega,
+                                     String CodPromo
     ) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_CodigoPedido, CodigoPedido);
@@ -60,6 +62,7 @@ public class PedidosDetalleHelper {
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Subtotal, Subtotal);
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Total, Total);
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega, Bodega);
+        contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_CodPromo, CodPromo);
         database.insert(variables_publicas.TABLE_PEDIDOS_DETALLE, null, contentValues);
     }
 
@@ -86,12 +89,14 @@ public class PedidosDetalleHelper {
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Subtotal, lstArticulos.get(variables_publicas.PEDIDOS_DETALLE_COLUMN_Subtotal));
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Total, lstArticulos.get(variables_publicas.PEDIDOS_DETALLE_COLUMN_Total));
         contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega, lstArticulos.get(variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega));
+        contentValues.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_CodPromo, lstArticulos.get(variables_publicas.PEDIDOS_DETALLE_COLUMN_CodPromo));
         long rowInserted=database.insert(variables_publicas.TABLE_PEDIDOS_DETALLE, null, contentValues);
         if(rowInserted != -1)
            return true;
         else return false;
     }
 
+    @SuppressLint("Range")
     public List<HashMap<String, String>> ObtenerPedidoDetalle(String CodigoPedido) {
         List<HashMap<String,String>> lst= new ArrayList<>();
         String sqlQuery ="SELECT  * FROM " + variables_publicas.TABLE_PEDIDOS_DETALLE + " WHERE " + variables_publicas.PEDIDOS_DETALLE_COLUMN_CodigoPedido + " = '" + CodigoPedido + "'";
@@ -119,6 +124,7 @@ public class PedidosDetalleHelper {
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Subtotal, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_Subtotal)));
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Total, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_Total)));
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega)));
+                detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_CodPromo, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_CodPromo)));
                 lst.add(detalle);
             } while (c.moveToNext());
         }
@@ -126,6 +132,7 @@ public class PedidosDetalleHelper {
         return lst;
     }
 
+    @SuppressLint("Range")
     public ArrayList<HashMap<String, String>> ObtenerPedidoDetalleArrayList(String CodigoPedido) {
         ArrayList<HashMap<String,String>> lst= new ArrayList<>();
         String sqlQuery="SELECT  * FROM " + variables_publicas.TABLE_PEDIDOS_DETALLE + " WHERE " + variables_publicas.PEDIDOS_DETALLE_COLUMN_CodigoPedido + " = '" + CodigoPedido + "'";
@@ -153,6 +160,7 @@ public class PedidosDetalleHelper {
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Subtotal, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_Subtotal)));
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Total, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_Total)));
                 detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega)));
+                detalle.put(variables_publicas.PEDIDOS_DETALLE_COLUMN_CodPromo, c.getString(c.getColumnIndex(variables_publicas.PEDIDOS_DETALLE_COLUMN_CodPromo)));
                 lst.add(detalle);
             } while (c.moveToNext());
         }

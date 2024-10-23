@@ -27,11 +27,11 @@ public class PedidoDetalle {
     String Total ="";
     String Bodega="";
 
-
+    String CodPromo="";
     public PedidoDetalle() {
     }
 
-    public PedidoDetalle(String codigoPedido, String codigoArticulo, String descripcion, String cantidad, String bonificaA,String tipoArt, String descuento, String codUM, String unidades, String costo, String precio,String tipoPrecio, String porcentajeIva, String iva, String um, String unidadMinima, String subtotal, String total,String porDescuento, String bodega) {
+    public PedidoDetalle(String codigoPedido, String codigoArticulo, String descripcion, String cantidad, String bonificaA,String tipoArt, String descuento, String codUM, String unidades, String costo, String precio,String tipoPrecio, String porcentajeIva, String iva, String um, String unidadMinima, String subtotal, String total,String porDescuento, String bodega, String codpromo) {
         CodigoPedido = codigoPedido;
         CodigoArticulo = codigoArticulo;
         Descripcion = descripcion;
@@ -52,6 +52,7 @@ public class PedidoDetalle {
         PorDescuento=porDescuento;
         TipoPrecio=tipoPrecio;
         Bodega = bodega;
+        CodPromo = codpromo;
     }
 
     public String getCodigoPedido() {
@@ -212,5 +213,13 @@ public class PedidoDetalle {
 
     public void setBodega(String bodega) {
         Bodega = bodega;
+    }
+
+    public String getCodPromo() {
+        return CodPromo;
+    }
+
+    public void setCodPromo(String codPromo) {
+        CodPromo = codPromo;
     }
 }

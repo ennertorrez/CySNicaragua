@@ -35,8 +35,31 @@
         android:paddingBottom="2dip"
         android:paddingTop="6dip"
         android:layout_toRightOf="@id/lblPrecio"
-        android:gravity="right"
+        android:gravity="left"
 />
+    <TextView
+        android:id="@+id/lblUcaja"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="UnidadXCaja: "
+        android:textColor="@color/colorAccent"
+        android:paddingBottom="2dip"
+        android:paddingTop="6dip"
+        android:layout_toRightOf="@id/Precio"
+        android:gravity="left"/>
+
+    <TextView
+        android:id="@+id/UCaja"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:textColor="#5d5d5d"
+        android:textStyle="bold"
+        android:paddingBottom="2dip"
+        android:paddingTop="6dip"
+        android:layout_toRightOf="@id/lblUcaja"
+        android:gravity="left"
+        />
     <TextView
         android:id="@+id/Nombre"
         android:layout_width="match_parent"
@@ -44,6 +67,5 @@
         android:paddingBottom="2dip"
         android:textColor="@color/colorAccent"
         android:layout_below="@id/Codigo" />
-
 
 </RelativeLayout>

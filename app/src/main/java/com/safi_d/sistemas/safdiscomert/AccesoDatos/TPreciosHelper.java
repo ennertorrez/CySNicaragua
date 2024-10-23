@@ -1,5 +1,6 @@
 package com.safi_d.sistemas.safdiscomert.AccesoDatos;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,6 +35,7 @@ public class TPreciosHelper {
         Log.d("tprecios_elimina", "Datos eliminados");
     }
 
+        @SuppressLint("Range")
         public List<TipoPrecio> ObtenerTipoPrecio() {
         List<TipoPrecio> list = new ArrayList<TipoPrecio>();
         String sqlQuery ="SELECT DISTINCT " + variables_publicas.TPRECIOS_COLUMN_COD_TIPO_PRECIO  + "," + variables_publicas.TPRECIOS_COLUMN_TIPO_PRECIO  + " FROM " + variables_publicas.TABLE_TPRECIOS  + " ";
@@ -50,6 +52,7 @@ public class TPreciosHelper {
         return list;
     }
 
+    @SuppressLint("Range")
     public List<TipoPrecio> ObtenerTipoPrecio2(String idCodPrecio) {
         List<TipoPrecio> list = new ArrayList<TipoPrecio>();
         String sqlQuery ="SELECT DISTINCT " + variables_publicas.TPRECIOS_COLUMN_COD_TIPO_PRECIO  + "," + variables_publicas.TPRECIOS_COLUMN_TIPO_PRECIO  + " FROM " + variables_publicas.TABLE_TPRECIOS  + " WHERE "+ variables_publicas.TPRECIOS_COLUMN_COD_TIPO_PRECIO +" = "+ idCodPrecio +" ";
@@ -66,6 +69,7 @@ public class TPreciosHelper {
         return list;
     }
 
+    @SuppressLint("Range")
     public List<Articulo> ObtenerPrecioPorUM(String CodigoArticulo) {
         List<Articulo> list = new ArrayList<Articulo>();
 
@@ -85,6 +89,8 @@ public class TPreciosHelper {
                         cursor.getString(cursor.getColumnIndex("Precio2")),
                         cursor.getString(cursor.getColumnIndex("Precio3")),
                         cursor.getString(cursor.getColumnIndex("Precio4")),
+                        cursor.getString(cursor.getColumnIndex("Precio5")),
+                        cursor.getString(cursor.getColumnIndex("Precio6")),
                         cursor.getString(cursor.getColumnIndex("CodUM")),
                         cursor.getString(cursor.getColumnIndex("PorIva")),
                         cursor.getString(cursor.getColumnIndex("DescuentoMaximo")),

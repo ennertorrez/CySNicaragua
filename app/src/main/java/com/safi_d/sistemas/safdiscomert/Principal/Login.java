@@ -45,6 +45,7 @@ import com.safi_d.sistemas.safdiscomert.AccesoDatos.ClientesHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.ClientesSucursalHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.ConfiguracionSistemaHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.DataBaseOpenHelper;
+import com.safi_d.sistemas.safdiscomert.AccesoDatos.EscalaPreciosHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.FacturasPendientesHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.FormaPagoHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.InformesDetalleHelper;
@@ -52,6 +53,7 @@ import com.safi_d.sistemas.safdiscomert.AccesoDatos.InformesHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.PedidosDetalleHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.PedidosHelper;
 //import com.safi_d.sistemas.safiapp.AccesoDatos.PreciosHelper;
+import com.safi_d.sistemas.safdiscomert.AccesoDatos.PromocionesHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.TPreciosHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.UsuariosHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.VendedoresHelper;
@@ -104,7 +106,9 @@ public class Login extends Activity {
     private UsuariosHelper UsuariosH;
     private ClientesHelper ClientesH;
     private VendedoresHelper VendedoresH;
+    private PromocionesHelper PromocionesH;
     private RutasHelper RutasH;
+    private EscalaPreciosHelper EscalaPreciosH;
     private TPreciosHelper TPreciosH;
     private CategoriasClienteHelper CategoriaH;
     private CartillasBcHelper CartillasBcH;
@@ -142,6 +146,7 @@ public class Login extends Activity {
         ClientesH = new ClientesHelper(DbOpenHelper.database);
         UsuariosH = new UsuariosHelper(DbOpenHelper.database);
         VendedoresH = new VendedoresHelper(DbOpenHelper.database);
+        PromocionesH = new PromocionesHelper(DbOpenHelper.database);
         ConfigH = new ConfiguracionSistemaHelper(DbOpenHelper.database);
         ClientesSucH = new ClientesSucursalHelper(DbOpenHelper.database);
         CartillasBcH = new CartillasBcHelper(DbOpenHelper.database);
@@ -151,6 +156,7 @@ public class Login extends Activity {
         UsuariosH = new UsuariosHelper(DbOpenHelper.database);
         PedidoH = new PedidosHelper(DbOpenHelper.database);
         RutasH = new RutasHelper(DbOpenHelper.database);
+        EscalaPreciosH = new EscalaPreciosHelper(DbOpenHelper.database);
         TPreciosH = new TPreciosHelper(DbOpenHelper.database);
         CategoriaH = new CategoriasClienteHelper(DbOpenHelper.database);
         PedidoDetalleH = new PedidosDetalleHelper(DbOpenHelper.database);
@@ -158,10 +164,10 @@ public class Login extends Activity {
         InformesDetalleH = new InformesDetalleHelper(DbOpenHelper.database);
         FacturasPendientesH = new FacturasPendientesHelper(DbOpenHelper.database);
 
-        sd = new SincronizarDatos(DbOpenHelper, ClientesH, VendedoresH, CartillasBcH,
+        sd = new SincronizarDatos(DbOpenHelper, ClientesH, VendedoresH,PromocionesH, CartillasBcH,
                 CartillasBcDetalleH,
                 FormaPagoH,
-                ConfigH, ClientesSucH, ArticulosH, UsuariosH,PedidoH,PedidoDetalleH,InformesH,InformesDetalleH,FacturasPendientesH,CategoriaH,TPreciosH,RutasH);
+                ConfigH, ClientesSucH, ArticulosH, UsuariosH,PedidoH,PedidoDetalleH,InformesH,InformesDetalleH,FacturasPendientesH,CategoriaH,TPreciosH,RutasH,EscalaPreciosH);
 
         txtUsuario = (EditText) findViewById(R.id.txtUsuario);
         txtPassword = (EditText) findViewById(R.id.txtPassword);
@@ -238,7 +244,7 @@ public class Login extends Activity {
         TextView lblVersion = (TextView) findViewById(R.id.login_version);
         lblVersion.setText("Versión " + getCurrentVersion());
         /*NO CAMBIAR ESTA DIRECCION: VERIFICA SI ES SERVIDOR DE PRUEBAS*/
-        if (variables_publicas.direccionIp == "http://192.168.0.7:8087" ||variables_publicas.direccionIp == "http://192.168.1.244:8087" ) {
+        if (variables_publicas.direccionIp == "http://192.168.0.7:8087" ) {
             lblVersion.setText("Versión " + getCurrentVersion() + " Desarrollo");
         }
         txtPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -571,7 +577,11 @@ public class Login extends Activity {
 
                         //SINCRONIZAR DATOS
                         try {
-                            sd.SincronizarTodo();
+                            if (!variables_publicas.usuario.getTipo().equalsIgnoreCase("Consulta")){
+                                sd.SincronizarTodo();
+                            }else{
+                                sd.SincronizarConsulta();
+                            }
                         } catch (final JSONException e) {
                             Log.e(TAG, "Json parsing error: " + e.getMessage());
 //

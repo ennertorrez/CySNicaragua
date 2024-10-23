@@ -15,6 +15,8 @@ public class Articulo {
     String Precio2 = "";
     String Precio3 = "";
     String Precio4 = "";
+    String Precio5 = "";
+    String Precio6 = "";
     String CodUM = "";
     String PorIva = "";
     String DescuentoMaximo = "";
@@ -28,7 +30,7 @@ public class Articulo {
     }
 
     public Articulo(String codigo, String nombre, String costo, String unidad, String unidadCaja, String precio,
-                    String precio2,String precio3,String precio4,String codUM,String porIva,
+                    String precio2,String precio3,String precio4,String precio5,String precio6,String codUM,String porIva,
                     String descuentoMaximo, String existencia, String unidadCajaVenta, String unidadCajaVenta2, String unidadCajaVenta3,String idProveedor,String unidadMinima) {
         Codigo = codigo;
         Nombre = nombre;
@@ -39,6 +41,8 @@ public class Articulo {
         Precio2 = precio2;
         Precio3 = precio3;
         Precio4 = precio4;
+        Precio5 = precio5;
+        Precio6 = precio6;
         CodUM = codUM;
         PorIva = porIva;
         DescuentoMaximo = descuentoMaximo;
@@ -144,6 +148,22 @@ public class Articulo {
 
     public void setPrecio4(String precio4) {
         Precio4 = precio4;
+    }
+
+    public String getPrecio5() {
+        return Precio5;
+    }
+
+    public void setPrecio5(String precio5) {
+        Precio5 = precio5;
+    }
+
+    public String getPrecio6() {
+        return Precio6;
+    }
+
+    public void setPrecio6(String precio6) {
+        Precio6 = precio6;
     }
 
     public String getCodUM() {

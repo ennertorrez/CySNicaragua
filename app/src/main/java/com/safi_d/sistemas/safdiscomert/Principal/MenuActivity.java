@@ -32,7 +32,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.text.ParseException;
 import android.os.Handler;
 
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.ArticulosHelper;
@@ -43,12 +42,14 @@ import com.safi_d.sistemas.safdiscomert.AccesoDatos.ClientesHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.ClientesSucursalHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.ConfiguracionSistemaHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.DataBaseOpenHelper;
+import com.safi_d.sistemas.safdiscomert.AccesoDatos.EscalaPreciosHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.FacturasPendientesHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.FormaPagoHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.InformesDetalleHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.InformesHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.PedidosDetalleHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.PedidosHelper;
+import com.safi_d.sistemas.safdiscomert.AccesoDatos.PromocionesHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.UsuariosHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.VendedoresHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.TPreciosHelper;
@@ -56,6 +57,7 @@ import com.safi_d.sistemas.safdiscomert.AccesoDatos.RutasHelper;
 import com.safi_d.sistemas.safdiscomert.Auxiliar.Funciones;
 import com.safi_d.sistemas.safdiscomert.Auxiliar.SincronizarDatos;
 import com.safi_d.sistemas.safdiscomert.Auxiliar.variables_publicas;
+import com.safi_d.sistemas.safdiscomert.CodeBar.ActivityScannPrincipal;
 import com.safi_d.sistemas.safdiscomert.Informes.InformesActivity;
 import com.safi_d.sistemas.safdiscomert.Menu.ClientesFragment;
 import com.safi_d.sistemas.safdiscomert.Clientes.ClientesNew;
@@ -76,11 +78,6 @@ import com.safi_d.sistemas.safdiscomert.R;
 
 import org.json.JSONException;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.time.LocalDateTime;
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Handler handler = new Handler();
@@ -97,6 +94,7 @@ public class MenuActivity extends AppCompatActivity
     private UsuariosHelper UsuariosH;
     private ClientesHelper ClientesH;
     private VendedoresHelper VendedoresH;
+    private PromocionesHelper PromocionesH;
     private CartillasBcHelper CartillasBcH;
     private CartillasBcDetalleHelper CartillasBcDetalleH;
     private FormaPagoHelper FormaPagoH;
@@ -110,6 +108,7 @@ public class MenuActivity extends AppCompatActivity
     private PedidosHelper PedidoH;
     private RutasHelper RutasH;
     private TPreciosHelper TPreciosH;
+    private EscalaPreciosHelper EscalaPreciosH;
     private CategoriasClienteHelper CategoriaH;
     private static String vFechaResultadoFInicio="";
     private static String vFechaResultadoFFin="";
@@ -170,7 +169,7 @@ public class MenuActivity extends AppCompatActivity
             userHeader = variables_publicas.usuario.getNombre();
             userHeaderCodigo = variables_publicas.usuario.getCodigo();
             VersionSistema = "Version: " + variables_publicas.VersionSistema;
-            Servidor = variables_publicas.direccionIp.equals("http://200.62.90.235:8087") ? "SERVIDOR: PRODUCCION" : "SERVIDOR: DESARROLLO";
+            Servidor = variables_publicas.direccionIp.equals("http://200.62.65.19:8087") ? "SERVIDOR: PRODUCCION" : "SERVIDOR: DESARROLLO";
         } catch (Exception ex) {
             Log.e("Error:", ex.getMessage());
         }
@@ -184,6 +183,7 @@ public class MenuActivity extends AppCompatActivity
         ClientesH = new ClientesHelper(DbOpenHelper.database);
         UsuariosH = new UsuariosHelper(DbOpenHelper.database);
         VendedoresH = new VendedoresHelper(DbOpenHelper.database);
+        PromocionesH = new PromocionesHelper(DbOpenHelper.database);
         ConfigH = new ConfiguracionSistemaHelper(DbOpenHelper.database);
         ClientesSucH = new ClientesSucursalHelper(DbOpenHelper.database);
         CartillasBcH = new CartillasBcHelper(DbOpenHelper.database);
@@ -198,10 +198,11 @@ public class MenuActivity extends AppCompatActivity
         RutasH = new RutasHelper(DbOpenHelper.database);
         CategoriaH = new CategoriasClienteHelper(DbOpenHelper.database);
         TPreciosH = new TPreciosHelper(DbOpenHelper.database);
+        EscalaPreciosH = new EscalaPreciosHelper(DbOpenHelper.database);
 
-        sd = new SincronizarDatos(DbOpenHelper, ClientesH, VendedoresH, CartillasBcH,
+        sd = new SincronizarDatos(DbOpenHelper, ClientesH, VendedoresH,PromocionesH, CartillasBcH,
                 CartillasBcDetalleH, FormaPagoH,ConfigH, ClientesSucH,
-                ArticulosH, UsuariosH, PedidoH, PedidoDetalleH,InformesH,InformesDetalleH,FacturasPendientesH,CategoriaH,TPreciosH,RutasH);
+                ArticulosH, UsuariosH, PedidoH, PedidoDetalleH,InformesH,InformesDetalleH,FacturasPendientesH,CategoriaH,TPreciosH,RutasH,EscalaPreciosH);
 
         try {
             variables_publicas.info = "***** Usuario: " + variables_publicas.usuario.getNombre() + " / IMEI: " + (variables_publicas.IMEI == null ? "null" : variables_publicas.IMEI) + " / VersionSistema: " + variables_publicas.VersionSistema + " ******** ";
@@ -220,7 +221,15 @@ public class MenuActivity extends AppCompatActivity
             navigationView.getMenu().getItem(2).setVisible(false); //Menu Clientes
             navigationView.getMenu().getItem(3).setVisible(false); //Menu Recibos
             navigationView.getMenu().getItem(4).setVisible(false); //Menu Reportes
-        }else {
+            navigationView.getMenu().getItem(5).setVisible(false); //Menu Scan
+        } else if (variables_publicas.usuario.getTipo().equalsIgnoreCase("Consulta")){
+            navigationView.getMenu().getItem(0).setVisible(false); //Menu Articulos
+            navigationView.getMenu().getItem(1).setVisible(false); //Menu Pedidos
+            navigationView.getMenu().getItem(2).setVisible(false); //Menu Clientes
+            navigationView.getMenu().getItem(3).setVisible(false); //Menu Recibos
+            navigationView.getMenu().getItem(4).setVisible(false); //Menu Reportes
+            navigationView.getMenu().getItem(5).setVisible(true); //Menu Scan
+        } else {
             navigationView.getMenu().getItem(2).getSubMenu().getItem(0).setVisible(false); //Maestro Clientes
             //navigationView.getMenu().getItem(2).getSubMenu().getItem(2).setVisible(false); //Activar Clientes
             navigationView.getMenu().getItem(3).setVisible(false); //Recibos
@@ -228,6 +237,7 @@ public class MenuActivity extends AppCompatActivity
             navigationView.getMenu().getItem(1).getSubMenu().getItem(3).setVisible(false); //Pedido Clientes
             navigationView.getMenu().getItem(1).getSubMenu().getItem(4).setVisible(false); //Lista Pedidos Cliente
             navigationView.getMenu().getItem(2).getSubMenu().getItem(2).setVisible(false); //Activar Clientes
+            navigationView.getMenu().getItem(5).setVisible(false); //Menu Scan
 
             if ((!variables_publicas.usuario.getCanal().equalsIgnoreCase("Detalle") && variables_publicas.usuario.getTipo().equalsIgnoreCase("Vendedor")) || variables_publicas.usuario.getTipo().equalsIgnoreCase("Supervisor") || variables_publicas.usuario.getTipo().equalsIgnoreCase("User")) {
                 navigationView.getMenu().getItem(3).setVisible(true); //Recibos
@@ -363,7 +373,11 @@ public class MenuActivity extends AppCompatActivity
 
                 boolean isOnline = Funciones.TestServerConectivity();
                 if (isOnline) {
-                    sd.SincronizarTodo();
+                    if (!variables_publicas.usuario.getTipo().equalsIgnoreCase("Consulta")){
+                        sd.SincronizarTodo();
+                    }else{
+                        sd.SincronizarConsulta();
+                    }
                 }
 
             } catch (final JSONException e) {
@@ -726,6 +740,10 @@ public class MenuActivity extends AppCompatActivity
                 tran.commit();
                 break;
 
+            case R.id.btnScan:
+                Intent newActi2 = new Intent(getApplicationContext(), ActivityScannPrincipal.class);
+                startActivity(newActi2);
+                break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

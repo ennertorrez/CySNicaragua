@@ -30,6 +30,7 @@ public class MyAdapter extends ArrayAdapter<Model> {
         protected CheckBox chkItem;
         protected TextView txtCodigo;
         protected TextView txtPrecio;
+        protected TextView txtUCaja;
         protected TextView txtNombre;
     }
 
@@ -45,6 +46,7 @@ public class MyAdapter extends ArrayAdapter<Model> {
             viewHolder.txtCodigo = (TextView) convertView.findViewById(R.id.Codigo);
             viewHolder.txtNombre = (TextView)convertView.findViewById(R.id.Nombre);
             viewHolder.txtPrecio = (TextView)convertView.findViewById(R.id.Precio);
+            viewHolder.txtUCaja = (TextView)convertView.findViewById(R.id.UCaja);
             viewHolder.chkItem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -56,6 +58,7 @@ public class MyAdapter extends ArrayAdapter<Model> {
             convertView.setTag(R.id.Codigo, viewHolder.txtCodigo);
             convertView.setTag(R.id.Precio, viewHolder.txtPrecio);
             convertView.setTag(R.id.Nombre, viewHolder.txtNombre);
+            convertView.setTag(R.id.UCaja, viewHolder.txtUCaja);
             convertView.setTag(R.id.checkbox, viewHolder.chkItem);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -65,6 +68,7 @@ public class MyAdapter extends ArrayAdapter<Model> {
         viewHolder.txtCodigo.setText(list.get(position).getCodigo());
         viewHolder.txtNombre.setText(list.get(position).getNombre());
         viewHolder.txtPrecio.setText(list.get(position).getPrecio());
+        viewHolder.txtUCaja.setText(list.get(position).getUnidadcaja());
         viewHolder.chkItem.setChecked(list.get(position).isSelected());
 
         return convertView;

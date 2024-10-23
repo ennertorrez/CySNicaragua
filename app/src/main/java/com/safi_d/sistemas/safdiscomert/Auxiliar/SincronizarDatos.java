@@ -12,6 +12,7 @@ import com.safi_d.sistemas.safdiscomert.AccesoDatos.ClientesHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.ClientesSucursalHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.ConfiguracionSistemaHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.DataBaseOpenHelper;
+import com.safi_d.sistemas.safdiscomert.AccesoDatos.EscalaPreciosHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.FacturasPendientesHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.FormaPagoHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.InformesDetalleHelper;
@@ -19,12 +20,14 @@ import com.safi_d.sistemas.safdiscomert.AccesoDatos.InformesHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.PedidosDetalleHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.PedidosHelper;
 //import com.safi_d.sistemas.safiapp.AccesoDatos.PreciosHelper;
+import com.safi_d.sistemas.safdiscomert.AccesoDatos.PromocionesHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.RutasHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.TPreciosHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.UsuariosHelper;
 import com.safi_d.sistemas.safdiscomert.AccesoDatos.VendedoresHelper;
 //import com.safi_d.sistemas.safiapp.AccesoDatos.ZonasHelper;
 import com.safi_d.sistemas.safdiscomert.Entidades.Cliente;
+import com.safi_d.sistemas.safdiscomert.Entidades.EscalaPrecios;
 import com.safi_d.sistemas.safdiscomert.Entidades.Vendedor;
 import com.safi_d.sistemas.safdiscomert.HttpHandler;
 
@@ -66,6 +69,8 @@ public class SincronizarDatos {
     static final String urlPrecios = variables_publicas.direccionIp + "/ServicioPedidos.svc/GetPreciosArticulos/1";
     static final String urlDiasCierre= variables_publicas.direccionIp + "/ServicioLogin.svc/GetDiasCierre/";
     static final String urlDiasCierreNew= variables_publicas.direccionIp + "/ServicioLogin.svc/GetDiasCierreNew/";
+    final String urlPromociones = variables_publicas.direccionIp + "/ServicioPedidos.svc/GetPromociones/";
+    final String urlEscalaPrecios = variables_publicas.direccionIp + "/ServicioPedidos.svc/GetEscalaPrecios";
     private String TAG = SincronizarDatos.class.getSimpleName();
     private DataBaseOpenHelper DbOpenHelper;
     private ClientesHelper ClientesH;
@@ -85,19 +90,22 @@ public class SincronizarDatos {
     private InformesHelper InformesH;
     private InformesDetalleHelper InformesDetalleH;
     private FacturasPendientesHelper FacturasPendientesH;
+    private PromocionesHelper PromocionesH;
     //private PreciosHelper PreciosH;
     private TPreciosHelper TPreciosH;
     private boolean isOnline=false;
+    private EscalaPreciosHelper EscalaPreciosH;
 
     public SincronizarDatos(DataBaseOpenHelper dbh, ClientesHelper Clientesh,
-                            VendedoresHelper Vendedoresh, CartillasBcHelper CatillasBch,
+                            VendedoresHelper Vendedoresh, PromocionesHelper Promocionesh,CartillasBcHelper CatillasBch,
                             CartillasBcDetalleHelper CartillasBcDetalleh, FormaPagoHelper FormaPagoh,
                             ConfiguracionSistemaHelper ConfigSistemah,
                             ClientesSucursalHelper ClientesSuch, ArticulosHelper Articulosh, UsuariosHelper usuariosH,
-                            PedidosHelper pedidoH, PedidosDetalleHelper pedidosDetalleH ,TPreciosHelper tpreciosH,RutasHelper rutasH) {
+                            PedidosHelper pedidoH, PedidosDetalleHelper pedidosDetalleH ,TPreciosHelper tpreciosH,RutasHelper rutasH,EscalaPreciosHelper escalaPreciosH) {
         DbOpenHelper = dbh;
         ClientesH = Clientesh;
         VendedoresH = Vendedoresh;
+        PromocionesH = Promocionesh;
         CartillasBcH = CatillasBch;
         CartillasBcDetalleH = CartillasBcDetalleh;
         FormaPagoH = FormaPagoh;
@@ -110,19 +118,21 @@ public class SincronizarDatos {
        // PreciosH = preciosH;
         RutasH = rutasH;
         TPreciosH = tpreciosH;
+        EscalaPreciosH = escalaPreciosH;
     }
 
     public SincronizarDatos(DataBaseOpenHelper dbh, ClientesHelper Clientesh,
-                            VendedoresHelper Vendedoresh, CartillasBcHelper CatillasBch,
+                            VendedoresHelper Vendedoresh, PromocionesHelper Promocionesh, CartillasBcHelper CatillasBch,
                             CartillasBcDetalleHelper CartillasBcDetalleh, FormaPagoHelper FormaPagoh,
                             ConfiguracionSistemaHelper ConfigSistemah,
                             ClientesSucursalHelper ClientesSuch, ArticulosHelper Articulosh, UsuariosHelper usuariosH,
                             PedidosHelper pedidoH, PedidosDetalleHelper pedidosDetalleH, InformesHelper Informesh,
                             InformesDetalleHelper InformesDetalleh,FacturasPendientesHelper FacturasPendientesh,
-                            CategoriasClienteHelper categoriasH,TPreciosHelper tpreciosH,RutasHelper rutasH) {
+                            CategoriasClienteHelper categoriasH,TPreciosHelper tpreciosH,RutasHelper rutasH,EscalaPreciosHelper escalaPreciosH) {
         DbOpenHelper = dbh;
         ClientesH = Clientesh;
         VendedoresH = Vendedoresh;
+        PromocionesH = Promocionesh;
         CartillasBcH = CatillasBch;
         CartillasBcDetalleH = CartillasBcDetalleh;
         FormaPagoH = FormaPagoh;
@@ -140,6 +150,7 @@ public class SincronizarDatos {
         TPreciosH = tpreciosH;
         CategoriaH=categoriasH;
         RutasH =rutasH;
+        EscalaPreciosH = escalaPreciosH;
     }
 
     public SincronizarDatos(DataBaseOpenHelper dbh , ClientesHelper Clientesh, CategoriasClienteHelper Categoriah,TPreciosHelper tpreciosH,RutasHelper rutasH) {
@@ -205,6 +216,8 @@ public class SincronizarDatos {
                 String Precio2 = c.getString("Precio2");
                 String Precio3 = c.getString("Precio3");
                 String Precio4 = c.getString("Precio4");
+                String Precio5 = c.getString("Precio5");
+                String Precio6 = c.getString("Precio6");
                 String CodUM = c.getString("codUM");
                 String PorIVA = c.getString("PorIVA");
                 String DESCUENTO_MAXIMO = c.getString("DESCUENTO_MAXIMO");
@@ -214,7 +227,7 @@ public class SincronizarDatos {
                 String UnidadCajaVenta3 = c.getString("UnidadCajaVenta3");
                 String IdProveedor = c.getString("IdProveedor");
                 String UnidadMinima = c.getString("UnidadMinima");
-                ArticulosH.GuardarTotalArticulos(Codigo, Nombre, COSTO, UNIDAD, UnidadCaja, Precio,Precio2,Precio3,Precio4,CodUM, PorIVA, DESCUENTO_MAXIMO,  existencia, UnidadCajaVenta,UnidadCajaVenta2,UnidadCajaVenta3, IdProveedor,UnidadMinima);
+                ArticulosH.GuardarTotalArticulos(Codigo, Nombre, COSTO, UNIDAD, UnidadCaja, Precio,Precio2,Precio3,Precio4,Precio5,Precio6,CodUM, PorIVA, DESCUENTO_MAXIMO,  existencia, UnidadCajaVenta,UnidadCajaVenta2,UnidadCajaVenta3, IdProveedor,UnidadMinima);
             }
             DbOpenHelper.database.setTransactionSuccessful();
             return true;
@@ -534,7 +547,137 @@ public class SincronizarDatos {
         }
 
     }
+    public boolean SincronizarPromociones() throws JSONException {
+        HttpHandler shPromociones = new HttpHandler();
+        String urlStringPromociones= urlPromociones;
+        String jsonStrPromociones = shPromociones.makeServiceCall(urlStringPromociones);
 
+        if (jsonStrPromociones == null) {
+            new Funciones().SendMail("Ha ocurrido un error al sincronicar CartillasBC, Respuesta nula GET", variables_publicas.info + urlStringPromociones, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            return false;
+        }
+
+        DbOpenHelper.database.beginTransaction();
+        PromocionesH.EliminaPromociones();
+        JSONObject jsonObjPromociones = new JSONObject(jsonStrPromociones);
+        // Getting JSON Array node
+        JSONArray promociones = jsonObjPromociones.getJSONArray("GetPromocionesResult");
+
+
+        try {
+            // looping through All Contacts
+            for (int i = 0; i < promociones.length(); i++) {
+                JSONObject c = promociones.getJSONObject(i);
+
+                String codpromo = c.getString("CodPromo");
+                String itemv = c.getString("itemV");
+                String cantv = c.getString("cantV");
+                String itemb = c.getString("itemB");
+                String cantb = c.getString("cantB");
+
+                PromocionesH.GuardarPromociones(codpromo, itemv, cantv, itemb, cantb);
+            }
+            DbOpenHelper.database.setTransactionSuccessful();
+            return true;
+        } catch (Exception ex) {
+            new Funciones().SendMail("Ha ocurrido un error al sincronicar Promociones, Excepcion controlada", variables_publicas.info + ex.getMessage(), "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            return false;
+        } finally {
+            DbOpenHelper.database.endTransaction();
+        }
+
+    }
+    private boolean SincronizarEscalaPrecios() throws JSONException {
+        HttpHandler shC = new HttpHandler();
+        String urlStringC = urlEscalaPrecios;
+        String jsonStrC = shC.makeServiceCall(urlStringC);
+
+        if (jsonStrC == null) {
+            new Funciones().SendMail("Ha ocurrido un error al sincronizar las Escalas de Precios Combinados, Respuesta nula GET", variables_publicas.info + urlStringC, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            return false;
+        }
+        //Log.e(TAG, "Response from url: " + jsonStrC);
+        DbOpenHelper.database.beginTransaction();
+
+        EscalaPreciosH.EliminaEscalaPrecios();
+        JSONObject jsonObjC = new JSONObject(jsonStrC);
+        // Getting JSON Array node
+        JSONArray precios = jsonObjC.getJSONArray("GetEscalaPreciosResult");
+
+
+        try {
+            // looping through All Contacts
+            for (int i = 0; i < precios.length(); i++) {
+                JSONObject c = precios.getJSONObject(i);
+
+                String codEscala = c.getString("CodEscala");
+                String lista = c.getString("ListaArticulos");
+                String escala1 = c.getString("Escala1");
+                String escala2 = c.getString("Escala2");
+                String escala3 = c.getString("Escala3");
+                String precio1 = c.getString("Precio1");
+                String precio2 = c.getString("Precio2");
+                String precio3 = c.getString("Precio3");
+                EscalaPreciosH.GuardarEscalaPrecios(codEscala,lista,escala1,escala2,escala3,precio1,precio2,precio3);
+            }
+            DbOpenHelper.database.setTransactionSuccessful();
+            return true;
+        } catch (Exception ex) {
+            new Funciones().SendMail("Ha ocurrido un error al sincronizar las Escalas de Precios Combinados, Excepcion controlada", variables_publicas.info + ex.getMessage(), "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            return false;
+        } finally {
+            DbOpenHelper.database.endTransaction();
+        }
+
+    }
+    private boolean ObtenerMotivosNoVenta() {
+
+        HttpHandler sh = new HttpHandler();
+        String urlString = variables_publicas.direccionIp + "/ServicioClientes.svc/ObtenerMotivosNoVisita";
+        String encodeUrl = "";
+        try {
+            URL Url = new URL(urlString);
+            URI uri = new URI(Url.getProtocol(), Url.getUserInfo(), Url.getHost(), Url.getPort(), Url.getPath(), Url.getQuery(), Url.getRef());
+            encodeUrl = uri.toURL().toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String jsonStr = sh.makeServiceCall(encodeUrl);
+
+        /**********************************BANCOS**************************************/
+        if (jsonStr != null) {
+            DbOpenHelper.database.beginTransactionNonExclusive();
+            try {
+                //DbOpenHelper.database.beginTransactionNonExclusive();
+                JSONObject jsonObj = new JSONObject(jsonStr);
+                // Getting JSON Array node
+                JSONArray motivos = jsonObj.getJSONArray("ObtenerMotivosNoVisitaResult");
+                if (motivos.length() == 0) {
+                    return false;
+                }
+                ClientesH.EliminarMotivosNoVenta();
+                // looping through All Contacts
+
+                for (int i = 0; i < motivos.length(); i++) {
+                    JSONObject c = motivos.getJSONObject(i);
+                    ClientesH.GuardarMotivosNoVenta(c.get("Codigo").toString(),c.get("Motivo").toString());
+                }
+                DbOpenHelper.database.setTransactionSuccessful();
+                return true;
+            } catch (Exception ex) {
+                Log.e("Error", ex.getMessage());
+                new Funciones().SendMail("Ha ocurrido un error al obtener el listado de Motivos No Venta,Excepcion controlada", variables_publicas.info + ex.getMessage(), "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+                return false;
+            }  finally {
+                DbOpenHelper.database.endTransaction();
+            }
+
+        } else {
+            new Funciones().SendMail("Ha ocurrido un error al obtener el Listado de Motivos No Venta,Respuesta nula", variables_publicas.info + urlString, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
+            return false;
+        }
+    }
    public boolean SincronizarRutas() throws JSONException {
        HttpHandler shRutas= new HttpHandler();
        String urlStringRutas= urlRutas + variables_publicas.usuario.getCodigo();
@@ -812,18 +955,24 @@ public class SincronizarDatos {
         if (SincronizarDiasCierre()) {
             if (SincronizarArticulos()) {
                  if (SincronizarClientes()) {
-                     if (SincronizarTPrecios()) {
-                        if (SincronizarCategorias()) {
-                         if (SincronizarVendedores()) {
-                             if (SincronizarCartillasBc()) {
-                                 if (SincronizarCartillasBcDetalle()) {
-                                     if (SincronizarFormaPago()) {
-                                         if (SincronizarRutas()) {
-                                             if (SincronizarClientesSucursal()) {
-                                                 if (SincronizarConfiguracionSistema()) {
-                                                     if (ActualizarUsuario()) {
-                                                         SincronizarPedidosLocales();
-                                                         return true;
+                     if (ObtenerMotivosNoVenta()) {
+                        if (SincronizarTPrecios()) {
+                            if (SincronizarEscalaPrecios()) {
+                                if (SincronizarCategorias()) {
+                                    if (SincronizarVendedores()) {
+                                        if (SincronizarPromociones()) {
+                                            if (SincronizarCartillasBc()) {
+                                                if (SincronizarCartillasBcDetalle()) {
+                                                    if (SincronizarFormaPago()) {
+                                                        if (SincronizarRutas()) {
+                                                            if (SincronizarClientesSucursal()) {
+                                                                if (SincronizarConfiguracionSistema()) {
+                                                                    if (ActualizarUsuario()) {
+                                                                        SincronizarPedidosLocales();
+                                                                        return true;
+                                                                    }
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -840,12 +989,23 @@ public class SincronizarDatos {
         return false;
     }
 
-
+    public boolean SincronizarConsulta() throws JSONException {
+        if (SincronizarConfiguracionSistema()) {
+             if (ActualizarUsuario()) {
+                //SincronizarPedidosLocales();
+                    return true;
+                }
+             }
+        return false;
+    }
     public void SincronizarTablas() throws JSONException {
         SincronizarDiasCierre();
         SincronizarArticulos();
         SincronizarClientes();
+        ObtenerMotivosNoVenta();
         SincronizarRutas();
+        SincronizarEscalaPrecios();
+        SincronizarPromociones();
         SincronizarCartillasBc();
         SincronizarCartillasBcDetalle();
         SincronizarClientesSucursal();
@@ -1002,7 +1162,7 @@ public class SincronizarDatos {
             item.put("Descripcion", Codificar(item.get("Descripcion")));
         }
         String jsonPedidoDetalle = gson.toJson(pedidoDetalle);
-        final String urlDetalle = variables_publicas.direccionIp + "/ServicioPedidos.svc/SincronizarPedidoTotal/";
+        final String urlDetalle = variables_publicas.direccionIp + "/ServicioPedidos.svc/SincronizarPedidoTotalPromoNew/";
         final String urlStringDetalle = urlDetalle + cliente.getIdCliente() + "/" + String.valueOf(Editar) + "/" + vendedor.getCODIGO() + "/" + jsonPedido + "/" + jsonPedidoDetalle+ "/" + cliente.getEmpresa();
 
         HashMap<String,String> postData = new HashMap<>();
@@ -1024,12 +1184,12 @@ public class SincronizarDatos {
         } else {
             try {
                 JSONObject result = new JSONObject(jsonStrPedido);
-                String resultState = (String) ((String) result.get("SincronizarPedidoTotalResult")).split(",")[0];
-                String NoPedido = (String) ((String) result.get("SincronizarPedidoTotalResult")).split(",")[1];
+                String resultState = (String) ((String) result.get("SincronizarPedidoTotalPromoNewResult")).split(",")[0];
+                String NoPedido = (String) ((String) result.get("SincronizarPedidoTotalPromoNewResult")).split(",")[1];
                 if (resultState.equals("false")) {
 
                     if (NoPedido.equalsIgnoreCase("Pedido ya existe en base de datos")) {
-                        NoPedido =  ((String) result.get("SincronizarPedidoTotalResult")).split(",")[1];
+                        NoPedido =  ((String) result.get("SincronizarPedidoTotalPromoNewResult")).split(",")[1];
                     } else {
                         new Funciones().SendMail("Ha ocurrido un error al sincronizar el pedido ,Respuesta false", variables_publicas.info + NoPedido +" *** "+urlStringDetalle, "dlunasistemas@gmail.com", variables_publicas.correosErrores);
                         return "false," + NoPedido;
@@ -1528,7 +1688,7 @@ public class SincronizarDatos {
     public static boolean ObtenerPedidoGuardadoDetalle(String vPedido,PedidosDetalleHelper vpedidodetalleh) {
 
         HttpHandler sh = new HttpHandler();
-        String urlString = variables_publicas.direccionIp + "/ServicioPedidos.svc/ObtenerPedidoDetalle/" + vPedido;
+        String urlString = variables_publicas.direccionIp + "/ServicioPedidos.svc/ObtenerPedidoDetalleNew/" + vPedido;
         String encodeUrl = "";
         try {
             URL Url = new URL(urlString);
@@ -1544,14 +1704,14 @@ public class SincronizarDatos {
         if (jsonStr != null) {
             try {
                 JSONObject jsonObj = new JSONObject(jsonStr);
-                JSONArray pedido = jsonObj.getJSONArray("ObtenerPedidoDetalleResult");
+                JSONArray pedido = jsonObj.getJSONArray("ObtenerPedidoDetalleNewResult");
                 if (pedido.length() == 0) {
                     return false;
                 }
                 vpedidodetalleh.EliminarDetallePedido(vPedido);
                 for (int i = 0; i < pedido.length(); i++) {
                     JSONObject c = pedido.getJSONObject(i);
-                    vpedidodetalleh.GuardarDetallePedido(c.get("CodigoPedido").toString(),c.get("CodigoArticulo").toString(),c.get("Descripcion").toString(),c.get("Cantidad").toString().substring(0,c.get("Cantidad").toString().indexOf(".")),c.get("BonificaA").toString(),c.get("TipoArt").toString(),c.get("PorDescuento").toString(),c.get("Descuento").toString(),c.get("CodUM").toString(),c.get("Unidades").toString(),c.get("Costo").toString(),c.get("Precio").toString(),c.get("TipoPrecio").toString(),c.get("PorcentajeIva").toString(),c.get("Iva").toString(),c.get("Um").toString(),"1",c.get("Subtotal").toString(),c.get("Total").toString(),c.get("Bodega").toString());
+                    vpedidodetalleh.GuardarDetallePedido(c.get("CodigoPedido").toString(),c.get("CodigoArticulo").toString(),c.get("Descripcion").toString(),c.get("Cantidad").toString().substring(0,c.get("Cantidad").toString().indexOf(".")),c.get("BonificaA").toString(),c.get("TipoArt").toString(),c.get("PorDescuento").toString(),c.get("Descuento").toString(),c.get("CodUM").toString(),c.get("Unidades").toString(),c.get("Costo").toString(),c.get("Precio").toString(),c.get("TipoPrecio").toString(),c.get("PorcentajeIva").toString(),c.get("Iva").toString(),c.get("Um").toString(),"1",c.get("Subtotal").toString(),c.get("Total").toString(),c.get("Bodega").toString(),c.get("codPromo").toString());
                 }
                 return true;
             } catch (Exception ex) {

@@ -35,7 +35,30 @@
         android:paddingBottom="2dip"
         android:paddingTop="6dip"
         android:layout_toRightOf="@id/lblPrecio"
-        android:gravity="right"
+        android:gravity="left"
+        />
+    <TextView
+        android:id="@+id/lblUcaja"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="U.XCaja: "
+        android:textColor="@color/colorAccent"
+        android:paddingBottom="2dip"
+        android:paddingTop="6dip"
+        android:layout_toRightOf="@id/Precio"
+        android:gravity="left"/>
+
+    <TextView
+        android:id="@+id/UCaja"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:textColor="#5d5d5d"
+        android:textStyle="bold"
+        android:paddingBottom="2dip"
+        android:paddingTop="6dip"
+        android:layout_toRightOf="@id/lblUcaja"
+        android:gravity="left"
         />
     <CheckBox android:id="@+id/checkbox"
         android:layout_width="wrap_content"

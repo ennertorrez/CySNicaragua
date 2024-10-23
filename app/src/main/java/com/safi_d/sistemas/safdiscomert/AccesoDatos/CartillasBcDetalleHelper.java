@@ -1,6 +1,7 @@
 package com.safi_d.sistemas.safdiscomert.AccesoDatos;
 
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -63,7 +64,8 @@ public class CartillasBcDetalleHelper {
     }
 
 
-    public HashMap<String, String> BuscarBonificacion(String ItemV, String Canal, String Fecha,String Cantidad,String codUMV){
+    @SuppressLint("Range")
+    public HashMap<String, String> BuscarBonificacion(String ItemV, String Canal, String Fecha, String Cantidad, String codUMV){
         HashMap<String,String> cartillaDetalle = new HashMap<String, String>();
 
         String selectQuery = "SELECT * FROM "+variables_publicas.TABLE_CARTILLAS_BC+" cb INNER JOIN "+variables_publicas.TABLE_DETALLE_CARTILLAS_BC+" db ON cb.codigo= db.codigo " +
@@ -93,6 +95,7 @@ public class CartillasBcDetalleHelper {
         return cartillaDetalle;
     }
 
+        @SuppressLint("Range")
         public ArrayList<HashMap<String, String>> ListaBonificacionesCanal(String Canal)  {
 
         String selectQuery = "SELECT db.itemV,db.descripcionV,db.cantidad,db.itemB, db.descripcionB,db.cantidadB FROM "+variables_publicas.TABLE_CARTILLAS_BC+" cb INNER JOIN "+variables_publicas.TABLE_DETALLE_CARTILLAS_BC+" db ON cb.codigo= db.codigo " +

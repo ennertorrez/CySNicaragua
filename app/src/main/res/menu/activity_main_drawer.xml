@@ -102,5 +102,17 @@
                 android:title="Histórico de Ventas" />
         </menu>
     </item>
+        <item
+            android:id="@+id/btnConsulta"
+            android:icon="@drawable/ic_menu_share"
+            android:iconTint="@color/colorPrimary"
+            android:title="Consultar">
+            <menu>
+                <item android:iconTint="@color/colorPrimary"
+                    android:id="@+id/btnScan"
+                    android:icon="@drawable/ic_menu_mapmode"
+                    android:title="Scanear" />
+            </menu>
+        </item>
 </group>
 </menu>

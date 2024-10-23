@@ -236,8 +236,8 @@ public class PedidosFragment extends Fragment {
                 * */
                ListAdapter adapter = new SimpleAdapter(
                        getActivity(), listaClientes,
-                       R.layout.list_cliente, new String[]{variables_publicas.CLIENTES_COLUMN_IdCliente,"CodigoLetra","Ciudad", "Nombre", variables_publicas.CLIENTES_COLUMN_Direccion}, new int[]{R.id.IdCliente,R.id.CodLetra,R.id.Ciudad, R.id.Nombre,
-                       R.id.Direccion});
+                       R.layout.list_cliente, new String[]{variables_publicas.CLIENTES_COLUMN_IdCliente,"CodigoLetra","Ciudad", "Nombre",variables_publicas.CLIENTES_COLUMN_Telefono, variables_publicas.CLIENTES_COLUMN_Direccion}, new int[]{R.id.IdCliente,R.id.CodLetra,R.id.Ciudad, R.id.Nombre,
+                       R.id.Telefono, R.id.Direccion});
                if(adapter!=null){
                    lv.setAdapter(adapter);
                }

@@ -86,6 +86,8 @@ public class DataBaseOpenHelper {
                     + variables_publicas.ARTICULO_COLUMN_Precio2 + " TEXT, "
                     + variables_publicas.ARTICULO_COLUMN_Precio3 + " TEXT, "
                     + variables_publicas.ARTICULO_COLUMN_Precio4 + " TEXT, "
+                    + variables_publicas.ARTICULO_COLUMN_Precio5 + " TEXT, "
+                    + variables_publicas.ARTICULO_COLUMN_Precio6 + " TEXT, "
                     + variables_publicas.ARTICULO_COLUMN_CodUM+ " TEXT, "
                     + variables_publicas.ARTICULO_COLUMN_PorIva + " TEXT, "
                     + variables_publicas.ARTICULO_COLUMN_DescuentoMaximo + " TEXT, "
@@ -209,7 +211,8 @@ public class DataBaseOpenHelper {
                     + variables_publicas.PEDIDOS_DETALLE_COLUMN_UnidadMinima + " TEXT ,"
                     + variables_publicas.PEDIDOS_DETALLE_COLUMN_Subtotal + " TEXT ,"
                     + variables_publicas.PEDIDOS_DETALLE_COLUMN_Total + " TEXT ,"
-                    + variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega + " TEXT )");
+                    + variables_publicas.PEDIDOS_DETALLE_COLUMN_Bodega + " TEXT ,"
+                    + variables_publicas.PEDIDOS_DETALLE_COLUMN_CodPromo + " TEXT )");
 
             db.execSQL("CREATE TABLE " + variables_publicas.TABLE_DPTOMUNIBARRIOS + "( "
                     + variables_publicas.DPTOMUNIBARRIOS_COLUMN_Codigo_Departamento + " TEXT , "
@@ -300,6 +303,27 @@ public class DataBaseOpenHelper {
                     + variables_publicas.DIASCIERRE_COLUMN_HoraFin + " TEXT , "
                     + variables_publicas.DIASCIERRE_COLUMN_FechaInicio + " TEXT , "
                     + variables_publicas.DIASCIERRE_COLUMN_FechaFin + " TEXT ) ");
+
+            db.execSQL("CREATE TABLE " + variables_publicas.TABLE_PROMOCIONES + "( "
+                    + variables_publicas.PROMOCIONES_COLUMN_codPromo + " TEXT , "
+                    + variables_publicas.PROMOCIONES_COLUMN_itemV + " TEXT , "
+                    + variables_publicas.PROMOCIONES_COLUMN_cantV + " TEXT , "
+                    + variables_publicas.PROMOCIONES_COLUMN_itemB + " TEXT , "
+                    + variables_publicas.PROMOCIONES_COLUMN_cantB + " TEXT ) ");
+
+            db.execSQL("CREATE TABLE " + variables_publicas.TABLE_ESCALAPRECIOS + "( "
+                    + variables_publicas.ESCALAPRECIOS_COLUMN_CODESCALA + " TEXT , "
+                    + variables_publicas.ESCALAPRECIOS_COLUMN_LISTAARTICULOS + " TEXT , "
+                    + variables_publicas.ESCALAPRECIOS_COLUMN_ESCALA1 + " TEXT , "
+                    + variables_publicas.ESCALAPRECIOS_COLUMN_ESCALA2 + " TEXT , "
+                    + variables_publicas.ESCALAPRECIOS_COLUMN_ESCALA3 + " TEXT , "
+                    + variables_publicas.ESCALAPRECIOS_COLUMN_PRECIO1 + " TEXT , "
+                    + variables_publicas.ESCALAPRECIOS_COLUMN_PRECIO2 + " TEXT , "
+                    + variables_publicas.ESCALAPRECIOS_COLUMN_PRECIO3 + " TEXT ) ");
+
+            db.execSQL("CREATE TABLE " + variables_publicas.TABLE_MOTIVOS_NOVENTA + "( "
+                    + variables_publicas.MOTIVOS_NOVENTA_COLUMN_codigo + " TEXT , "
+                    + variables_publicas.MOTIVOS_NOVENTA_COLUMN_motivo + " TEXT ) ");
         }
 
         @Override
@@ -327,7 +351,10 @@ public class DataBaseOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS " + variables_publicas.TABLE_RUTAS);
             db.execSQL("DROP TABLE IF EXISTS " + variables_publicas.TABLE_CATEGORIAS);
             db.execSQL("DROP TABLE IF EXISTS " + variables_publicas.TABLE_SERIE_RECIBOS);
+            db.execSQL("DROP TABLE IF EXISTS " + variables_publicas.TABLE_PROMOCIONES);
             db.execSQL("DROP TABLE IF EXISTS " + variables_publicas.TABLE_DIASCIERRE);
+            db.execSQL("DROP TABLE IF EXISTS " + variables_publicas.TABLE_ESCALAPRECIOS);
+            db.execSQL("DROP TABLE IF EXISTS " + variables_publicas.TABLE_MOTIVOS_NOVENTA);
             onCreate(db);
         }
     }

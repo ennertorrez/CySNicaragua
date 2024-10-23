@@ -56,7 +56,7 @@ public class variables_publicas {
     public static final String correosErrores = "cysnicaragua@gmail.com";
     public  static final String correoError= "cysnicaragua@gmail.com";
     //Variables BD
-    public static final int DATABASE_VERSION = 9;
+    public static final int DATABASE_VERSION = 14;
     public static final String DATABASE_NAME = "Safi_D.db";
     //Variables TB
     public static final String TABLE_ARTICULOS = "Articulos";
@@ -82,6 +82,9 @@ public class variables_publicas {
     public static final String TABLE_CATEGORIAS = "Categorias";
     public static final String TABLE_RUTAS= "Rutas";
     public static final String TABLE_DIASCIERRE= "DiasCierre";
+    public static final String TABLE_PROMOCIONES= "Promociones";
+    public static final String TABLE_ESCALAPRECIOS= "EscalaPrecios";
+    public static final String TABLE_MOTIVOS_NOVENTA="MotivosNoVenta";
     //Variables CamposTbArticulos
     public static final String ARTICULO_COLUMN_Codigo = "Codigo";
     public static final String ARTICULO_COLUMN_Nombre = "Nombre";
@@ -92,6 +95,8 @@ public class variables_publicas {
     public static final String ARTICULO_COLUMN_Precio2 = "Precio2";
     public static final String ARTICULO_COLUMN_Precio3 = "Precio3";
     public static final String ARTICULO_COLUMN_Precio4 = "Precio4";
+    public static final String ARTICULO_COLUMN_Precio5 = "Precio5";
+    public static final String ARTICULO_COLUMN_Precio6 = "Precio6";
     public static final String ARTICULO_COLUMN_CodUM = "CodUM";
     public static final String ARTICULO_COLUMN_PorIva = "PorIva";
     public static final String ARTICULO_COLUMN_DescuentoMaximo = "DescuentoMaximo";
@@ -174,6 +179,7 @@ public class variables_publicas {
     public static final String PEDIDOS_DETALLE_COLUMN_Subtotal = "SubTotal";
     public static final String PEDIDOS_DETALLE_COLUMN_Total = "Total";
     public static final String PEDIDOS_DETALLE_COLUMN_Bodega = "Bodega";
+    public static final String PEDIDOS_DETALLE_COLUMN_CodPromo = "codPromo";
 
     //Variables CamposUsuario
     public static final String USUARIOS_COLUMN_Codigo = "Codigo";
@@ -336,6 +342,24 @@ public class variables_publicas {
     public static final String DIASCIERRE_COLUMN_HoraFin= "HoraFin";
     public static final String DIASCIERRE_COLUMN_FechaInicio= "FechaInicio";
     public static final String DIASCIERRE_COLUMN_FechaFin= "FechaFin";
+
+    public static final String PROMOCIONES_COLUMN_codPromo = "codPromo";
+    public static final String PROMOCIONES_COLUMN_itemV = "itemV";
+    public static final String PROMOCIONES_COLUMN_cantV = "cantV";
+    public static final String PROMOCIONES_COLUMN_itemB = "itemB";
+    public static final String PROMOCIONES_COLUMN_cantB = "cantB";
+
+    public static final String ESCALAPRECIOS_COLUMN_CODESCALA= "CodEscala";
+    public static final String ESCALAPRECIOS_COLUMN_LISTAARTICULOS = "ListaArticulos";
+    public static final String ESCALAPRECIOS_COLUMN_ESCALA1 = "Escala1";
+    public static final String ESCALAPRECIOS_COLUMN_ESCALA2 = "Escala2";
+    public static final String ESCALAPRECIOS_COLUMN_ESCALA3 = "Escala3";
+    public static final String ESCALAPRECIOS_COLUMN_PRECIO1 = "Precio1";
+    public static final String ESCALAPRECIOS_COLUMN_PRECIO2 = "Precio2";
+    public static final String ESCALAPRECIOS_COLUMN_PRECIO3 = "Precio3";
+
+    public static  final String MOTIVOS_NOVENTA_COLUMN_codigo = "Codigo";
+    public static final String  MOTIVOS_NOVENTA_COLUMN_motivo ="Motivo";
 
     public final static int COUNTDOWN_FREQUENCY = 1000;
     public final static int VIBRATE_THRESHOLD = 30 * 1000;

@@ -1,5 +1,6 @@
 package com.safi_d.sistemas.safdiscomert.AccesoDatos;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,6 +9,7 @@ import android.util.Log;
 import com.safi_d.sistemas.safdiscomert.Auxiliar.variables_publicas;
 import com.safi_d.sistemas.safdiscomert.Entidades.Cliente;
 import com.safi_d.sistemas.safdiscomert.Entidades.Departamentos;
+import com.safi_d.sistemas.safdiscomert.Entidades.MotivosNoVenta;
 import com.safi_d.sistemas.safdiscomert.Entidades.Municipios;
 
 import java.util.ArrayList;
@@ -142,6 +144,7 @@ public class ClientesHelper {
         database.insert(variables_publicas.TABLE_CLIENTES, null, contentValues);
     }
 
+    @SuppressLint("Range")
     public ArrayList<HashMap<String, String>>  BuscarClientesNombre(String Busqueda) {
         Busqueda= Busqueda.replace(" ","%");
         Cursor c= database.rawQuery("SELECT * FROM "
@@ -192,6 +195,7 @@ public class ClientesHelper {
         return  lst;
     }
 
+    @SuppressLint("Range")
     public ArrayList<HashMap<String, String>>  BuscarClientesCodigo(String Busqueda) {
         Cursor c= database.rawQuery("SELECT * FROM "
                 + variables_publicas.TABLE_CLIENTES+" WHERE "+variables_publicas.CLIENTES_COLUMN_IdCliente+" = CASE WHEN '' = '"+Busqueda+"' THEN "+variables_publicas.CLIENTES_COLUMN_IdCliente+" ELSE '"+Busqueda+"' END ", null);
@@ -241,6 +245,7 @@ public class ClientesHelper {
         return  lst;
     }
 
+    @SuppressLint("Range")
     public HashMap<String, String>  ObtenerClienteGuardado(String Busqueda) {
         String sql="SELECT * FROM "
                 + variables_publicas.TABLE_CLIENTES+" WHERE "+variables_publicas.CLIENTES_COLUMN_IdCliente+" = CASE WHEN '' = '"+Busqueda+"' THEN "+variables_publicas.CLIENTES_COLUMN_IdCliente+" ELSE '"+Busqueda+"' END ";
@@ -301,6 +306,7 @@ public class ClientesHelper {
         Log.d("clientes_elimina", "Datos eliminados");
     }
 
+    @SuppressLint("Range")
     public Cliente BuscarCliente(String Codigo){
         Cliente cli= new Cliente();
         String sql="select * from " + variables_publicas.TABLE_CLIENTES + " Where IdCliente = "+Codigo +" ";
@@ -347,6 +353,7 @@ public class ClientesHelper {
         return cli;
     }
 
+    @SuppressLint("Range")
     public List<Departamentos> ObtenerListaDepartamentos() {
         List<Departamentos> list = new ArrayList<Departamentos>();
         String Query = "SELECT DISTINCT " + variables_publicas.DPTOMUNIBARRIOS_COLUMN_Codigo_Departamento + " ," + variables_publicas.DPTOMUNIBARRIOS_COLUMN_Nombre_Departamento + " FROM " + variables_publicas.TABLE_DPTOMUNIBARRIOS + " ORDER BY "+ variables_publicas.DPTOMUNIBARRIOS_COLUMN_Nombre_Departamento+";";
@@ -363,6 +370,7 @@ public class ClientesHelper {
         return list;
     }
 
+    @SuppressLint("Range")
     public List<Municipios> ObtenerListaMunicipios(String DesDepto) {
         List<Municipios> list = new ArrayList<Municipios>();
         String Query = "SELECT DISTINCT " + variables_publicas.DPTOMUNIBARRIOS_COLUMN_Codigo_Municipio + " ," + variables_publicas.DPTOMUNIBARRIOS_COLUMN_Nombre_Municipio + " FROM " + variables_publicas.TABLE_DPTOMUNIBARRIOS + " WHERE "+ variables_publicas.DPTOMUNIBARRIOS_COLUMN_Nombre_Departamento + "= '"+ DesDepto + "' ORDER BY "+ variables_publicas.DPTOMUNIBARRIOS_COLUMN_Nombre_Municipio+";";
@@ -381,7 +389,8 @@ public class ClientesHelper {
     }
 
 
-    public ArrayList<HashMap<String, String>> BuscarCedulaClientes( String vCedula) {
+    @SuppressLint("Range")
+    public ArrayList<HashMap<String, String>> BuscarCedulaClientes(String vCedula) {
         String Query = "SELECT DISTINCT " + variables_publicas.CLIENTES_COLUMN_IdCliente + ", " + variables_publicas.CLIENTES_COLUMN_Nombre + " FROM " + variables_publicas.TABLE_CLIENTES + " WHERE "+ variables_publicas.CLIENTES_COLUMN_Cedula + "= '"+ vCedula + "' LIMIT 1;";
         Cursor c = database.rawQuery(Query, null);
         ArrayList<HashMap<String, String>> lst= new ArrayList<HashMap<String, String>> () ;
@@ -447,7 +456,8 @@ public class ClientesHelper {
         c.close();
         return resultado;
     }
-    public HashMap<String, String> ObtenerDatosClientesParcial(String Codigo,String CodCv) {
+    @SuppressLint("Range")
+    public HashMap<String, String> ObtenerDatosClientesParcial(String Codigo, String CodCv) {
 
         String sql="select IdCliente,CodCv,Nombre,NombreCliente,Telefono,Direccion,Cedula,IdVendedor,Ruta,Frecuencia from " + variables_publicas.TABLE_CLIENTES + " Where IdCliente = "+Codigo +" AND CodCv = '"+CodCv.replace("Cod_Cv: ","")+"' ";
         Cursor c = database.rawQuery(sql,null);
@@ -469,5 +479,36 @@ public class ClientesHelper {
         }
         c.close();
         return cliente;
+    }
+    public boolean EliminarMotivosNoVenta() {
+        long deletedrows=  database.delete( variables_publicas.TABLE_MOTIVOS_NOVENTA,null,null);
+        Log.d("motivos_noventa_deleted", "Datos eliminados");
+        return deletedrows!=-1;
+    }
+    public boolean GuardarMotivosNoVenta(String cod, String motivo){
+        long rows = 0;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(variables_publicas.MOTIVOS_NOVENTA_COLUMN_codigo, cod);
+        contentValues.put(variables_publicas.MOTIVOS_NOVENTA_COLUMN_motivo, motivo);
+        long rowInserted = database.insert(variables_publicas.TABLE_MOTIVOS_NOVENTA, null, contentValues);
+        if (rowInserted != -1)
+            return true;
+        else return false;
+    }
+    @SuppressLint("Range")
+    public List<MotivosNoVenta> ObtenerListaMotivosNoVenta() {
+        List<MotivosNoVenta> list = new ArrayList<MotivosNoVenta>();
+        String Query = "SELECT DISTINCT " + variables_publicas.MOTIVOS_NOVENTA_COLUMN_codigo + " ," + variables_publicas.MOTIVOS_NOVENTA_COLUMN_motivo + " FROM " + variables_publicas.TABLE_MOTIVOS_NOVENTA + " ORDER BY "+ variables_publicas.MOTIVOS_NOVENTA_COLUMN_codigo+";";
+        Cursor c = database.rawQuery(Query, null);
+        if (c.moveToFirst()) {
+            do {
+                list.add(new MotivosNoVenta(
+                        c.getString(c.getColumnIndex("Codigo")),
+                        c.getString(c.getColumnIndex("Motivo"))
+                ));
+            } while (c.moveToNext());
+        }
+        c.close();
+        return list;
     }
 }
